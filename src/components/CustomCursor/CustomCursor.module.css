@@ -3,31 +3,35 @@
     cursor: none !important;
 }
 
-.dot {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: white;
-    pointer-events: none;
-    z-index: 10000;
-    mix-blend-mode: difference;
-    will-change: transform;
-}
-
+.dot,
 .ring {
     position: fixed;
     top: 0;
     left: 0;
-    width: 32px;
-    height: 32px;
     border-radius: 50%;
-    border: 1px solid white;
     pointer-events: none;
     z-index: 10000;
     mix-blend-mode: difference;
     will-change: transform;
+    transform: translate3d(-9999px, -9999px, 0);
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    background: white;
+}
+
+.ring {
+    width: 32px;
+    height: 32px;
+    border: 1px solid white;
     transition: width 220ms ease, height 220ms ease;
+}
+
+@media (hover: none) {
+    .dot,
+    .ring {
+        display: none;
+    }
 }
