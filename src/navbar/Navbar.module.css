@@ -1,7 +1,7 @@
 .navbar {
   position: fixed;
-  top: 1.5rem;
-  left: 1.5rem;
+  top: var(--content-gutter);
+  left: max(var(--content-gutter), calc(50vw - var(--content-max) / 2 + var(--content-gutter)));
   display: flex;
   gap: 0.25rem;
   align-items: center;

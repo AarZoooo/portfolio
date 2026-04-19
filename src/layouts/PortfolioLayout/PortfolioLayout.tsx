@@ -11,7 +11,7 @@ import styles from './PortfolioLayout.module.css'
 function PortfolioLayout() {
     const d = data as PortfolioData
     return (
-        <main className={styles.layout}>
+        <main className={`${styles.layout} container`}>
             <Hero personal={d.personal} hero={d.hero} />
             <Experience items={d.experience} />
             <Skills skills={d.skills} />

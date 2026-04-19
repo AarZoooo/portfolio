@@ -8,7 +8,7 @@ function ResumeLayout() {
     const src = assets.resume(d.personal.resume)
 
     return (
-        <main className={styles.layout}>
+        <main className={`${styles.layout} container`}>
             {src && <iframe className={styles.pdf} src={src} title="Resume" />}
         </main>
     )

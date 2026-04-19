@@ -1,7 +1,7 @@
 .pill {
     position: fixed;
-    top: 1.5rem;
-    right: 1.5rem;
+    top: var(--content-gutter);
+    right: max(var(--content-gutter), calc(50vw - var(--content-max) / 2 + var(--content-gutter)));
     display: flex;
     align-items: center;
     gap: 0.5rem;
