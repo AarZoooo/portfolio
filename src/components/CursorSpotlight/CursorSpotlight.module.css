@@ -20,7 +20,7 @@
 .pattern {
     position: absolute;
     inset: 0;
-    background-color: rgb(var(--ink) / 0.35);
+    background-color: rgb(var(--ink) / 0.12);
     -webkit-mask-image: url('./temple.svg');
     mask-image: url('./temple.svg');
     -webkit-mask-size: 90px 90px;
