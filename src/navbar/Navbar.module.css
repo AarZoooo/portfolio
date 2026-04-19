@@ -13,53 +13,82 @@
 }
 
 .inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   height: 4rem;
+  gap: 2rem;
 }
 
-.nav {
-  position: relative;
+.left {
   display: flex;
-  gap: 0.25rem;
   align-items: center;
+  gap: 0.75rem;
+  justify-self: start;
 }
 
-.indicator {
-  position: absolute;
-  top: calc(50% - 1rem);
+.iconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
   height: 2rem;
-  left: 0;
-  background: var(--accent);
   border-radius: 999px;
-  box-shadow: var(--shadow-xl), var(--glow-md);
-  transition:
-    transform 380ms cubic-bezier(0.22, 1, 0.36, 1),
-    width 380ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 180ms ease;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.item {
-  position: relative;
-  z-index: 1;
-  padding: 0.4rem 1.2rem;
-  border-radius: 999px;
-  text-decoration: none;
   color: var(--text-secondary);
-  font-size: 0.9rem;
-  transition:
-    color 220ms ease,
-    text-shadow 220ms ease;
+  transition: color 200ms ease, background 200ms ease;
 }
 
-.item:not(.active):hover {
+.iconBtn:hover {
   color: var(--text);
-  text-shadow: 0 0 14px rgb(var(--ink) / 0.35);
+  background: var(--hover);
 }
 
-.active {
+.center {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text);
+  justify-self: center;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-self: end;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: var(--weight-light);
+  color: var(--text);
+  font-feature-settings: 'tnum' 1;
+}
+
+.time,
+.date {
+  line-height: 1;
+}
+
+.sep {
+  color: var(--text-subtle);
+  line-height: 1;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 999px;
+  background: var(--accent);
   color: var(--accent-contrast);
-  font-weight: var(--weight-bold);
+  box-shadow: var(--shadow-xl), var(--glow-md);
+  transition: background 220ms ease, color 220ms ease;
+}
+
+.toggle svg {
+  display: block;
 }
