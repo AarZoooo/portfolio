@@ -1,5 +1,6 @@
 import type { Personal, Hero as HeroContent } from '../../types/portfolio'
 import { useTypewriter } from '../../hooks/useTypewriter'
+import { smoothScrollToId } from '../../utils/smoothScroll'
 import styles from './Hero.module.css'
 
 interface HeroProps {
@@ -15,10 +16,7 @@ function Hero({ personal, hero }: HeroProps) {
         gapMs: 450,
     })
 
-    const scrollToNext = () => {
-        const el = document.getElementById('experience')
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
+    const scrollToNext = () => smoothScrollToId('experience', 900, 80)
 
     return (
         <section id="hero" className={styles.hero}>

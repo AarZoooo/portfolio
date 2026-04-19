@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { assets } from '../assets'
+import { smoothScrollToId } from '../utils/smoothScroll'
 import styles from './Navbar.module.css'
 
 interface NavLink {
@@ -79,10 +80,7 @@ function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
         return () => observer.disconnect()
     }, [])
 
-    const scrollTo = (id: string) => {
-        const el = document.getElementById(id)
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
+    const scrollTo = (id: string) => smoothScrollToId(id, 900, 80)
 
     return (
         <header className={`${styles.bar} ${scrolled ? styles.scrolled : ''}`}>
