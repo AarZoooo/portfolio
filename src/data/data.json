@@ -20,14 +20,16 @@
     },
     "footer": {
         "taglines": [
-            "You've read enough already.",
             "Vibecoded with ~~love~~ claude.",
-            "Written at 2am, probably.",
-            "90% code, 10% vibes.",
-            "Shipped before it was ready.",
-            "Proudly overthought.",
             "Brewed with too much coffee.",
-            "If you're still here, just email me already."
+            "Runs on caffeine and stubborn optimism.",
+            "You've read enough already.",
+            "If you're still here, just email me already.",
+            "Thanks for scrolling through my life choices.",
+            "process.exit(0)",
+            "Rest of the story is in person.",
+            "Still here? Let's talk.",
+            "This is the part where recruiters usually leave."
         ],
         "meta": [
             "© 2026 Aarju Pal",
