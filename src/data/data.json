@@ -69,11 +69,7 @@
             "institution": "Chandigarh University",
             "degree": "Bachelor of Engineering (B.E.), Computer Science",
             "duration": "July 2022 – June 2026 (Expected)",
-            "score": "CGPA: 7.8 / 10",
-            "logo": "chandigarh-university",
-            "highlights": [
-                "Part of the top 5% elite batch of students picked for special placement training."
-            ]
+            "logo": "chandigarh-university"
         }
     ],
     "projects": [

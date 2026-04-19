@@ -24,8 +24,8 @@ export interface Education {
     institution: string
     degree: string
     duration: string
-    score: string
     logo: string
+    score?: string
     highlights?: string[]
 }
 
