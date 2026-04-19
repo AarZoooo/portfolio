@@ -44,6 +44,11 @@
     line-height: var(--leading-relaxed);
 }
 
+.sep {
+    margin: 0 0.75rem;
+    color: var(--text-muted);
+}
+
 .chips {
     margin: 0;
     padding: 0;

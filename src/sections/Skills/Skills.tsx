@@ -42,7 +42,12 @@ function Skills({ heading, skills }: SkillsProps) {
                                     })}
                                 </ul>
                             ) : (
-                                row.items.join(' · ')
+                                row.items.map((item, i) => (
+                                    <span key={item}>
+                                        {i > 0 && <span className={styles.sep}>·</span>}
+                                        {item}
+                                    </span>
+                                ))
                             )}
                         </dd>
                     </div>
