@@ -34,7 +34,16 @@
   text-decoration: none;
   color: var(--text);
   font-size: 0.9rem;
-  transition: color 220ms ease;
+  transform-origin: center;
+  transition:
+    color 220ms ease,
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    text-shadow 220ms ease;
+}
+
+.item:not(.active):hover {
+  transform: scale(1.08);
+  text-shadow: 0 0 14px rgb(var(--ink) / 0.35);
 }
 
 .active {
