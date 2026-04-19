@@ -1,2 +1,92 @@
 .experience {
+    padding: 6rem 0;
+}
+
+.heading {
+    margin: 0 0 3rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 2rem;
+}
+
+.primary {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.company {
+    margin: 0;
+    font-size: var(--text-lg);
+    font-weight: var(--weight-medium);
+    color: var(--text);
+}
+
+.role {
+    margin: 0;
+    font-size: var(--text-md);
+    font-weight: var(--weight-light);
+    color: var(--text-secondary);
+}
+
+.duration {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.bullets {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.bullet {
+    font-size: var(--text-base);
+    font-weight: var(--weight-light);
+    color: var(--text-secondary);
+    padding-left: 1.25rem;
+    text-indent: -1.25rem;
+    line-height: var(--leading-relaxed);
+}
+
+.bullet::before {
+    content: '–  ';
+    color: var(--text-subtle);
+}
+
+.tech {
+    margin: 0.5rem 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    color: var(--text-muted);
 }
