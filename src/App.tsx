@@ -10,6 +10,7 @@ function App() {
 
     return (
         <>
+            <a href="#main" className="skip-link">Skip to content</a>
             <CustomCursor />
             <Navbar
                 github={d.personal.github}

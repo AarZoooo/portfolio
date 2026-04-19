@@ -53,6 +53,34 @@ a {
     text-decoration: none;
 }
 
+/* Keyboard focus — visible ring via box-shadow (doesn't disturb layout). */
+:focus { outline: none; }
+:focus-visible {
+    outline: 2px solid var(--text);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* Skip link — hidden until keyboard-focused. */
+.skip-link {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    padding: 0.5rem 0.9rem;
+    background: var(--accent);
+    color: var(--accent-contrast);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    border-radius: 6px;
+    z-index: 1000;
+    transform: translateY(-150%);
+    transition: transform 200ms ease;
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
 /* Glass surface — tinted, saturated backdrop blur with edge + inner highlight.
    Shape-agnostic; combine with a radius utility or your own border-radius. */
 .glass {
