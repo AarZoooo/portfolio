@@ -15,15 +15,26 @@ function Hero({ personal, hero }: HeroProps) {
         gapMs: 450,
     })
 
+    const scrollToNext = () => {
+        const el = document.getElementById('experience')
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+
     return (
         <section id="hero" className={styles.hero}>
-            <h1 className={styles.greeting}>
-                Hey, I'm <span className={styles.name}>{personal.name}</span>
-            </h1>
-            <p className={styles.tagline}>
-                {typed}
-                <span className={styles.caret} aria-hidden />
-            </p>
+            <div className={styles.center}>
+                <h1 className={styles.greeting}>
+                    Hey, I'm <span className={styles.name}>{personal.name}</span>
+                </h1>
+                <p className={styles.tagline}>
+                    {typed}
+                    <span className={styles.caret} aria-hidden />
+                </p>
+            </div>
+
+            <button type="button" onClick={scrollToNext} className={styles.scrollHint}>
+                scroll <span aria-hidden>↓</span>
+            </button>
         </section>
     )
 }
