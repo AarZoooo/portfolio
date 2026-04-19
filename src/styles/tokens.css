@@ -43,9 +43,9 @@
     --shadow-2xl: 0 20px 48px -10px rgb(0 0 0 / 0.60);
 
     /* Glows — theme-aware halo for inverted elements (accent-colored emission) */
-    --glow-sm: 0 0 10px 0 rgb(var(--ink) / 0.2);
-    --glow-md: 0 0 20px 2px rgb(var(--ink) / 0.35);
-    --glow-lg: 0 0 36px 4px rgb(var(--ink) / 0.5);
+    --glow-sm: 0 0 10px 0 rgb(var(--ink) / 0.12);
+    --glow-md: 0 0 20px 2px rgb(var(--ink) / 0.22);
+    --glow-lg: 0 0 36px 4px rgb(var(--ink) / 0.35);
 
     /* Layout */
     --content-max: 1280px;

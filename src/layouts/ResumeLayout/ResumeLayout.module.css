@@ -1,8 +1,18 @@
 .layout {
+    padding-top: 6rem;
+    padding-bottom: 3rem;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
 }
 
 .pdf {
-}
-
-.empty {
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 1 / 1.294;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: var(--shadow-lg);
+    background: var(--bg);
+    display: block;
 }
