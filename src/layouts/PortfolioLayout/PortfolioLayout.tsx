@@ -15,7 +15,7 @@ function PortfolioLayout() {
             <Hero personal={d.personal} hero={d.hero} />
             <Experience heading={d.sections.experience} items={d.experience} />
             <Skills heading={d.sections.skills} skills={d.skills} />
-            <Projects items={d.projects} />
+            <Projects heading={d.sections.projects} items={d.projects} />
             <Education items={d.education} />
             <Contact personal={d.personal} />
         </main>

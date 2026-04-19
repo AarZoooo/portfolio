@@ -1,2 +1,99 @@
 .projects {
+    padding: 6rem 0;
+}
+
+.heading {
+    margin: 0 0 3rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 2rem;
+}
+
+.primary {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.name {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: var(--text-lg);
+    font-weight: var(--weight-medium);
+    color: var(--text);
+}
+
+.logo {
+    width: 1.1em;
+    height: 1.1em;
+    object-fit: contain;
+    filter: var(--mono-logo);
+}
+
+.context {
+    margin: 0;
+    font-size: var(--text-md);
+    font-weight: var(--weight-light);
+    color: var(--text-secondary);
+}
+
+.date {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.bullets {
+    margin: 0;
+    padding-left: 1.25rem;
+    list-style: disc outside;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.bullet {
+    font-size: var(--text-base);
+    font-weight: var(--weight-light);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+}
+
+.bullet::marker {
+    color: var(--text-subtle);
+}
+
+.tech {
+    margin: 0.5rem 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    color: var(--text-muted);
 }
