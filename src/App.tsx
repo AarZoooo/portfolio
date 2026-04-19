@@ -1,6 +1,5 @@
 import Navbar from './navbar/Navbar'
 import Footer from './components/Footer/Footer'
-import CursorSpotlight from './components/CursorSpotlight/CursorSpotlight'
 import PortfolioLayout from './layouts/PortfolioLayout/PortfolioLayout'
 import data from './data/data.json'
 import type { PortfolioData } from './types/portfolio'
@@ -10,7 +9,6 @@ function App() {
 
     return (
         <>
-            <CursorSpotlight />
             <Navbar
                 github={d.personal.github}
                 linkedin={d.personal.linkedin}
