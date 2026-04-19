@@ -7,6 +7,7 @@ import styles from './Navbar.module.css'
 interface NavLink {
     id: string
     label: string
+    short?: string
 }
 
 interface NavbarProps {
@@ -125,7 +126,8 @@ function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
                             onClick={() => scrollTo(link.id)}
                             className={`${styles.navLink} ${active === link.id ? styles.navActive : ''}`}
                         >
-                            {link.label}
+                            <span className={styles.labelLong}>{link.label}</span>
+                            {link.short && <span className={styles.labelShort}>{link.short}</span>}
                         </button>
                     ))}
                 </nav>

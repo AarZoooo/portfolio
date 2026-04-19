@@ -36,11 +36,6 @@
   .center {
     grid-area: nav;
     justify-self: center;
-    gap: 0.6rem;
-  }
-  .navLink {
-    font-size: var(--text-xs);
-    padding: 0.35rem 0.2rem;
   }
   .left {
     grid-area: left;
@@ -120,7 +115,7 @@
   position: relative;
   padding: 0.35rem 0.4rem;
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: var(--text-sm);
   font-weight: var(--weight-light);
   color: var(--text-secondary);
   transition:
@@ -152,6 +147,19 @@
 .navActive {
   color: var(--text);
   font-weight: var(--weight-medium);
+}
+
+.labelShort {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .labelLong {
+    display: none;
+  }
+  .labelShort {
+    display: inline;
+  }
 }
 
 .right {

@@ -30,11 +30,11 @@ function App() {
                 linkedin={d.personal.linkedin}
                 resumeKey={d.personal.resume}
                 links={[
-                    { id: 'experience', label: d.sections.experience },
-                    { id: 'skills', label: d.sections.skills },
-                    { id: 'projects', label: d.sections.projects },
-                    { id: 'education', label: d.sections.education },
-                    { id: 'contact', label: d.sections.contact },
+                    { id: 'experience', label: d.sections.experience, short: 'exp' },
+                    { id: 'skills', label: d.sections.skills, short: 'skl' },
+                    { id: 'projects', label: d.sections.projects, short: 'prj' },
+                    { id: 'education', label: d.sections.education, short: 'edu' },
+                    { id: 'contact', label: d.sections.contact, short: 'ctc' },
                 ]}
             />
             <PortfolioLayout />
