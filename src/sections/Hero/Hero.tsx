@@ -8,7 +8,9 @@ interface HeroProps {
 function Hero({ personal }: HeroProps) {
     return (
         <section id="hero" className={styles.hero}>
-            <h1 className={styles.greeting}>Hey, I'm {personal.name}</h1>
+            <h1 className={styles.greeting}>
+                Hey, I'm <span className={styles.name}>{personal.name}</span>
+            </h1>
             <p className={styles.tagline}>{personal.tagline}</p>
         </section>
     )
