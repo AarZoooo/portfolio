@@ -26,7 +26,7 @@
     align-items: baseline;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 900px) {
     .row {
         grid-template-columns: 1fr;
         gap: 0.35rem;

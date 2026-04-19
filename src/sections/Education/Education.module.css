@@ -90,7 +90,7 @@
     color: var(--text-subtle);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 900px) {
     .head {
         display: grid;
         grid-template-columns: 1fr auto;

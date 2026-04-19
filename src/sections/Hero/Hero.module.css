@@ -89,7 +89,7 @@
     50% { transform: translateY(3px); }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 900px) {
     .greeting,
     .tagline {
         font-size: var(--text-md);
