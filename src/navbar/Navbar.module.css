@@ -4,9 +4,9 @@
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgb(var(--paper) / 0.35);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background: transparent;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   transition: box-shadow 250ms ease, background 250ms ease;
 }
 
