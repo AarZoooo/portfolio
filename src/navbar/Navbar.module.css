@@ -36,8 +36,11 @@
   .center {
     grid-area: nav;
     justify-self: center;
-    gap: 0.9rem;
+    gap: 0.8rem;
     max-width: 100%;
+  }
+  .navLink {
+    padding: 0.3rem 0.1rem;
   }
   .left {
     grid-area: left;
