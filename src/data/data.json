@@ -7,54 +7,63 @@
         "location": "Bangalore, India",
         "github": "https://github.com/AarZoooo",
         "linkedin": "https://linkedin.com/in/aarjupal",
-        "resume": "resume.pdf",
-        "avatar": "avatar.png",
+        "resume": "resume",
+        "avatar": "avatar",
         "summary": "Backend Software Engineer specialising in AI-driven systems and backend infrastructure, with production internship experience at PayPal and Rippling. At PayPal, built a LangGraph multi-agent system with Milvus that reduced ticket creation time by 92%; at Rippling, built backend frameworks and tooling now serving 560,000+ page saves/month across 78 countries."
     },
-
     "experience": [
         {
             "company": "Rippling People Center Inc.",
             "role": "Software Engineer Intern",
             "duration": "Nov 2025 – May 2026",
-            "logo": "rippling.svg",
+            "logo": "rippling",
             "bullets": [
                 "Migrated 183 employee data fields across 20+ countries from a legacy multi-class system to an internal define-once, use-everywhere framework; fields now serve 560,000+ page saves/month on systems powering $114.25M in EOR ARR across 78 countries.",
                 "Owned two complexity-5 migrations in the entire project (FLSA Exempt, Company Employment Type); redesigned the standard approach into an 8-PR incremental plan when the original PR grew to 10,000+ lines — zero margin for error on a US regulatory compliance field.",
                 "Co-built Conditionality Engine during Quality Week, won Foundational Fixes category at the company-wide event."
             ],
-            "tech": ["Python", "Django", "MCP", "Buildkite", "Jira"]
+            "tech": [
+                "Python",
+                "Django",
+                "MCP",
+                "Buildkite",
+                "Jira"
+            ]
         },
         {
             "company": "PayPal India Pvt. Ltd.",
             "role": "Software Engineer Intern",
             "duration": "May 2025 – Aug 2025",
-            "logo": "paypal.svg",
+            "logo": "paypal",
             "bullets": [
                 "Designed an AI-driven Change Management PoC using Python, LangGraph, and Milvus, reducing ticket creation time by 90%.",
                 "Built backend automation tools and MCP integrations, reducing developer friction by 8,000 hours/month.",
                 "Developed and shipped Java Spring Boot REST APIs for backend services across QA and production environments as part of the full SDLC."
             ],
-            "tech": ["Java", "Spring Boot", "Python", "LangGraph", "Milvus"]
+            "tech": [
+                "Java",
+                "Spring Boot",
+                "Python",
+                "LangGraph",
+                "Milvus"
+            ]
         }
     ],
-
     "education": [
         {
             "institution": "Chandigarh University",
             "degree": "Bachelor of Engineering (B.E.), Computer Science",
             "duration": "July 2022 – June 2026 (Expected)",
             "score": "CGPA: 7.8 / 10",
-            "logo": "chandigarh-university.png"
+            "logo": "chandigarh-university"
         }
     ],
-
     "projects": [
         {
             "name": "Conditionality Engine",
             "context": "Rippling",
             "date": "March 2026",
-            "logo": "rippling.svg",
+            "logo": "rippling",
             "github": "",
             "live": "",
             "bullets": [
@@ -62,13 +71,17 @@
                 "Analysis of 2,300+ production overrides showed 1,200 (50%+) directly migrateable; projected 70-80% coverage with regex and feature flag support.",
                 "Engine inserted at priority 3 in the middleware chain — zero-risk incremental adoption per field."
             ],
-            "tech": ["Python", "Django", "REST"]
+            "tech": [
+                "Python",
+                "Django",
+                "REST"
+            ]
         },
         {
             "name": "AI-Driven Change Management Automation",
             "context": "PayPal",
             "date": "July 2025",
-            "logo": "paypal.svg",
+            "logo": "paypal",
             "github": "",
             "live": "",
             "bullets": [
@@ -76,32 +89,78 @@
                 "Implemented a LangGraph-based multi-agent system integrated with Milvus vector database to enable semantic search, context retrieval, and intelligent workflow orchestration.",
                 "Reduced average ticket creation time from 1 hour to 5 minutes (92% reduction), significantly improving engineering productivity and operational efficiency."
             ],
-            "tech": ["Python", "LangGraph", "Milvus", "RAG"]
+            "tech": [
+                "Python",
+                "LangGraph",
+                "Milvus",
+                "RAG"
+            ]
         }
     ],
-
     "skills": {
         "languages": [
-            { "name": "Java", "logo": "java.svg" },
-            { "name": "Python", "logo": "python.svg" }
+            {
+                "name": "Java",
+                "logo": "java"
+            },
+            {
+                "name": "Python",
+                "logo": "python"
+            }
         ],
         "frameworks": [
-            { "name": "Spring Boot", "logo": "spring-boot.svg" },
-            { "name": "Django", "logo": "django.svg" },
-            { "name": "LangGraph", "logo": "langgraph.svg" },
-            { "name": "MCP", "logo": "mcp.svg" }
+            {
+                "name": "Spring Boot",
+                "logo": "spring-boot"
+            },
+            {
+                "name": "Django",
+                "logo": "django"
+            },
+            {
+                "name": "LangGraph",
+                "logo": "langgraph"
+            },
+            {
+                "name": "MCP",
+                "logo": "mcp"
+            }
         ],
         "databases": [
-            { "name": "Milvus", "logo": "milvus.svg" }
+            {
+                "name": "Milvus",
+                "logo": "milvus"
+            }
         ],
         "tools": [
-            { "name": "Git", "logo": "git.svg" },
-            { "name": "GitHub", "logo": "github.svg" },
-            { "name": "Postman", "logo": "postman.svg" },
-            { "name": "Buildkite", "logo": "buildkite.svg" },
-            { "name": "Linux", "logo": "linux.svg" },
-            { "name": "Jira", "logo": "jira.svg" },
-            { "name": "Confluence", "logo": "confluence.svg" }
+            {
+                "name": "Git",
+                "logo": "git"
+            },
+            {
+                "name": "GitHub",
+                "logo": "github"
+            },
+            {
+                "name": "Postman",
+                "logo": "postman"
+            },
+            {
+                "name": "Buildkite",
+                "logo": "buildkite"
+            },
+            {
+                "name": "Linux",
+                "logo": "linux"
+            },
+            {
+                "name": "Jira",
+                "logo": "jira"
+            },
+            {
+                "name": "Confluence",
+                "logo": "confluence"
+            }
         ],
         "concepts": [
             "Agentic AI",

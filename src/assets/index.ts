@@ -1,35 +1,48 @@
-import avatarUrl from './avatar/avatar.png'
-import resumeUrl from './resume/resume.pdf'
-
-const companyLogos = import.meta.glob('./logos/companies/*.{svg,png}', {
+const companyLogoModules = import.meta.glob('./logos/companies/*.{svg,png}', {
     eager: true,
     import: 'default',
 }) as Record<string, string>
 
-const schoolLogos = import.meta.glob('./logos/schools/*.{svg,png}', {
+const schoolLogoModules = import.meta.glob('./logos/schools/*.{svg,png}', {
     eager: true,
     import: 'default',
 }) as Record<string, string>
 
-const techLogos = import.meta.glob('./logos/tech/*.{svg,png}', {
+const techLogoModules = import.meta.glob('./logos/tech/*.{svg,png}', {
     eager: true,
     import: 'default',
 }) as Record<string, string>
 
-const toMap = (entries: Record<string, string>, dir: string): Record<string, string> => {
+const avatarModules = import.meta.glob('./avatar/*.{svg,png,jpg,jpeg}', {
+    eager: true,
+    import: 'default',
+}) as Record<string, string>
+
+const resumeModules = import.meta.glob('./resume/*.pdf', {
+    eager: true,
+    import: 'default',
+}) as Record<string, string>
+
+const byBasename = (mods: Record<string, string>): Record<string, string> => {
     const out: Record<string, string> = {}
-    for (const [path, url] of Object.entries(entries)) {
+    for (const [path, url] of Object.entries(mods)) {
         const file = path.slice(path.lastIndexOf('/') + 1)
-        out[file] = url
+        const base = file.replace(/\.[^.]+$/, '')
+        out[base] = url
     }
-    void dir
     return out
 }
 
+const companyLogos = byBasename(companyLogoModules)
+const schoolLogos = byBasename(schoolLogoModules)
+const techLogos = byBasename(techLogoModules)
+const avatars = byBasename(avatarModules)
+const resumes = byBasename(resumeModules)
+
 export const assets = {
-    avatar: avatarUrl,
-    resume: resumeUrl,
-    companyLogo: (file: string): string | undefined => toMap(companyLogos, 'companies')[file],
-    schoolLogo: (file: string): string | undefined => toMap(schoolLogos, 'schools')[file],
-    techLogo: (file: string): string | undefined => toMap(techLogos, 'tech')[file],
+    avatar: (key: string): string | undefined => avatars[key],
+    resume: (key: string): string | undefined => resumes[key],
+    companyLogo: (key: string): string | undefined => companyLogos[key],
+    schoolLogo: (key: string): string | undefined => schoolLogos[key],
+    techLogo: (key: string): string | undefined => techLogos[key],
 }
