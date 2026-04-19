@@ -3,11 +3,16 @@ import { useTheme } from '../hooks/useTheme'
 import { assets } from '../assets'
 import styles from './Navbar.module.css'
 
+interface NavLink {
+    id: string
+    label: string
+}
+
 interface NavbarProps {
     github: string
     linkedin: string
     resumeKey: string
-    title: string
+    links: NavLink[]
 }
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -23,7 +28,7 @@ function formatDate(d: Date): string {
     return `${MONTHS[d.getMonth()]} ${dd}`
 }
 
-function Navbar({ github, linkedin, resumeKey, title }: NavbarProps) {
+function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
     const [scrolled, setScrolled] = useState(false)
     const [now, setNow] = useState(() => new Date())
     const { theme, toggle } = useTheme()
@@ -50,6 +55,11 @@ function Navbar({ github, linkedin, resumeKey, title }: NavbarProps) {
         }
     }, [])
 
+    const scrollTo = (id: string) => {
+        const el = document.getElementById(id)
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+
     return (
         <header className={`${styles.bar} ${scrolled ? styles.scrolled : ''}`}>
             <div className={`${styles.inner} container`}>
@@ -75,7 +85,18 @@ function Navbar({ github, linkedin, resumeKey, title }: NavbarProps) {
                     )}
                 </div>
 
-                <p className={styles.center}>{title}</p>
+                <nav className={styles.center}>
+                    {links.map((link) => (
+                        <button
+                            key={link.id}
+                            type="button"
+                            onClick={() => scrollTo(link.id)}
+                            className={styles.navLink}
+                        >
+                            {link.label}
+                        </button>
+                    ))}
+                </nav>
 
                 <div className={styles.right}>
                     <span className={styles.time}>{formatTime(now)}</span>

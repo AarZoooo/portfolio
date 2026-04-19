@@ -13,7 +13,12 @@ function App() {
                 github={d.personal.github}
                 linkedin={d.personal.linkedin}
                 resumeKey={d.personal.resume}
-                title="Portfolio"
+                links={[
+                    { id: 'experience', label: d.sections.experience },
+                    { id: 'skills', label: d.sections.skills },
+                    { id: 'education', label: d.sections.education },
+                    { id: 'contact', label: d.sections.contact },
+                ]}
             />
             <PortfolioLayout />
             <Footer footer={d.footer} />
