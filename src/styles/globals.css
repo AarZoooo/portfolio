@@ -12,13 +12,6 @@ body {
     padding: 0;
 }
 
-html {
-    /* Split background so overscroll matches the nearest edge:
-       top overscroll reveals theme bg, bottom overscroll reveals the footer's black. */
-    background: linear-gradient(to bottom, var(--bg) 50%, #000 50%);
-    background-attachment: fixed;
-}
-
 body {
     background: var(--bg);
     color: var(--text);
