@@ -1,5 +1,5 @@
 .footer {
-    /* Forced dark surface — does NOT flip with theme. */
+    /* Forced dark surface - does NOT flip with theme. */
     background: #000;
     color: rgb(255 255 255 / 0.6);
     margin-top: 6rem;

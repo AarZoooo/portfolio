@@ -60,7 +60,7 @@
             "logo": "rippling",
             "bullets": [
                 "Migrated 183 employee data fields across 20+ countries from a legacy multi-class system to an internal define-once, use-everywhere framework; fields now serve 560,000+ page saves/month on systems powering $114.25M in EOR ARR across 78 countries.",
-                "Owned two complexity-5 migrations in the entire project (FLSA Exempt, Company Employment Type); redesigned the standard approach into an 8-PR incremental plan when the original PR grew to 10,000+ lines — zero margin for error on a US regulatory compliance field.",
+                "Owned two complexity-5 migrations in the entire project (FLSA Exempt, Company Employment Type); redesigned the standard approach into an 8-PR incremental plan when the original PR grew to 10,000+ lines - zero margin for error on a US regulatory compliance field.",
                 "Co-built Conditionality Engine during Quality Week, won Foundational Fixes category at the company-wide event."
             ],
             "tech": [
@@ -109,7 +109,7 @@
             "bullets": [
                 "Built a declarative rules engine on Django REST that replaces hand-written Python lambda overrides with database-stored rules, reducing field behavior changes from a full engineering cycle to 5 minutes via a UI, enabling self-serve rule management by non-engineers.",
                 "Analysis of 2,300+ production overrides showed 1,200 (50%+) directly migrateable; projected 70-80% coverage with regex and feature flag support.",
-                "Engine inserted at priority 3 in the middleware chain — zero-risk incremental adoption per field."
+                "Engine inserted at priority 3 in the middleware chain - zero-risk incremental adoption per field."
             ],
             "tech": [
                 "Python",

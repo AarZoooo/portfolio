@@ -1,4 +1,4 @@
-# Portfolio — Aarju Pal
+# Portfolio - Aarju Pal
 
 Live: [portfolioaarju.vercel.app](https://portfolioaarju.vercel.app)
 
@@ -22,15 +22,15 @@ npm run preview    # preview production build locally
 
 ## Content
 
-All copy, taglines, skills, experience, projects, and education live in [`src/data/data.json`](src/data/data.json). Edit freely — no code changes needed.
+All copy, taglines, skills, experience, projects, and education live in [`src/data/data.json`](src/data/data.json). Edit freely - no code changes needed.
 
 ## Design system
 
 Central tokens in [`src/styles/`](src/styles):
 
-- `tokens.css` — color, spacing, shadows, glow, layout
-- `typography.css` — font families, type scale, weights
-- `globals.css` — resets, utilities, skip link, `.glass`, `.container`
+- `tokens.css` - color, spacing, shadows, glow, layout
+- `typography.css` - font families, type scale, weights
+- `globals.css` - resets, utilities, skip link, `.glass`, `.container`
 
 Theme toggle (light/dark) lives in the navbar. Auto-detects system preference on first visit and persists choice.
 
