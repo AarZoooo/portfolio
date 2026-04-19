@@ -8,7 +8,12 @@ interface HeroProps {
 }
 
 function Hero({ personal, hero }: HeroProps) {
-    const typed = useTypewriter(hero.taglines)
+    const typed = useTypewriter(hero.taglines, {
+        typeMs: 35,
+        deleteMs: 20,
+        holdMs: 2600,
+        gapMs: 450,
+    })
 
     return (
         <section id="hero" className={styles.hero}>
