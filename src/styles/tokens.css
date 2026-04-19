@@ -1,11 +1,41 @@
-/* Design tokens — colors, spacing, radii, shadows, z-index.
-   Values TBD by design pass. Migrated existing vars below. */
+/* Monochrome design tokens.
+   Single hue (ink on paper), expressed through alpha for every surface,
+   text, border, and overlay use case. Dark mode flips ink <-> paper. */
 
 :root {
-    --color-nav-bg: #ebebeb;
-    --color-nav-active: #000000;
-    --color-text: #000000;
+    /* Base monochrome */
+    --ink: 0 0 0;       /* rgb channels, used via rgb(var(--ink) / <alpha>) */
+    --paper: 255 255 255;
+
+    /* Surfaces */
+    --bg: rgb(var(--paper));
+    --surface-1: rgb(var(--ink) / 0.03);
+    --surface-2: rgb(var(--ink) / 0.06);
+    --surface-3: rgb(var(--ink) / 0.10);
+
+    /* Text */
+    --text: rgb(var(--ink) / 1);
+    --text-secondary: rgb(var(--ink) / 0.72);
+    --text-muted: rgb(var(--ink) / 0.52);
+    --text-subtle: rgb(var(--ink) / 0.36);
+    --text-faint: rgb(var(--ink) / 0.20);
+
+    /* Borders */
+    --border-subtle: rgb(var(--ink) / 0.06);
+    --border: rgb(var(--ink) / 0.12);
+    --border-strong: rgb(var(--ink) / 0.24);
+
+    /* Interactive / overlay */
+    --hover: rgb(var(--ink) / 0.04);
+    --active: rgb(var(--ink) / 0.08);
+    --scrim: rgb(var(--ink) / 0.40);
+
+    /* Accent = pure ink (monochrome accent) */
+    --accent: rgb(var(--ink));
+    --accent-contrast: rgb(var(--paper));
 }
 
 :root[theme="dark"] {
+    --ink: 255 255 255;
+    --paper: 0 0 0;
 }

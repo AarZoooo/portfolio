@@ -1,0 +1,24 @@
+.navbar {
+  position: fixed;
+  top:1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  padding: 0.35rem;
+  z-index: 100;
+}
+
+.item {
+  padding: 0.4rem 1.2rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.active {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
