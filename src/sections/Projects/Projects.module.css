@@ -31,6 +31,13 @@
     gap: 2rem;
 }
 
+@media (max-width: 640px) {
+    .head {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+}
+
 .primary {
     display: flex;
     flex-direction: column;
