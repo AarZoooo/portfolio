@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { Footer as FooterContent } from '../../types/portfolio'
 import styles from './Footer.module.css'
 
@@ -6,10 +7,15 @@ interface FooterProps {
 }
 
 function Footer({ footer }: FooterProps) {
+    const [tagline] = useState(() => {
+        const list = footer.taglines
+        return list[Math.floor(Math.random() * list.length)] ?? ''
+    })
+
     return (
         <footer className={styles.footer}>
             <div className={`${styles.inner} container`}>
-                <p className={styles.tagline}>{footer.tagline}</p>
+                <p className={styles.tagline}>{tagline}</p>
 
                 <p className={styles.meta}>
                     {footer.meta.map((m, i) => (

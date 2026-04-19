@@ -19,7 +19,9 @@
         "contact": "Contact"
     },
     "footer": {
-        "tagline": "You've reached the end of my portfolio.",
+        "taglines": [
+            "You've reached the end of my portfolio."
+        ],
         "meta": [
             "© 2026 Aarju Pal",
             "Typeset in IBM Plex",

@@ -58,7 +58,7 @@ export interface Hero {
 }
 
 export interface Footer {
-    tagline: string
+    taglines: string[]
     meta: string[]
     source: {
         label: string
