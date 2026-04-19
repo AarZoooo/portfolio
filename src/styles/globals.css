@@ -61,24 +61,25 @@ a {
     border-radius: 4px;
 }
 
-/* Skip link — color-matched to bg until keyboard-focused. */
+/* Skip link — transparent until keyboard-focused. */
 .skip-link {
     position: fixed;
     top: 0.75rem;
     left: 0.75rem;
     padding: 0.5rem 0.9rem;
-    background: var(--bg);
-    color: var(--bg);
+    background: var(--accent);
+    color: var(--accent-contrast);
     font-family: var(--font-mono);
     font-size: var(--text-sm);
     border-radius: 6px;
     z-index: 1000;
+    opacity: 0;
     pointer-events: none;
+    transition: opacity 150ms ease;
 }
 
 .skip-link:focus {
-    background: var(--accent);
-    color: var(--accent-contrast);
+    opacity: 1;
     pointer-events: auto;
 }
 
