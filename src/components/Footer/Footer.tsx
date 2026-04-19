@@ -1,9 +1,19 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import type { Footer as FooterContent } from '../../types/portfolio'
 import styles from './Footer.module.css'
 
 interface FooterProps {
     footer: FooterContent
+}
+
+function renderTagline(text: string): ReactNode[] {
+    return text.split(/(~~[^~]+~~)/g).map((p, i) =>
+        p.startsWith('~~') && p.endsWith('~~') ? (
+            <del key={i}>{p.slice(2, -2)}</del>
+        ) : (
+            <span key={i}>{p}</span>
+        ),
+    )
 }
 
 function Footer({ footer }: FooterProps) {
@@ -15,7 +25,7 @@ function Footer({ footer }: FooterProps) {
     return (
         <footer className={styles.footer}>
             <div className={`${styles.inner} container`}>
-                <p className={styles.tagline}>{tagline}</p>
+                <p className={styles.tagline}>{renderTagline(tagline)}</p>
 
                 <p className={styles.meta}>
                     {footer.meta.map((m, i) => (

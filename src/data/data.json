@@ -20,12 +20,14 @@
     },
     "footer": {
         "taglines": [
-            "You've reached the end of my portfolio.",
-            "That's all I've got. For now.",
-            "End of page. Seriously.",
-            "Scroll complete. Nothing more down here.",
-            "That was the whole pitch.",
-            "You read the whole thing. Thank you."
+            "You've read enough already.",
+            "Vibecoded with ~~love~~ claude.",
+            "Written at 2am, probably.",
+            "90% code, 10% vibes.",
+            "Shipped before it was ready.",
+            "Proudly overthought.",
+            "Brewed with too much coffee.",
+            "If you're still here, just email me already."
         ],
         "meta": [
             "© 2026 Aarju Pal",
