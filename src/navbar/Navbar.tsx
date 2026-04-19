@@ -14,7 +14,7 @@ function Navbar({ current, onChange }: NavbarProps) {
     ]
 
     return (
-        <div className={`${styles.navbar} glass pill`}>
+        <div className={`${styles.navbar} glass-refined pill`}>
             {items.map((item) => (
                 <button
                     key={item.key}
