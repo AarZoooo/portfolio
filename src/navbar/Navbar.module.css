@@ -24,15 +24,23 @@
 
 @media (max-width: 720px) {
   .inner {
-    grid-template-columns: 1fr auto;
-    gap: 1rem;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "nav nav nav"
+      "left . right";
+    height: auto;
+    padding: 0.6rem 0;
+    gap: 0.25rem;
   }
   .center {
-    display: none;
+    grid-area: nav;
+    justify-self: center;
   }
-  .date,
-  .sep {
-    display: none;
+  .left {
+    grid-area: left;
+  }
+  .right {
+    grid-area: right;
   }
 }
 

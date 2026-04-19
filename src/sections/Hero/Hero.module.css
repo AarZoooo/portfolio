@@ -26,13 +26,6 @@
     color: var(--text);
 }
 
-@media (max-width: 640px) {
-    .greeting,
-    .tagline {
-        font-size: var(--text-md);
-    }
-}
-
 .name {
     font-weight: var(--weight-medium);
 }
