@@ -47,6 +47,9 @@
     --glow-md: 0 0 20px 2px rgb(var(--ink) / 0.22);
     --glow-lg: 0 0 36px 4px rgb(var(--ink) / 0.35);
 
+    /* Monochrome filter — forces any colored logo to current ink */
+    --mono-logo: grayscale(1) brightness(0) contrast(1);
+
     /* Layout */
     --content-max: 1280px;
     --content-gutter: 1.5rem;
@@ -58,4 +61,5 @@
 :root[theme="dark"] {
     --ink: 255 255 255;
     --paper: 0 0 0;
+    --mono-logo: grayscale(1) brightness(0) invert(1);
 }

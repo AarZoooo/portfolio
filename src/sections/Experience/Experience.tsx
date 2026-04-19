@@ -1,4 +1,5 @@
 import type { Experience as ExperienceType } from '../../types/portfolio'
+import { assets } from '../../assets'
 import { highlightMetrics } from '../../utils/highlightMetrics'
 import styles from './Experience.module.css'
 
@@ -16,7 +17,16 @@ function Experience({ items }: ExperienceProps) {
                     <article key={item.company} className={styles.item}>
                         <header className={styles.head}>
                             <div className={styles.primary}>
-                                <p className={styles.company}>{item.company}</p>
+                                <p className={styles.company}>
+                                    {item.logo && assets.companyLogo(item.logo) && (
+                                        <img
+                                            src={assets.companyLogo(item.logo)}
+                                            alt=""
+                                            className={styles.logo}
+                                        />
+                                    )}
+                                    <span>{item.company}</span>
+                                </p>
                                 <p className={styles.role}>{item.role}</p>
                             </div>
                             <p className={styles.duration}>{item.duration}</p>
