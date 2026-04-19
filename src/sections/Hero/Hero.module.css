@@ -19,7 +19,6 @@
 }
 
 .name {
-    font-size: var(--text-xl);
     font-weight: var(--weight-medium);
 }
 
