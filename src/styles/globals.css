@@ -13,9 +13,7 @@ body {
 }
 
 body {
-    background:
-        radial-gradient(rgb(var(--ink) / 0.05) 1px, transparent 1.2px) 0 0 / 22px 22px,
-        var(--bg);
+    background: var(--bg);
     color: var(--text);
     font-family: var(--font-sans);
     font-weight: var(--weight-light);

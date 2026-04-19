@@ -1,16 +1,20 @@
 .spotlight {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 140px;
-    height: 140px;
-    margin: -70px 0 0 -70px;
-    border-radius: 50%;
+    inset: 0;
     pointer-events: none;
-    z-index: 999;
-    background: white;
-    mix-blend-mode: difference;
+    z-index: 1;
+    background:
+        radial-gradient(rgb(var(--ink) / 0.14) 1px, transparent 1.3px) 0 0 / 22px 22px;
+    -webkit-mask: radial-gradient(
+        circle 180px at var(--mx, -9999px) var(--my, -9999px),
+        black 0%,
+        transparent 70%
+    );
+    mask: radial-gradient(
+        circle 180px at var(--mx, -9999px) var(--my, -9999px),
+        black 0%,
+        transparent 70%
+    );
     opacity: 0;
-    transition: opacity 200ms ease;
-    will-change: transform;
+    transition: opacity 250ms ease;
 }

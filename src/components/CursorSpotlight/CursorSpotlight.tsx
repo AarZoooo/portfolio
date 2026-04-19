@@ -12,25 +12,29 @@ function CursorSpotlight() {
         if (!canHover || reduced) return
 
         let raf = 0
-        let tx = 0
-        let ty = 0
-        let cx = 0
-        let cy = 0
+        let tx = -9999
+        let ty = -9999
+        let cx = -9999
+        let cy = -9999
         let visible = false
 
         const tick = () => {
             cx += (tx - cx) * 0.2
             cy += (ty - cy) * 0.2
-            el.style.transform = `translate3d(${cx}px, ${cy}px, 0)`
+            el.style.setProperty('--mx', `${cx}px`)
+            el.style.setProperty('--my', `${cy}px`)
             raf = requestAnimationFrame(tick)
         }
 
         const onMove = (e: MouseEvent) => {
-            tx = e.clientX
-            ty = e.clientY
             if (!visible) {
+                cx = tx = e.clientX
+                cy = ty = e.clientY
                 el.style.opacity = '1'
                 visible = true
+            } else {
+                tx = e.clientX
+                ty = e.clientY
             }
         }
 
