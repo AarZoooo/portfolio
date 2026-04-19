@@ -1,0 +1,11 @@
+/* Design tokens — colors, spacing, radii, shadows, z-index.
+   Values TBD by design pass. Migrated existing vars below. */
+
+:root {
+    --color-nav-bg: #ebebeb;
+    --color-nav-active: #000000;
+    --color-text: #000000;
+}
+
+:root[theme="dark"] {
+}
