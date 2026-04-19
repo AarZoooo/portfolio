@@ -22,5 +22,5 @@
   background: var(--accent);
   color: var(--accent-contrast);
   font-weight: var(--weight-semibold);
-  box-shadow: 0 10px 24px -6px rgb(var(--ink) / 0.45);
+  box-shadow: var(--shadow-xl);
 }

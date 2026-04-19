@@ -33,6 +33,14 @@
     /* Accent = pure ink (monochrome accent) */
     --accent: rgb(var(--ink));
     --accent-contrast: rgb(var(--paper));
+
+    /* Shadows — ink-based, theme-aware */
+    --shadow-xs: 0 1px 2px 0 rgb(var(--ink) / 0.06);
+    --shadow-sm: 0 2px 6px -1px rgb(var(--ink) / 0.10);
+    --shadow-md: 0 6px 16px -4px rgb(var(--ink) / 0.18);
+    --shadow-lg: 0 10px 24px -6px rgb(var(--ink) / 0.28);
+    --shadow-xl: 0 14px 32px -8px rgb(var(--ink) / 0.45);
+    --shadow-2xl: 0 20px 48px -10px rgb(var(--ink) / 0.60);
 }
 
 :root[theme="dark"] {

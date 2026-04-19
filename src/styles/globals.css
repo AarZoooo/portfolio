@@ -47,7 +47,7 @@ a {
 /* Utility carried over from earlier scaffolding. */
 .pill-strong {
     background-color: transparent;
-    box-shadow: 0 0 10px 0 rgb(var(--ink) / 0.1);
+    box-shadow: var(--shadow-sm);
     backdrop-filter: blur(10px);
     border-radius: 999px;
 }
