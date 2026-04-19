@@ -1,4 +1,5 @@
-import type { Skills as SkillsType } from '../../types/portfolio'
+import type { Skills as SkillsType, SkillItem } from '../../types/portfolio'
+import { assets } from '../../assets'
 import styles from './Skills.module.css'
 
 interface SkillsProps {
@@ -6,13 +7,17 @@ interface SkillsProps {
     skills: SkillsType
 }
 
+type Row =
+    | { label: string; kind: 'withLogos'; items: SkillItem[] }
+    | { label: string; kind: 'textOnly'; items: string[] }
+
 function Skills({ heading, skills }: SkillsProps) {
-    const rows: { label: string; items: string[] }[] = [
-        { label: 'Languages', items: skills.languages.map((s) => s.name) },
-        { label: 'Frameworks', items: skills.frameworks.map((s) => s.name) },
-        { label: 'Databases', items: skills.databases.map((s) => s.name) },
-        { label: 'Tools', items: skills.tools.map((s) => s.name) },
-        { label: 'Concepts', items: skills.concepts },
+    const rows: Row[] = [
+        { label: 'Languages', kind: 'withLogos', items: skills.languages },
+        { label: 'Frameworks', kind: 'withLogos', items: skills.frameworks },
+        { label: 'Databases', kind: 'withLogos', items: skills.databases },
+        { label: 'Tools', kind: 'withLogos', items: skills.tools },
+        { label: 'Concepts', kind: 'textOnly', items: skills.concepts },
     ]
 
     return (
@@ -23,7 +28,23 @@ function Skills({ heading, skills }: SkillsProps) {
                 {rows.map((row) => (
                     <div key={row.label} className={styles.row}>
                         <dt className={styles.label}>{row.label}</dt>
-                        <dd className={styles.items}>{row.items.join(' · ')}</dd>
+                        <dd className={styles.items}>
+                            {row.kind === 'withLogos' ? (
+                                <ul className={styles.chips}>
+                                    {row.items.map((s) => {
+                                        const logo = assets.techLogo(s.logo)
+                                        return (
+                                            <li key={s.name} className={styles.chip}>
+                                                {logo && <img src={logo} alt="" className={styles.icon} />}
+                                                <span>{s.name}</span>
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
+                            ) : (
+                                row.items.join(' · ')
+                            )}
+                        </dd>
                     </div>
                 ))}
             </dl>

@@ -43,3 +43,26 @@
     color: var(--text);
     line-height: var(--leading-relaxed);
 }
+
+.chips {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.5rem;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.icon {
+    width: 1em;
+    height: 1em;
+    object-fit: contain;
+    filter: var(--mono-logo);
+    opacity: 0.9;
+}
