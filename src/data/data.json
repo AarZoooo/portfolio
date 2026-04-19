@@ -18,6 +18,19 @@
         "education": "Education",
         "contact": "Contact"
     },
+    "footer": {
+        "tagline": "Thanks for scrolling.",
+        "meta": [
+            "© 2026 Aarju Pal",
+            "Typeset in IBM Plex",
+            "Built with React + Vite",
+            "Last updated Apr 2026"
+        ],
+        "source": {
+            "label": "View source on GitHub",
+            "href": "https://github.com/AarZoooo/portfolio"
+        }
+    },
     "hero": {
         "taglines": [
             "Backend systems. Smarter agents.",

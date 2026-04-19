@@ -57,6 +57,15 @@ export interface Hero {
     taglines: string[]
 }
 
+export interface Footer {
+    tagline: string
+    meta: string[]
+    source: {
+        label: string
+        href: string
+    }
+}
+
 export interface SectionHeadings {
     experience: string
     skills: string
@@ -68,6 +77,7 @@ export interface SectionHeadings {
 export interface PortfolioData {
     personal: Personal
     sections: SectionHeadings
+    footer: Footer
     hero: Hero
     experience: Experience[]
     education: Education[]
