@@ -44,11 +44,17 @@ a {
     text-decoration: none;
 }
 
-/* Frosted pill surface — transparent + blur + shadow + pill radius.
-   Reusable container style for floating UI (navbar, toolbars, badges). */
-.pill-strong {
+/* Glass surface — transparent + backdrop blur + subtle shadow.
+   Shape-agnostic; combine with a radius utility or your own border-radius. */
+.glass {
     background-color: transparent;
     box-shadow: var(--shadow-sm);
     backdrop-filter: blur(10px);
-    border-radius: 999px;
+    -webkit-backdrop-filter: blur(10px);
 }
+
+/* Shape shortcuts that compose with .glass (or stand alone). */
+.pill { border-radius: 999px; }
+.rounded-sm { border-radius: 6px; }
+.rounded-md { border-radius: 12px; }
+.rounded-lg { border-radius: 20px; }
