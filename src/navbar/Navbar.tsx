@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { assets } from '../assets'
 import styles from './Navbar.module.css'
@@ -31,8 +31,11 @@ function formatDate(d: Date): string {
 function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
     const [scrolled, setScrolled] = useState(false)
     const [now, setNow] = useState(() => new Date())
+    const [active, setActive] = useState<string | null>(null)
     const { theme, toggle } = useTheme()
     const resumeUrl = assets.resume(resumeKey)
+    const ids = useRef(links.map((l) => l.id))
+    ids.current = links.map((l) => l.id)
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 4)
@@ -53,6 +56,27 @@ function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
             window.clearTimeout(timeout)
             if (interval !== undefined) window.clearInterval(interval)
         }
+    }, [])
+
+    useEffect(() => {
+        const observed: HTMLElement[] = []
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const visible = entries
+                    .filter((e) => e.isIntersecting)
+                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+                if (visible) setActive(visible.target.id)
+            },
+            { rootMargin: '-40% 0px -50% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] },
+        )
+        for (const id of ids.current) {
+            const el = document.getElementById(id)
+            if (el) {
+                observer.observe(el)
+                observed.push(el)
+            }
+        }
+        return () => observer.disconnect()
     }, [])
 
     const scrollTo = (id: string) => {
@@ -91,7 +115,7 @@ function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
                             key={link.id}
                             type="button"
                             onClick={() => scrollTo(link.id)}
-                            className={styles.navLink}
+                            className={`${styles.navLink} ${active === link.id ? styles.navActive : ''}`}
                         >
                             {link.label}
                         </button>

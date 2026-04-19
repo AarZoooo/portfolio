@@ -51,18 +51,29 @@
 }
 
 .navLink {
-  padding: 0.35rem 0.9rem;
-  border-radius: 999px;
-  font-family: var(--font-sans);
+  padding: 0.35rem 0.4rem;
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: var(--weight-light);
   color: var(--text-secondary);
-  transition: color 200ms ease, background 200ms ease;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition:
+    color 200ms ease,
+    background-size 250ms ease,
+    font-weight 200ms ease;
 }
 
 .navLink:hover {
   color: var(--text);
-  background: var(--hover);
+  background-size: 100% 1px;
+}
+
+.navActive {
+  color: var(--text);
+  font-weight: var(--weight-medium);
 }
 
 .right {
