@@ -62,8 +62,8 @@
 
 .bullets {
     margin: 0;
-    padding: 0;
-    list-style: none;
+    padding-left: 1.25rem;
+    list-style: disc outside;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -73,13 +73,10 @@
     font-size: var(--text-base);
     font-weight: var(--weight-light);
     color: var(--text-secondary);
-    padding-left: 1.25rem;
-    text-indent: -1.25rem;
     line-height: var(--leading-relaxed);
 }
 
-.bullet::before {
-    content: '–  ';
+.bullet::marker {
     color: var(--text-subtle);
 }
 
