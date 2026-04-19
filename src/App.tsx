@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react'
 import Navbar from './navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import CustomCursor from './components/CustomCursor/CustomCursor'
@@ -26,6 +27,7 @@ function App() {
             />
             <PortfolioLayout />
             <Footer footer={d.footer} />
+            <Analytics />
         </>
     )
 }
