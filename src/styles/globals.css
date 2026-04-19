@@ -65,7 +65,7 @@ a {
 }
 
 .view-fade {
-    animation: view-fade-in 260ms ease both;
+    animation: view-fade-in 550ms ease both;
 }
 
 .pill { border-radius: 999px; }
