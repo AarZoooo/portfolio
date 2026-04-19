@@ -4,7 +4,7 @@
     pointer-events: none;
     z-index: 1;
     background:
-        radial-gradient(rgb(var(--ink) / 0.14) 1px, transparent 1.3px) 0 0 / 22px 22px;
+        radial-gradient(rgb(var(--ink) / 0.32) 1.2px, transparent 1.5px) 0 0 / 22px 22px;
     -webkit-mask: radial-gradient(
         circle 180px at var(--mx, -9999px) var(--my, -9999px),
         black 0%,
