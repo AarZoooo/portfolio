@@ -1,16 +1,44 @@
 import type { Education as EducationType } from '../../types/portfolio'
+import { assets } from '../../assets'
+import { highlightMetrics } from '../../utils/highlightMetrics'
 import styles from './Education.module.css'
 
 interface EducationProps {
+    heading: string
     items: EducationType[]
 }
 
-function Education({ items }: EducationProps) {
+function Education({ heading, items }: EducationProps) {
     return (
         <section id="education" className={styles.education}>
-            {items.map((e) => (
-                <div key={e.institution}>{e.institution}</div>
-            ))}
+            <h2 className={styles.heading}>{heading}</h2>
+
+            <div className={styles.list}>
+                {items.map((item) => (
+                    <article key={item.institution} className={styles.item}>
+                        <header className={styles.head}>
+                            <div className={styles.primary}>
+                                <p className={styles.institution}>
+                                    {item.logo && assets.schoolLogo(item.logo) && (
+                                        <img
+                                            src={assets.schoolLogo(item.logo)}
+                                            alt=""
+                                            className={styles.logo}
+                                        />
+                                    )}
+                                    <span>{item.institution}</span>
+                                </p>
+                                <p className={styles.degree}>{item.degree}</p>
+                            </div>
+                            <p className={styles.duration}>{item.duration}</p>
+                        </header>
+
+                        {item.score && (
+                            <p className={styles.score}>{highlightMetrics(item.score)}</p>
+                        )}
+                    </article>
+                ))}
+            </div>
         </section>
     )
 }
