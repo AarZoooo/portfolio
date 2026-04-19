@@ -28,7 +28,7 @@ function Footer({ footer }: FooterProps) {
 
                 <p className={styles.source}>
                     <a href={footer.source.href} target="_blank" rel="noreferrer" className={styles.link}>
-                        {footer.source.label} ↗
+                        {footer.source.label} <span aria-hidden>↗</span>
                     </a>
                 </p>
             </div>
