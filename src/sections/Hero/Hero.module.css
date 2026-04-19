@@ -26,13 +26,6 @@
     color: var(--text);
 }
 
-@media (max-width: 640px) {
-    .greeting,
-    .tagline {
-        font-size: var(--text-md);
-    }
-}
-
 .name {
     font-weight: var(--weight-medium);
 }
@@ -87,4 +80,11 @@
 @keyframes scroll-nudge {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(3px); }
+}
+
+@media (max-width: 720px) {
+    .greeting,
+    .tagline {
+        font-size: var(--text-md);
+    }
 }
