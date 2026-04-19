@@ -1,0 +1,43 @@
+.pill {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.35rem 0.35rem 0.9rem;
+    z-index: 100;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: var(--weight-light);
+    color: var(--text);
+    font-feature-settings: 'tnum' 1;
+}
+
+.time,
+.date {
+    letter-spacing: var(--tracking-normal);
+    line-height: 1;
+}
+
+.sep {
+    color: var(--text-subtle);
+    line-height: 1;
+}
+
+.toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--accent-contrast);
+    box-shadow: var(--shadow-xl);
+    transition: background 220ms ease, color 220ms ease;
+}
+
+.toggle svg {
+    display: block;
+}
