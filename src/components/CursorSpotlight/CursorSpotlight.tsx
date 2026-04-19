@@ -54,7 +54,11 @@ function CursorSpotlight() {
         }
     }, [])
 
-    return <div ref={ref} className={styles.spotlight} aria-hidden />
+    return (
+        <div ref={ref} className={styles.spotlight} aria-hidden>
+            <div className={styles.pattern} />
+        </div>
+    )
 }
 
 export default CursorSpotlight

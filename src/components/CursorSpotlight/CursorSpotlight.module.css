@@ -3,8 +3,8 @@
     inset: 0;
     pointer-events: none;
     z-index: 1;
-    background:
-        radial-gradient(rgb(var(--ink) / 0.32) 1.2px, transparent 1.5px) 0 0 / 22px 22px;
+    opacity: 0;
+    transition: opacity 250ms ease;
     -webkit-mask: radial-gradient(
         circle 180px at var(--mx, -9999px) var(--my, -9999px),
         black 0%,
@@ -15,6 +15,16 @@
         black 0%,
         transparent 70%
     );
-    opacity: 0;
-    transition: opacity 250ms ease;
+}
+
+.pattern {
+    position: absolute;
+    inset: 0;
+    background-color: rgb(var(--ink) / 0.35);
+    -webkit-mask-image: url('./temple.svg');
+    mask-image: url('./temple.svg');
+    -webkit-mask-size: 90px 90px;
+    mask-size: 90px 90px;
+    -webkit-mask-repeat: repeat;
+    mask-repeat: repeat;
 }
