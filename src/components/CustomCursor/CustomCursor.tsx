@@ -26,6 +26,8 @@ function CustomCursor({ variant }: CustomCursorProps) {
         let ty = -9999
         let rx = -9999
         let ry = -9999
+        let scale = 1
+        let targetScale = 1
         let hovering = false
 
         const dot = dotRef.current
@@ -34,8 +36,10 @@ function CustomCursor({ variant }: CustomCursorProps) {
         const tick = () => {
             rx += (tx - rx) * 0.18
             ry += (ty - ry) * 0.18
+            targetScale = hovering ? 1.6 : 1
+            scale += (targetScale - scale) * 0.18
             if (dot) dot.style.transform = `translate3d(${tx}px, ${ty}px, 0) translate(-50%, -50%)`
-            if (ring) ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%) scale(${hovering ? 1.6 : 1})`
+            if (ring) ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%) scale(${scale})`
             raf = requestAnimationFrame(tick)
         }
 
