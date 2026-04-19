@@ -9,7 +9,9 @@ function App() {
     return (
         <>
             <Navbar current={view} onChange={setView} />
-            {view === 'portfolio' ? <PortfolioLayout /> : <ResumeLayout />}
+            <div key={view} className="view-fade">
+                {view === 'portfolio' ? <PortfolioLayout /> : <ResumeLayout />}
+            </div>
         </>
     )
 }
