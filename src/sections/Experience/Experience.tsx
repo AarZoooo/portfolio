@@ -1,4 +1,5 @@
 import type { Experience as ExperienceType } from '../../types/portfolio'
+import { highlightMetrics } from '../../utils/highlightMetrics'
 import styles from './Experience.module.css'
 
 interface ExperienceProps {
@@ -23,7 +24,7 @@ function Experience({ items }: ExperienceProps) {
 
                         <ul className={styles.bullets}>
                             {item.bullets.map((b, i) => (
-                                <li key={i} className={styles.bullet}>{b}</li>
+                                <li key={i} className={styles.bullet}>{highlightMetrics(b)}</li>
                             ))}
                         </ul>
 

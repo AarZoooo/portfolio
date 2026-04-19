@@ -59,6 +59,12 @@ a {
 
 /* Shape shortcuts that compose with .glass (or stand alone). */
 /* Container — centered, capped at --content-max. */
+/* Metric tokens inside prose — slightly bolder + full ink for emphasis. */
+.metric {
+    font-weight: var(--weight-medium);
+    color: var(--text);
+}
+
 .container {
     width: 100%;
     max-width: var(--content-max);
