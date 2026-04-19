@@ -34,7 +34,7 @@
     border-radius: 999px;
     background: var(--accent);
     color: var(--accent-contrast);
-    box-shadow: var(--shadow-xl);
+    box-shadow: var(--shadow-xl), var(--glow-md);
     transition: background 220ms ease, color 220ms ease;
 }
 
