@@ -36,6 +36,8 @@
   .center {
     grid-area: nav;
     justify-self: center;
+    gap: 0.9rem;
+    max-width: 100%;
   }
   .left {
     grid-area: left;
