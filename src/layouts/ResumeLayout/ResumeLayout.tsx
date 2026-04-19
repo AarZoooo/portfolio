@@ -5,7 +5,8 @@ import styles from './ResumeLayout.module.css'
 
 function ResumeLayout() {
     const d = data as PortfolioData
-    const src = assets.resume(d.personal.resume)
+    const base = assets.resume(d.personal.resume)
+    const src = base ? `${base}#toolbar=0&navpanes=0&scrollbar=0&view=FitH` : undefined
 
     return (
         <main className={`${styles.layout} container`}>
