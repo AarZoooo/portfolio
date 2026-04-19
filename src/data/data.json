@@ -11,6 +11,14 @@
         "avatar": "avatar",
         "summary": "Backend Software Engineer specialising in AI-driven systems and backend infrastructure, with production internship experience at PayPal and Rippling. At PayPal, built a LangGraph multi-agent system with Milvus that reduced ticket creation time by 92%; at Rippling, built backend frameworks and tooling now serving 560,000+ page saves/month across 78 countries."
     },
+    "hero": {
+        "taglines": [
+            "i build backend systems, and teach agents to handle the boring bits.",
+            "backend at heart. quietly nerding out on agents and retrieval.",
+            "mostly backend. sometimes ai. always shipping.",
+            "right now, stitching backends together with a little ai glue."
+        ]
+    },
     "experience": [
         {
             "company": "Rippling People Center Inc.",

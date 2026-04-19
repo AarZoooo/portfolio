@@ -11,7 +11,7 @@
 
 .greeting {
     margin: 0;
-    font-size: var(--text-lg);
+    font-size: var(--text-xl);
     font-weight: var(--weight-light);
     letter-spacing: var(--tracking-tight);
     line-height: var(--leading-snug);
@@ -24,7 +24,22 @@
 
 .tagline {
     margin: 0.75rem 0 0;
-    font-size: var(--text-lg);
+    font-size: var(--text-xl);
     font-weight: var(--weight-light);
     color: var(--text-secondary);
+    min-height: 1.5em;
+}
+
+.caret {
+    display: inline-block;
+    width: 0.55ch;
+    height: 1em;
+    margin-left: 2px;
+    vertical-align: -0.15em;
+    background: var(--text-secondary);
+    animation: caret-blink 1s steps(2, start) infinite;
+}
+
+@keyframes caret-blink {
+    to { visibility: hidden; }
 }

@@ -12,7 +12,7 @@ function PortfolioLayout() {
     const d = data as PortfolioData
     return (
         <main className={styles.layout}>
-            <Hero personal={d.personal} />
+            <Hero personal={d.personal} hero={d.hero} />
             <Experience items={d.experience} />
             <Skills skills={d.skills} />
             <Projects items={d.projects} />

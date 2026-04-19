@@ -52,8 +52,13 @@ export interface Skills {
     concepts: string[]
 }
 
+export interface Hero {
+    taglines: string[]
+}
+
 export interface PortfolioData {
     personal: Personal
+    hero: Hero
     experience: Experience[]
     education: Education[]
     projects: Project[]
