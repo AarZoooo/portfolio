@@ -39,7 +39,18 @@ function Experience({ heading, items }: ExperienceProps) {
                             ))}
                         </ul>
 
-                        <p className={styles.tech}>{item.tech.join(' · ')}</p>
+                        <ul className={styles.tech}>
+                            {item.tech.map((t) => {
+                                const slug = t.toLowerCase().replace(/\s+/g, '-')
+                                const logo = assets.techLogo(slug)
+                                return (
+                                    <li key={t} className={styles.techItem}>
+                                        {logo && <img src={logo} alt="" className={styles.techIcon} />}
+                                        <span>{t}</span>
+                                    </li>
+                                )
+                            })}
+                        </ul>
                     </article>
                 ))}
             </div>
