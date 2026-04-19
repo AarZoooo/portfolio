@@ -33,9 +33,15 @@ function Education({ heading, items }: EducationProps) {
                             <p className={styles.duration}>{item.duration}</p>
                         </header>
 
-                        {item.score && (
-                            <p className={styles.score}>{highlightMetrics(item.score)}</p>
+                        {item.highlights && item.highlights.length > 0 && (
+                            <ul className={styles.bullets}>
+                                {item.highlights.map((h, i) => (
+                                    <li key={i} className={styles.bullet}>{highlightMetrics(h)}</li>
+                                ))}
+                            </ul>
                         )}
+
+                        {item.score && <p className={styles.score}>{item.score}</p>}
                     </article>
                 ))}
             </div>

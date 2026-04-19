@@ -70,7 +70,10 @@
             "degree": "Bachelor of Engineering (B.E.), Computer Science",
             "duration": "July 2022 – June 2026 (Expected)",
             "score": "CGPA: 7.8 / 10",
-            "logo": "chandigarh-university"
+            "logo": "chandigarh-university",
+            "highlights": [
+                "Selected into a 240-student cohort from a batch of 6,000, trained separately for placements."
+            ]
         }
     ],
     "projects": [

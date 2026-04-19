@@ -70,6 +70,26 @@
     white-space: nowrap;
 }
 
+.bullets {
+    margin: 0;
+    padding-left: 1.25rem;
+    list-style: disc outside;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.bullet {
+    font-size: var(--text-base);
+    font-weight: var(--weight-light);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+}
+
+.bullet::marker {
+    color: var(--text-subtle);
+}
+
 .score {
     margin: 0;
     font-family: var(--font-mono);

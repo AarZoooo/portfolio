@@ -26,6 +26,7 @@ export interface Education {
     duration: string
     score: string
     logo: string
+    highlights?: string[]
 }
 
 export interface Project {
