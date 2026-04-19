@@ -61,24 +61,25 @@ a {
     border-radius: 4px;
 }
 
-/* Skip link — hidden until keyboard-focused. */
+/* Skip link — color-matched to bg until keyboard-focused. */
 .skip-link {
     position: fixed;
     top: 0.75rem;
     left: 0.75rem;
     padding: 0.5rem 0.9rem;
-    background: var(--accent);
-    color: var(--accent-contrast);
+    background: var(--bg);
+    color: var(--bg);
     font-family: var(--font-mono);
     font-size: var(--text-sm);
     border-radius: 6px;
     z-index: 1000;
-    transform: translateY(-150%);
-    transition: transform 200ms ease;
+    pointer-events: none;
 }
 
 .skip-link:focus {
-    transform: translateY(0);
+    background: var(--accent);
+    color: var(--accent-contrast);
+    pointer-events: auto;
 }
 
 /* Glass surface — tinted, saturated backdrop blur with edge + inner highlight.
