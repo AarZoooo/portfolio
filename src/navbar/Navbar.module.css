@@ -8,9 +8,6 @@
   align-items: center;
   padding: 0.35rem;
   z-index: 100;
-  background-image: var(--noise);
-  background-size: 160px 160px;
-  background-repeat: repeat;
 }
 
 .item {
