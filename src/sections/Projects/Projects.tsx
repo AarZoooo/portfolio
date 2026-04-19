@@ -18,17 +18,19 @@ function Projects({ heading, items }: ProjectsProps) {
                     <article key={item.name} className={styles.item}>
                         <header className={styles.head}>
                             <div className={styles.primary}>
-                                <p className={styles.name}>
-                                    {item.logo && assets.companyLogo(item.logo) && (
-                                        <img
-                                            src={assets.companyLogo(item.logo)}
-                                            alt=""
-                                            className={styles.logo}
-                                        />
-                                    )}
-                                    <span>{item.name}</span>
-                                </p>
-                                {item.context && <p className={styles.context}>{item.context}</p>}
+                                <p className={styles.name}>{item.name}</p>
+                                {item.context && (
+                                    <p className={styles.context}>
+                                        {item.logo && assets.companyLogo(item.logo) && (
+                                            <img
+                                                src={assets.companyLogo(item.logo)}
+                                                alt=""
+                                                className={styles.logo}
+                                            />
+                                        )}
+                                        <span>{item.context}</span>
+                                    </p>
+                                )}
                             </div>
                             <p className={styles.date}>{item.date}</p>
                         </header>
