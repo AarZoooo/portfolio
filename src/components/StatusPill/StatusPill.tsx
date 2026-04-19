@@ -38,6 +38,7 @@ function StatusPill() {
             <span className={styles.time}>{formatTime(now)}</span>
             <span className={styles.sep} aria-hidden>·</span>
             <span className={styles.date}>{formatDate(now)}</span>
+            <span className={styles.sep} aria-hidden>·</span>
             <button
                 type="button"
                 onClick={toggle}
