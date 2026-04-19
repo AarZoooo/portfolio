@@ -39,7 +39,14 @@ function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
     ids.current = links.map((l) => l.id)
 
     useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 4)
+        const onScroll = () => {
+            setScrolled(window.scrollY > 4)
+            const doc = document.documentElement
+            const atBottom = window.innerHeight + window.scrollY >= doc.scrollHeight - 4
+            if (atBottom && ids.current.length > 0) {
+                setActive(ids.current[ids.current.length - 1])
+            }
+        }
         window.addEventListener('scroll', onScroll, { passive: true })
         onScroll()
         return () => window.removeEventListener('scroll', onScroll)
