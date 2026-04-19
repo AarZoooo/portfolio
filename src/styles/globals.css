@@ -44,18 +44,9 @@ a {
     text-decoration: none;
 }
 
-/* Glass surface — transparent + backdrop blur + subtle shadow.
+/* Glass surface — tinted, saturated backdrop blur with edge + inner highlight.
    Shape-agnostic; combine with a radius utility or your own border-radius. */
 .glass {
-    background-color: transparent;
-    box-shadow: var(--shadow-sm);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-/* Experimental — "refined" glass, closer to real glassmorphism.
-   Adds: saturation boost, light tint, crisp edge border, inner highlight, layered shadow. */
-.glass-refined {
     background-color: rgb(var(--paper) / 0.55);
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
