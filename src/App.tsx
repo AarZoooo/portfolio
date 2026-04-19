@@ -32,6 +32,7 @@ function App() {
                 links={[
                     { id: 'experience', label: d.sections.experience },
                     { id: 'skills', label: d.sections.skills },
+                    { id: 'projects', label: d.sections.projects },
                     { id: 'education', label: d.sections.education },
                     { id: 'contact', label: d.sections.contact },
                 ]}
