@@ -8,8 +8,8 @@ interface HeroProps {
 function Hero({ personal }: HeroProps) {
     return (
         <section id="hero" className={styles.hero}>
-            {/* design TBD — personal: {personal.name} */}
-            {personal.name}
+            <h1 className={styles.greeting}>Hey, I'm {personal.name}</h1>
+            <p className={styles.tagline}>{personal.tagline}</p>
         </section>
     )
 }
