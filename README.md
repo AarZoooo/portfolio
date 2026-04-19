@@ -1,6 +1,6 @@
 # Portfolio - Aarju Pal
 
-Live: [portfolioaarju.vercel.app](https://portfolioaarju.vercel.app)
+Live: [aarju.vercel.app](https://aarju.vercel.app)
 
 A minimal monochrome portfolio site. Single page, scrolling sections.
 
