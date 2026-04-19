@@ -21,6 +21,6 @@
 .active {
   background: var(--accent);
   color: var(--accent-contrast);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-bold);
   box-shadow: var(--shadow-xl);
 }
