@@ -6,13 +6,12 @@
     min-height: 100vh;
 }
 
-.pdf {
+.doc {
     width: 100%;
     max-width: 900px;
-    aspect-ratio: 1 / 1.294;
     border: 1px solid var(--border);
     border-radius: 8px;
     box-shadow: var(--shadow-lg);
-    background: var(--bg);
-    display: block;
+    overflow: hidden;
+    line-height: 0;
 }
