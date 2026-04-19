@@ -90,6 +90,31 @@
     color: var(--text-subtle);
 }
 
+@media (max-width: 720px) {
+    .head {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "name name"
+            "degree date";
+        gap: 0.25rem 1rem;
+        align-items: baseline;
+    }
+    .primary {
+        display: contents;
+    }
+    .institution {
+        grid-area: name;
+    }
+    .degree {
+        grid-area: degree;
+    }
+    .duration {
+        grid-area: date;
+        justify-self: end;
+    }
+}
+
 .score {
     margin: 0;
     font-family: var(--font-mono);
