@@ -1,73 +1,55 @@
-# React + TypeScript + Vite
+# Portfolio — Aarju Pal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Live: [portfolioaarju.vercel.app](https://portfolioaarju.vercel.app)
 
-Currently, two official plugins are available:
+A minimal monochrome portfolio site. Single page, scrolling sections.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Stack
 
-## React Compiler
+- Vite + React + TypeScript
+- CSS Modules, custom design tokens
+- IBM Plex Sans / Mono (Google Fonts)
+- Deployed on Vercel
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Scripts
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install        # install deps
+npm run dev        # dev server (LAN-exposed)
+npm run build      # production build
+npm run preview    # preview production build locally
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Content
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+All copy, taglines, skills, experience, projects, and education live in [`src/data/data.json`](src/data/data.json). Edit freely — no code changes needed.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Design system
+
+Central tokens in [`src/styles/`](src/styles):
+
+- `tokens.css` — color, spacing, shadows, glow, layout
+- `typography.css` — font families, type scale, weights
+- `globals.css` — resets, utilities, skip link, `.glass`, `.container`
+
+Theme toggle (light/dark) lives in the navbar. Auto-detects system preference on first visit and persists choice.
+
+## Structure
+
 ```
+src/
+├── assets/          # logos, resume, avatar (with resolver)
+├── components/      # Footer, CustomCursor
+├── data/            # data.json (all content)
+├── hooks/           # useTheme, useTypewriter
+├── layouts/         # PortfolioLayout
+├── navbar/          # Navbar
+├── sections/        # Hero, Experience, Skills, Projects, Education, Contact
+├── styles/          # design tokens + globals
+├── types/           # TS interfaces mirroring data.json
+└── utils/           # highlightMetrics, smoothScroll
+```
+
+## Credits
+
+Typeset in IBM Plex. Logos from simpleicons + svgrepo. Built with React + Vite.
