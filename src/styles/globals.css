@@ -44,13 +44,10 @@ a {
     text-decoration: none;
 }
 
-/* Frosted pill surface — transparent + blur + subtle noise + shadow + pill radius.
+/* Frosted pill surface — transparent + blur + shadow + pill radius.
    Reusable container style for floating UI (navbar, toolbars, badges). */
 .pill-strong {
     background-color: transparent;
-    background-image: var(--noise);
-    background-size: 220px 220px;
-    background-repeat: repeat;
     box-shadow: var(--shadow-sm);
     backdrop-filter: blur(10px);
     border-radius: 999px;
