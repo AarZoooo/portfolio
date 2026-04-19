@@ -13,7 +13,7 @@ function PortfolioLayout() {
     return (
         <main className={`${styles.layout} container`}>
             <Hero personal={d.personal} hero={d.hero} />
-            <Experience items={d.experience} />
+            <Experience heading={d.sections.experience} items={d.experience} />
             <Skills skills={d.skills} />
             <Projects items={d.projects} />
             <Education items={d.education} />

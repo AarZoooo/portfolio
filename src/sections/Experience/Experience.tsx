@@ -4,13 +4,14 @@ import { highlightMetrics } from '../../utils/highlightMetrics'
 import styles from './Experience.module.css'
 
 interface ExperienceProps {
+    heading: string
     items: ExperienceType[]
 }
 
-function Experience({ items }: ExperienceProps) {
+function Experience({ heading, items }: ExperienceProps) {
     return (
         <section id="experience" className={styles.experience}>
-            <h2 className={styles.heading}>Experience</h2>
+            <h2 className={styles.heading}>{heading}</h2>
 
             <div className={styles.list}>
                 {items.map((item) => (

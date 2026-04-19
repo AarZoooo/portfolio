@@ -56,8 +56,17 @@ export interface Hero {
     taglines: string[]
 }
 
+export interface SectionHeadings {
+    experience: string
+    skills: string
+    projects: string
+    education: string
+    contact: string
+}
+
 export interface PortfolioData {
     personal: Personal
+    sections: SectionHeadings
     hero: Hero
     experience: Experience[]
     education: Education[]
