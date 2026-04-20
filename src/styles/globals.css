@@ -14,6 +14,7 @@ body {
 
 body {
     overflow-wrap: break-word;
+    isolation: isolate;
 }
 
 body {
