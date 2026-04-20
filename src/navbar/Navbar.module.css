@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgb(var(--paper));
+  background: rgb(var(--paper) / 0.15);
   transition: box-shadow 250ms ease, background 250ms ease;
 }
 
