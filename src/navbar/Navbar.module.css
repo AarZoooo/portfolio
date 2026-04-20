@@ -6,7 +6,6 @@
   z-index: 100;
   background: rgb(var(--paper) / 0.15);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   transition: box-shadow 250ms ease, background 250ms ease;
 }
 
