@@ -4,9 +4,9 @@
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgb(var(--paper) / 0.15);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgb(var(--paper) / 0.35);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
   isolation: isolate;
   transform: translateZ(0);
   will-change: backdrop-filter;
