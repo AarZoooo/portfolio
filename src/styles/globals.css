@@ -12,12 +12,7 @@ body {
     padding: 0;
 }
 
-html {
-    overflow-x: clip;
-}
-
 body {
-    overflow-x: clip;
     overflow-wrap: break-word;
 }
 
