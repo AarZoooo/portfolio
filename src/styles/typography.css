@@ -1,5 +1,5 @@
 /* Typography - IBM Plex Sans + IBM Plex Mono.
-   Weights loaded: 300 (light), 400 (regular), 600 (semibold). */
+   Weights loaded: 300 (light), 500 (medium), 700 (bold). */
 
 :root {
     --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;

@@ -6,12 +6,11 @@ import Skills from '../../sections/Skills/Skills'
 import Projects from '../../sections/Projects/Projects'
 import Education from '../../sections/Education/Education'
 import Contact from '../../sections/Contact/Contact'
-import styles from './PortfolioLayout.module.css'
 
 function PortfolioLayout() {
     const d = data as PortfolioData
     return (
-        <main id="main" className={`${styles.layout} container`}>
+        <main id="main" className="container">
             <Hero personal={d.personal} hero={d.hero} />
             <Experience heading={d.sections.experience} items={d.experience} />
             <Skills heading={d.sections.skills} skills={d.skills} />

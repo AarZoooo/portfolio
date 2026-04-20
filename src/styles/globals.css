@@ -13,16 +13,13 @@ body {
 }
 
 body {
-    overflow-wrap: break-word;
-}
-
-body {
     background: var(--bg);
     color: var(--text);
     font-family: var(--font-sans);
     font-weight: var(--weight-light);
     font-size: var(--text-base);
     line-height: var(--leading-normal);
+    overflow-wrap: break-word;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -48,7 +45,7 @@ a {
     text-decoration: none;
 }
 
-/* Keyboard focus - visible ring via box-shadow (doesn't disturb layout). */
+/* Keyboard focus - visible ring (doesn't disturb layout). */
 :focus { outline: none; }
 :focus-visible {
     outline: 2px solid var(--text);
@@ -56,7 +53,7 @@ a {
     border-radius: 4px;
 }
 
-/* Skip link - transparent until keyboard-focused. */
+/* Skip link - invisible until keyboard-focused. */
 .skip-link {
     position: fixed;
     top: 0.75rem;
@@ -78,26 +75,7 @@ a {
     pointer-events: auto;
 }
 
-/* Glass surface - tinted, saturated backdrop blur with edge + inner highlight.
-   Shape-agnostic; combine with a radius utility or your own border-radius. */
-.glass {
-    background-color: rgb(var(--ink) / 0.1);
-    backdrop-filter: blur(16px) saturate(180%);
-    border: 1px solid rgb(var(--ink) / 0.12);
-    box-shadow:
-        inset 0 1px 0 0 rgb(var(--paper) / 0.35),
-        inset 0 -1px 0 0 rgb(var(--ink) / 0.06),
-        var(--shadow-md);
-}
-
-/* Shape shortcuts that compose with .glass (or stand alone). */
 /* Container - centered, capped at --content-max. */
-/* Metric tokens inside prose - slightly bolder + full ink for emphasis. */
-.metric {
-    font-weight: var(--weight-medium);
-    color: var(--text);
-}
-
 .container {
     width: 100%;
     max-width: var(--content-max);
@@ -105,17 +83,8 @@ a {
     padding-inline: var(--content-gutter);
 }
 
-/* View transition - fades in on mount. Pair with a changing React key. */
-@keyframes view-fade-in {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+/* Metric - bolder + full ink inside otherwise muted prose. */
+.metric {
+    font-weight: var(--weight-medium);
+    color: var(--text);
 }
-
-.view-fade {
-    animation: view-fade-in 550ms ease both;
-}
-
-.pill { border-radius: 999px; }
-.rounded-sm { border-radius: 6px; }
-.rounded-md { border-radius: 12px; }
-.rounded-lg { border-radius: 20px; }
