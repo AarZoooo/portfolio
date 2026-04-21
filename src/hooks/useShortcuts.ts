@@ -27,14 +27,6 @@ import { useTheme } from './useTheme'
 export default function useShortcuts(sectionIds: string[]) {
     const { toggle: toggleTheme } = useTheme()
 
-    // Initialize paper mode attribute once.
-    useEffect(() => {
-        const root = document.documentElement
-        if (!root.hasAttribute('data-paper')) {
-            root.setAttribute('data-paper', 'on')
-        }
-    }, [])
-
     useEffect(() => {
         const root = document.documentElement
         const SEQUENCE_TIMEOUT = 600
