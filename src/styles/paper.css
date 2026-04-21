@@ -1,0 +1,75 @@
+/* Paper mode — editorial/print treatment, gated behind [data-paper="on"]
+   on the <html> element. Toggle with the 'p' key (see useShortcuts).
+   Keep everything that defines this branch's aesthetic in this file so it's
+   easy to review, extend, or remove. Works in light and dark themes. */
+
+/* ---- 1. Off-pure ink + paper ----------------------------------------- */
+/* Real ink and real paper absorb/scatter light — the endpoints never
+   land at pure #000 or #fff. Keep strictly monochrome (no hue shift):
+   pull ink off pure black and paper off pure white/black so the tones
+   read as printed, not rendered. */
+
+/* Light paper: near-white paper (barely off-pure), near-black ink
+   with a tiny blend into the bg. */
+:root[data-paper="on"] {
+    --ink: 20 20 20;
+    --paper: 250 250 250;
+}
+
+/* Dark paper: paper lifts a touch off pure black so the page reads as
+   a dark stock, not a void. Ink drops off pure white so it doesn't
+   glare — feels like muted pigment on matte card. */
+:root[theme="dark"][data-paper="on"] {
+    --ink: 224 224 224;
+    --paper: 22 22 22;
+}
+
+/* Footer follows the paper tokens so it reads as part of the same
+   printed page, not a separate pure-black/pure-white block punched in.
+   - Light paper: surface = ink, text = paper (dark block, paper-white
+     text — softened together).
+   - Dark paper: surface stays default pure black (slightly deeper than
+     the page's near-black paper, gives a subtle stripe); text follows
+     the page ink so it doesn't glare against the rest of the softened
+     type. */
+:root[data-paper="on"]:not([theme="dark"]) {
+    --surface-dark: var(--ink);
+    --on-surface-dark: var(--paper);
+}
+
+:root[theme="dark"][data-paper="on"] {
+    --on-surface-dark: var(--ink);
+}
+
+/* ---- 2. Paper grain --------------------------------------------------- */
+/* Fixed overlay with mix-blend-mode so the texture shows through both
+   background and ink (like fiber showing through printed letters).
+   Multiply darkens in light mode; screen lightens in dark mode. */
+:root[data-paper="on"] body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: var(--noise);
+    background-repeat: repeat;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: multiply;
+    opacity: 0.6;
+}
+
+/* Dark paper: invert the noise so the specks become light, then screen
+   against the near-black bg to lighten — otherwise dark specks on a
+   dark surface vanish mathematically (screen of black is black). */
+:root[theme="dark"][data-paper="on"] body::after {
+    mix-blend-mode: screen;
+    opacity: 0.35;
+    filter: invert(1);
+}
+
+/* ---- 3. Hairline rule lines between sections ------------------------- */
+/* Print-column-rule feel; a single hairline separates adjacent sections.
+   Hero has no top rule (it opens the page). */
+:root[data-paper="on"] main > section + section {
+    border-top: 1px solid rgb(var(--ink) / 0.12);
+}
+
