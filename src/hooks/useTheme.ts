@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useSyncExternalStore } from 'react'
 
 export type Theme = 'light' | 'dark'
 
@@ -11,27 +11,56 @@ function getInitial(): Theme {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
-export function useTheme(): { theme: Theme; toggle: () => void } {
-    const [theme, setTheme] = useState<Theme>(getInitial)
+/* ---- Module-level store ---------------------------------------------
+   Multiple components call useTheme() and must stay in sync (navbar
+   button + keyboard shortcut `t`). React's own `useSyncExternalStore`
+   is the correct primitive for this: one source of truth, React reads
+   and subscribes to it. */
 
-    useEffect(() => {
-        document.documentElement.setAttribute('theme', theme)
-        window.localStorage.setItem(STORAGE_KEY, theme)
-    }, [theme])
+type Listener = () => void
+const listeners = new Set<Listener>()
+let current: Theme = typeof window === 'undefined' ? 'light' : getInitial()
 
-    useEffect(() => {
-        const mq = window.matchMedia('(prefers-color-scheme: dark)')
-        const handler = (e: MediaQueryListEvent) => {
-            if (!window.localStorage.getItem(STORAGE_KEY)) {
-                setTheme(e.matches ? 'dark' : 'light')
-            }
+function setGlobalTheme(next: Theme) {
+    if (next === current) return
+    current = next
+    if (typeof document !== 'undefined') {
+        document.documentElement.setAttribute('theme', next)
+    }
+    if (typeof window !== 'undefined') {
+        window.localStorage.setItem(STORAGE_KEY, next)
+    }
+    listeners.forEach((l) => l())
+}
+
+// Apply the initial theme to the DOM once at module load, and follow OS
+// changes while no explicit preference is stored.
+if (typeof document !== 'undefined') {
+    document.documentElement.setAttribute('theme', current)
+}
+if (typeof window !== 'undefined') {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)')
+    mq.addEventListener('change', (e) => {
+        if (!window.localStorage.getItem(STORAGE_KEY)) {
+            setGlobalTheme(e.matches ? 'dark' : 'light')
         }
-        mq.addEventListener('change', handler)
-        return () => mq.removeEventListener('change', handler)
-    }, [])
+    })
+}
+
+const subscribe = (cb: Listener) => {
+    listeners.add(cb)
+    return () => {
+        listeners.delete(cb)
+    }
+}
+const getSnapshot = (): Theme => current
+const getServerSnapshot = (): Theme => 'light'
+
+export function useTheme(): { theme: Theme; toggle: () => void } {
+    const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 
     const toggle = useCallback(() => {
-        setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
+        setGlobalTheme(current === 'dark' ? 'light' : 'dark')
     }, [])
 
     return { theme, toggle }
