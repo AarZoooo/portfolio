@@ -2,7 +2,19 @@
    Single hue (ink on paper), expressed through alpha for every surface,
    text, border, and overlay use case. Dark mode flips ink <-> paper. */
 
+/* Declare --content-max as a typed custom property so it can transition.
+   Any element using max-width: var(--content-max) interpolates smoothly
+   between 1280px (wide) and 720px (narrow) when the w toggle flips. */
+@property --content-max {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 1280px;
+}
+
 :root {
+    /* Transition the width token itself so all consumers animate together. */
+    transition: --content-max 520ms cubic-bezier(0.32, 0.72, 0, 1);
+
     /* Base monochrome - used via rgb(var(--ink) / <alpha>) */
     --ink: 0 0 0;
     --paper: 255 255 255;
