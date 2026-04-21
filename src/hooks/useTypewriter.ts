@@ -7,23 +7,30 @@ interface Options {
     gapMs?: number
 }
 
-type Phase = 'typing' | 'holding' | 'deleting' | 'gap'
+// Two-phase machine — 'holding' collapses into the typing-complete branch
+// (hold timer fires, then flips to deleting) and 'gap' collapses into the
+// deleting-complete branch (gap timer fires, then advances index and
+// flips back to typing). Fewer phases, no synchronous setState in effect.
+type Phase = 'typing' | 'deleting'
+
+const prefersReducedMotion = (): boolean =>
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 export function useTypewriter(lines: string[], opts: Options = {}): string {
     const { typeMs = 55, deleteMs = 30, holdMs = 1800, gapMs = 400 } = opts
     const [index, setIndex] = useState(0)
-    const [text, setText] = useState('')
+    // Seed text from the first line directly when reduced-motion is on,
+    // so the effect body never needs to call setState synchronously just
+    // to establish the static-text case.
+    const [text, setText] = useState<string>(() =>
+        prefersReducedMotion() && lines[0] ? lines[0] : '',
+    )
     const [phase, setPhase] = useState<Phase>('typing')
 
     useEffect(() => {
         if (!lines.length) return
-        const reduced =
-            typeof window !== 'undefined' &&
-            window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        if (reduced) {
-            setText(lines[0])
-            return
-        }
+        if (prefersReducedMotion()) return
 
         const current = lines[index % lines.length]
         let t: number | undefined
@@ -35,10 +42,9 @@ export function useTypewriter(lines: string[], opts: Options = {}): string {
                     typeMs,
                 )
             } else {
-                setPhase('holding')
+                // Fully typed — hold, then flip to deleting.
+                t = window.setTimeout(() => setPhase('deleting'), holdMs)
             }
-        } else if (phase === 'holding') {
-            t = window.setTimeout(() => setPhase('deleting'), holdMs)
         } else if (phase === 'deleting') {
             if (text.length > 0) {
                 t = window.setTimeout(
@@ -46,13 +52,12 @@ export function useTypewriter(lines: string[], opts: Options = {}): string {
                     deleteMs,
                 )
             } else {
-                setPhase('gap')
+                // Fully deleted — gap, then advance to next line.
+                t = window.setTimeout(() => {
+                    setIndex((i) => i + 1)
+                    setPhase('typing')
+                }, gapMs)
             }
-        } else if (phase === 'gap') {
-            t = window.setTimeout(() => {
-                setIndex((i) => i + 1)
-                setPhase('typing')
-            }, gapMs)
         }
 
         return () => {
