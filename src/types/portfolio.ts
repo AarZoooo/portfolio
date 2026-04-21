@@ -16,7 +16,11 @@ export interface Experience {
     role: string
     duration: string
     logo: string
-    bullets: string[]
+    /** Short one-liners shown in the collapsed card. */
+    summary: string[]
+    /** Self-contained paragraphs shown in the expanded view; replaces
+     *  the summary when open. Optional — absence = no expand toggle. */
+    detail?: string[]
     tech: string[]
 }
 
@@ -36,7 +40,10 @@ export interface Project {
     logo: string
     github: string
     live: string
-    bullets: string[]
+    /** Short one-liners shown in the collapsed card. */
+    summary: string[]
+    /** Self-contained paragraphs shown when expanded; replaces summary. */
+    detail?: string[]
     tech: string[]
 }
 
@@ -55,6 +62,7 @@ export interface Skills {
 
 export interface Hero {
     taglines: string[]
+    scrollHints: string[]
 }
 
 export interface Footer {

@@ -73,20 +73,15 @@
     color: var(--text);
 }
 
-.scrollHint span {
-    animation: scroll-nudge 1.8s ease-in-out infinite;
+.scrollHint strong {
+    font-weight: var(--weight-medium);
+    color: var(--text);
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .scrollHint span,
     .caret {
         animation: none;
     }
-}
-
-@keyframes scroll-nudge {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(3px); }
 }
 
 @media (max-width: 900px) {

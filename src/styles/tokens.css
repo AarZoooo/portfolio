@@ -2,7 +2,19 @@
    Single hue (ink on paper), expressed through alpha for every surface,
    text, border, and overlay use case. Dark mode flips ink <-> paper. */
 
+/* Declare --content-max as a typed custom property so it can transition.
+   Any element using max-width: var(--content-max) interpolates smoothly
+   between 1280px (wide) and 720px (narrow) when the w toggle flips. */
+@property --content-max {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 1280px;
+}
+
 :root {
+    /* Transition the width token itself so all consumers animate together. */
+    transition: --content-max 520ms cubic-bezier(0.32, 0.72, 0, 1);
+
     /* Base monochrome - used via rgb(var(--ink) / <alpha>) */
     --ink: 0 0 0;
     --paper: 255 255 255;
@@ -20,25 +32,35 @@
     --accent: rgb(var(--ink));
     --accent-contrast: rgb(var(--paper));
 
+    /* Theme-invariant dark surface (footer). Stays dark regardless of theme;
+       paper mode retints it to warm ink so it reads as one printed block.
+       Space-separated channels so it composes with rgb(... / alpha). */
+    --surface-dark: 0 0 0;
+    --on-surface-dark: 255 255 255;
+
     /* Shadows - always cast dark, regardless of theme */
     --shadow-sm: 0 2px 6px -1px rgb(0 0 0 / 0.10);
     --shadow-xl: 0 14px 32px -8px rgb(0 0 0 / 0.45);
-
-    /* Glow - theme-aware halo for inverted elements (accent-colored emission) */
-    --glow-md: 0 0 20px 2px rgb(var(--ink) / 0.22);
 
     /* Monochrome filter - forces any colored logo to current ink */
     --mono-logo: grayscale(1) brightness(0) contrast(1);
 
     /* Layout */
-    --content-max: 1280px;
+    --content-max-wide: 1280px;
+    --content-max: var(--content-max-wide);
     --content-gutter: 1.5rem;
 
-    /* Noise texture - reserved for future use */
-    --noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='1' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    /* Paper grain — single-layer fractalNoise at fine frequency.
+       Anisotropic baseFrequency (X != Y) gives a slight directional bias
+       like pressed pulp fibers. Multi-octave adds natural sub-frequency
+       variation without creating visible macro-patches. 400px tile to
+       reduce perceivable repeat. */
+    --noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.5 1.35' numOctaves='2' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.22 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
 
 :root[theme="dark"] {
+    /* Dark mode stays pure monochrome - paper treatment is light-only for now.
+       TODO: revisit dark-mode paper aesthetic (black paper / white ink) later. */
     --ink: 255 255 255;
     --paper: 0 0 0;
     --mono-logo: grayscale(1) brightness(0) invert(1);

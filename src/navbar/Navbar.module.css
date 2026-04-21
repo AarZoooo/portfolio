@@ -9,8 +9,21 @@
   transition: box-shadow 250ms ease, background 250ms ease;
 }
 
+/* Paper mode: drop the glass blur for a flat printed-header feel. */
+:global([data-paper="on"]) .bar {
+  background: var(--bg);
+  backdrop-filter: none;
+}
+
 .bar.scrolled {
   box-shadow: var(--shadow-sm);
+}
+
+/* Dark + paper: default shadow alpha is too light to read against the
+   already-dark paper bg. Deepen the shadow (still pure black) so it's
+   actually perceivable as a dropped edge. */
+:global([theme="dark"][data-paper="on"]) .bar.scrolled {
+  box-shadow: 0 3px 10px -3px rgb(0 0 0 / 0.35);
 }
 
 .inner {
@@ -168,6 +181,17 @@
   }
 }
 
+/* Narrow mode: long labels won't fit in the tighter container.
+   Mobile already forces narrow off (see modes.css), so this only
+   matters on desktop with narrow toggled on. */
+:global([data-width="narrow"]) .labelLong {
+  display: none;
+}
+
+:global([data-width="narrow"]) .labelShort {
+  display: inline;
+}
+
 .right {
   display: flex;
   align-items: center;
@@ -190,6 +214,21 @@
   line-height: 1;
 }
 
+/* Hide the date (and the separator after it) on mobile and in narrow
+   mode — time + toggle are enough; date is the first thing to drop when
+   horizontal space is tight. */
+@media (max-width: 900px) {
+  .date,
+  .date + .sep {
+    display: none;
+  }
+}
+
+:global([data-width="narrow"]) .date,
+:global([data-width="narrow"]) .date + .sep {
+  display: none;
+}
+
 .toggle {
   display: inline-flex;
   align-items: center;
@@ -199,7 +238,7 @@
   border-radius: 999px;
   background: var(--accent);
   color: var(--accent-contrast);
-  box-shadow: var(--shadow-xl), var(--glow-md);
+  box-shadow: var(--shadow-xl);
   transition: background 220ms ease, color 220ms ease;
 }
 
