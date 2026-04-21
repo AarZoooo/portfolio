@@ -9,8 +9,21 @@
   transition: box-shadow 250ms ease, background 250ms ease;
 }
 
+/* Paper mode: drop the glass blur for a flat printed-header feel. */
+:global([data-paper="on"]) .bar {
+  background: var(--bg);
+  backdrop-filter: none;
+}
+
 .bar.scrolled {
   box-shadow: var(--shadow-sm);
+}
+
+/* Dark + paper: default shadow alpha is too light to read against the
+   already-dark paper bg. Deepen the shadow (still pure black) so it's
+   actually perceivable as a dropped edge. */
+:global([theme="dark"][data-paper="on"]) .bar.scrolled {
+  box-shadow: 0 3px 10px -3px rgb(0 0 0 / 0.35);
 }
 
 .inner {
@@ -225,7 +238,7 @@
   border-radius: 999px;
   background: var(--accent);
   color: var(--accent-contrast);
-  box-shadow: var(--shadow-xl), var(--glow-md);
+  box-shadow: var(--shadow-xl);
   transition: background 220ms ease, color 220ms ease;
 }
 
