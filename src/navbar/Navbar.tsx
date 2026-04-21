@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { assets } from '../assets'
 import { smoothScrollToId } from '../utils/smoothScroll'
@@ -36,22 +36,21 @@ function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
     const [active, setActive] = useState<string | null>(null)
     const { theme, toggle } = useTheme()
     const resumeUrl = assets.resume(resumeKey)
-    const ids = useRef(links.map((l) => l.id))
-    ids.current = links.map((l) => l.id)
 
     useEffect(() => {
+        const ids = links.map((l) => l.id)
         const onScroll = () => {
             setScrolled(window.scrollY > 4)
             const doc = document.documentElement
             const atBottom = window.innerHeight + window.scrollY >= doc.scrollHeight - 4
-            if (atBottom && ids.current.length > 0) {
-                setActive(ids.current[ids.current.length - 1])
+            if (atBottom && ids.length > 0) {
+                setActive(ids[ids.length - 1])
             }
         }
         window.addEventListener('scroll', onScroll, { passive: true })
         onScroll()
         return () => window.removeEventListener('scroll', onScroll)
-    }, [])
+    }, [links])
 
     useEffect(() => {
         let interval: number | undefined
@@ -68,7 +67,6 @@ function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
     }, [])
 
     useEffect(() => {
-        const observed: HTMLElement[] = []
         const observer = new IntersectionObserver(
             (entries) => {
                 const visible = entries
@@ -78,15 +76,12 @@ function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
             },
             { rootMargin: '-40% 0px -50% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] },
         )
-        for (const id of ids.current) {
-            const el = document.getElementById(id)
-            if (el) {
-                observer.observe(el)
-                observed.push(el)
-            }
+        for (const link of links) {
+            const el = document.getElementById(link.id)
+            if (el) observer.observe(el)
         }
         return () => observer.disconnect()
-    }, [])
+    }, [links])
 
     const scrollTo = (id: string) => smoothScrollToId(id, 900, 80)
 
