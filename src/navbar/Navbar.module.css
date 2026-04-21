@@ -168,6 +168,17 @@
   }
 }
 
+/* Narrow mode: long labels won't fit in the tighter container.
+   Mobile already forces narrow off (see modes.css), so this only
+   matters on desktop with narrow toggled on. */
+:global([data-width="narrow"]) .labelLong {
+  display: none;
+}
+
+:global([data-width="narrow"]) .labelShort {
+  display: inline;
+}
+
 .right {
   display: flex;
   align-items: center;
@@ -188,6 +199,21 @@
 .sep {
   color: var(--text-subtle);
   line-height: 1;
+}
+
+/* Hide the date (and the separator after it) on mobile and in narrow
+   mode — time + toggle are enough; date is the first thing to drop when
+   horizontal space is tight. */
+@media (max-width: 900px) {
+  .date,
+  .date + .sep {
+    display: none;
+  }
+}
+
+:global([data-width="narrow"]) .date,
+:global([data-width="narrow"]) .date + .sep {
+  display: none;
 }
 
 .toggle {
