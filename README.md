@@ -28,7 +28,7 @@ All copy, taglines, skills, experience, projects, and education live in [`src/da
 
 Central tokens in [`src/styles/`](src/styles):
 
-- `tokens.css` - color, spacing, shadows, glow, layout
+- `tokens.css` - color, spacing, shadows, layout
 - `typography.css` - font families, type scale, weights
 - `globals.css` - resets, utilities, skip link, `.glass`, `.container`
 
