@@ -50,6 +50,20 @@
             "Backend at heart. Agent-curious.",
             "Mostly backend. Sometimes AI. Always shipping.",
             "Stitching backends with a bit of AI glue."
+        ],
+        "scrollHints": [
+            "scroll",
+            "scroll",
+            "scroll",
+            "scroll",
+            "scroll",
+            "scroll",
+            "scroll",
+            "Why don't you **t**oggle the theme?",
+            "You might want to change **w**idth",
+            "might not need the mouse here",
+            "vim folks are welcome (sorry emacs)",
+            "**p**aper might feel nice"
         ]
     },
     "experience": [

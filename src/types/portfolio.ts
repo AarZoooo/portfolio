@@ -55,6 +55,7 @@ export interface Skills {
 
 export interface Hero {
     taglines: string[]
+    scrollHints: string[]
 }
 
 export interface Footer {
