@@ -46,11 +46,14 @@
     },
     "hero": {
         "taglines": [
-            "Agentic Backend Engineer",
-            "Born to backend, forced to prompt",
+            "A Backend Engineer",
+            "An Agentic Backend Engineer",
+            "A Software Engineer",
+            "An Engineer, mostly Backend",
+            "A vim user by default",
             "Stitching backends with AI glue",
-            "Engineer, not a vibe",
-            "Agents run. Backend endures."
+            "Born to backend, forced to prompt",
+            "Raised on REST, now writing prompts"
         ],
         "scrollHints": [
             "scroll",
