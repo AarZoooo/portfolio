@@ -1,0 +1,24 @@
+/* Reveal — fades content in once when it enters the viewport.
+   Tiny translate so it feels like arrival, not appearance. */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+        opacity 520ms ease-out,
+        transform 520ms ease-out;
+    will-change: opacity, transform;
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}

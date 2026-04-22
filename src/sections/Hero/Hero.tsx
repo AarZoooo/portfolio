@@ -1,6 +1,5 @@
 import { Fragment, useState } from 'react'
 import type { Personal, Hero as HeroContent } from '../../types/portfolio'
-import { useTypewriter } from '../../hooks/useTypewriter'
 import { smoothScrollToId } from '../../utils/smoothScroll'
 import styles from './Hero.module.css'
 
@@ -18,23 +17,17 @@ function renderHint(hint: string) {
     )
 }
 
-function Hero({ personal, hero }: HeroProps) {
-    const typed = useTypewriter(hero.taglines, {
-        typeMs: 35,
-        deleteMs: 20,
-        holdMs: 2600,
-        gapMs: 450,
-    })
+function pickRandom<T>(pool: T[], fallback: T): T {
+    if (!pool?.length) return fallback
+    return pool[Math.floor(Math.random() * pool.length)]
+}
 
-    // Pick one scroll hint per page load. Most pool entries are plain "scroll";
-    // occasional cheeky variants tease the keyboard easter eggs without
-    // advertising them. useState lazy init runs once on mount — the
-    // lint-disallowed Math.random lives outside render purity.
-    const [hint] = useState<string>(() => {
-        const pool = hero.scrollHints
-        if (!pool?.length) return 'scroll'
-        return pool[Math.floor(Math.random() * pool.length)]
-    })
+function Hero({ personal, hero }: HeroProps) {
+    // Both tagline and scroll hint pick once per page load. Static
+    // during the visit; each refresh rolls fresh — matches the footer
+    // pattern so the site's rotating bits all fire on the same cadence.
+    const [tagline] = useState<string>(() => pickRandom(hero.taglines, ''))
+    const [hint] = useState<string>(() => pickRandom(hero.scrollHints, 'scroll'))
 
     const scrollToNext = () => smoothScrollToId('experience', 900, 80)
 
@@ -44,10 +37,7 @@ function Hero({ personal, hero }: HeroProps) {
                 <h1 className={styles.greeting}>
                     Hey, I'm <span className={styles.name}>{personal.name}</span>
                 </h1>
-                <p className={styles.tagline}>
-                    {typed}
-                    <span className={styles.caret} aria-hidden />
-                </p>
+                <p className={styles.tagline}>{tagline}</p>
             </div>
 
             <button type="button" onClick={scrollToNext} className={styles.scrollHint}>
