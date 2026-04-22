@@ -42,7 +42,7 @@ function Hero({ personal, hero }: HeroProps) {
         <section id="hero" className={styles.hero}>
             <div className={styles.center}>
                 <h1 className={styles.greeting}>
-                    Hey, I'm <span className={styles.name}>{personal.name}</span>
+                    Hey, I'm <span className={styles.name}>{personal.name}</span>.
                 </h1>
                 <p className={styles.tagline}>
                     {typed}
