@@ -60,8 +60,8 @@
 }
 
 :root[theme="dark"] {
-    /* Dark mode stays pure monochrome - paper treatment is light-only for now.
-       TODO: revisit dark-mode paper aesthetic (black paper / white ink) later. */
+    /* Pure monochrome: white ink on black paper. Paper mode softens
+       both endpoints and adds grain (see paper.css). */
     --ink: 255 255 255;
     --paper: 0 0 0;
     --mono-logo: grayscale(1) brightness(0) invert(1);

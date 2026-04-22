@@ -1,31 +1,13 @@
 import { useState } from 'react'
 import type { Experience as ExperienceType } from '../../types/portfolio'
 import { assets } from '../../assets'
-import { highlightMetrics } from '../../utils/highlightMetrics'
+import { techLine, renderParas } from '../../utils/workItem'
 import Expandable from '../../components/Expandable/Expandable'
 import styles from './Experience.module.css'
 
 interface ExperienceProps {
     heading: string
     items: ExperienceType[]
-}
-
-const SHORT_TECH = 2
-
-function techLine(tech: string[], open: boolean): string {
-    if (open || tech.length <= SHORT_TECH) return tech.join(' · ')
-    const shown = tech.slice(0, SHORT_TECH).join(' · ')
-    return `${shown} · +${tech.length - SHORT_TECH} more`
-}
-
-function renderParas(paras: string[], cls: string) {
-    return (
-        <div className={cls}>
-            {paras.map((p, i) => (
-                <p key={i} className={styles.bullet}>{highlightMetrics(p)}</p>
-            ))}
-        </div>
-    )
 }
 
 function Item({ item }: { item: ExperienceType }) {
@@ -58,7 +40,7 @@ function Item({ item }: { item: ExperienceType }) {
             <article className={styles.item}>
                 {head}
                 <div className={styles.plainBody}>
-                    {renderParas(item.summary, styles.bullets)}
+                    {renderParas(item.summary, styles.bullets, styles.bullet)}
                     {after}
                 </div>
             </article>
@@ -71,8 +53,8 @@ function Item({ item }: { item: ExperienceType }) {
                 isOpen={open}
                 onToggle={() => setOpen((v) => !v)}
                 head={head}
-                short={renderParas(item.summary, styles.bullets)}
-                full={renderParas(item.detail!, styles.bullets)}
+                short={renderParas(item.summary, styles.bullets, styles.bullet)}
+                full={renderParas(item.detail!, styles.bullets, styles.bullet)}
                 after={after}
             />
         </article>

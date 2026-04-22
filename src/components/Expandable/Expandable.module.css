@@ -7,8 +7,6 @@
     flex-direction: column;
 }
 
-.head {}
-
 .rail {
     position: relative;
     padding-left: 1.1rem;
@@ -36,14 +34,9 @@
     transition: max-height 560ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-.viewInner {
-    opacity: 0;
-    transition: opacity 500ms ease;
-}
-
 /* Active view is opaque; inactive is transparent. Entering view waits
-   for the container to open before fading in, so content doesn't ghost
-   across. */
+   for the container to grow (280ms delay) so content doesn't ghost
+   across during the max-height animation; outgoing view fades fast. */
 .wrap .viewWrap:nth-child(1) .viewInner {
     opacity: 1;
     transition: opacity 500ms ease 280ms;
