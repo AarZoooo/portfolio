@@ -22,19 +22,21 @@
 }
 
 /* Paper mode: drop the glass blur for a flat printed-header feel, and
-   paint the same grain on the navbar's own background so it reads as
-   part of the same paper stock. Body's grain sits behind the navbar
-   (opaque bar covers it), so the navbar has its own. */
+   paint the same grain via a pseudo-element (alpha composite only —
+   no blend mode — so it stays cheap during width animations). */
 :global([data-paper="on"]) .bar {
-  background-color: var(--bg);
-  background-image: var(--noise);
-  background-repeat: repeat;
-  background-blend-mode: multiply;
+  background: var(--bg);
   backdrop-filter: none;
+  position: fixed; /* already fixed; kept explicit for pseudo positioning */
 }
 
-:global([theme="dark"][data-paper="on"]) .bar {
-  background-blend-mode: screen;
+:global([data-paper="on"]) .bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--noise);
+  background-repeat: repeat;
+  pointer-events: none;
 }
 
 .bar.scrolled {

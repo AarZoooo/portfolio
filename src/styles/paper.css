@@ -51,32 +51,33 @@
    User testing: grain reads the same whether it's above or below text,
    so moving it down costs no visible fidelity. */
 :root[data-paper="on"] body {
+    position: relative;
+}
+
+/* Grain overlay as an absolutely-positioned pseudo on body, not a
+   background-image on body itself. No blend mode — alpha compositing
+   only (standard GPU path, way cheaper than mix-blend-mode or
+   background-blend-mode during animation).
+   will-change: transform goes on the PSEUDO, not on body — promotes
+   just the grain to its own compositor layer. Body doesn't get a
+   containing block, so the navbar's position: fixed still pins to
+   viewport. Content reflows on its own layer without invalidating
+   the grain's cached paint. */
+:root[data-paper="on"] body::after {
+    content: "";
+    position: absolute;
+    inset: 0;
     background-image: var(--noise);
     background-repeat: repeat;
-    background-blend-mode: multiply;
-    /* Viewport-fixed attachment: the grain is anchored to the viewport
-       and doesn't reposition when body content reflows. Much cheaper
-       during --content-max width animations — the blended bg paints
-       once and doesn't re-compute when content above shifts. Small
-       sacrifice: the grain no longer scrolls with content, but the
-       difference is barely perceptible since the grain is uniform
-       noise, not structured artwork. */
-    background-attachment: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    will-change: transform;
 }
 
-/* Dark paper: swap in a light-speck noise and use screen blend so the
-   specks lighten the near-black paper. Dark specks on dark paper would
-   vanish mathematically (screen of black is black); a separate SVG
-   with inverted RGB keeps the grain visible without a costly filter. */
+/* Dark paper: swap in a light-speck noise SVG. No blend mode needed;
+   alpha compositing light specks over dark bg lightens naturally. */
 :root[theme="dark"][data-paper="on"] {
-    /* Lower alpha (0.10 vs light's 0.22): white specks against near-
-       black paper read much brighter per pixel than dark specks do
-       against near-white, so the same alpha would feel aggressive. */
     --noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.5 1.35' numOctaves='2' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.10 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-}
-
-:root[theme="dark"][data-paper="on"] body {
-    background-blend-mode: screen;
 }
 
 /* ---- 3. Hairline rule lines between sections ------------------------- */
