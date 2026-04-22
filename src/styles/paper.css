@@ -42,12 +42,18 @@
 }
 
 /* ---- 2. Paper grain --------------------------------------------------- */
-/* Fixed overlay with mix-blend-mode so the texture shows through both
-   background and ink (like fiber showing through printed letters).
-   Multiply darkens in light mode; screen lightens in dark mode. */
+/* Absolute overlay on body (not fixed to viewport) so the texture scrolls
+   with the content — paper stays stuck to its text instead of the grain
+   sliding under a static window. Blend mode keeps the fiber showing
+   through both background and ink. Multiply in light, screen + invert
+   in dark (dark specks on dark surface would vanish mathematically). */
+:root[data-paper="on"] body {
+    position: relative;
+}
+
 :root[data-paper="on"] body::after {
     content: "";
-    position: fixed;
+    position: absolute;
     inset: 0;
     background-image: var(--noise);
     background-repeat: repeat;

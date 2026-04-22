@@ -29,6 +29,23 @@
     transition: width 220ms ease, height 220ms ease;
 }
 
+/* Paper mode: swap the digital difference-blend cursor for direct ink
+   on paper. Color is the page ink (monochrome-aware per theme), no
+   blend tricks — reads as a printed mark, not a VFX overlay. */
+:global([data-paper="on"]) .dot,
+:global([data-paper="on"]) .ring {
+    mix-blend-mode: normal;
+}
+
+:global([data-paper="on"]) .dot {
+    background: var(--text);
+}
+
+:global([data-paper="on"]) .ring {
+    background: transparent;
+    border-color: var(--text-muted);
+}
+
 @media (hover: none) {
     .dot,
     .ring {
