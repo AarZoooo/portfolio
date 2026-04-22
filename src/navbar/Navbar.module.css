@@ -7,6 +7,18 @@
   background: rgb(var(--paper) / 0.15);
   backdrop-filter: blur(12px);
   transition: box-shadow 250ms ease, background 250ms ease;
+  animation: navbar-in 520ms ease-out both;
+}
+
+/* Opacity-only fade — a translate would create a new containing block
+   and break position: fixed. */
+@keyframes navbar-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar { animation: none; }
 }
 
 /* Paper mode: drop the glass blur for a flat printed-header feel. */
