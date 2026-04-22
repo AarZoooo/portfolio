@@ -106,14 +106,13 @@ function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
 
     const onResumeTouchStart = () => {
         longPressFired.current = false
-        // 400ms beats Android's ~500ms native long-press trigger, so our
-        // haptic is the only pulse. Otherwise the OS fires its own after
-        // ours and the user feels a double-pulse.
+        // Android fires a native long-press haptic that can't be
+        // suppressed from JS; piling navigator.vibrate on top just
+        // produces a double-pulse. Let the OS's haptic be the signal.
         longPressTimer.current = window.setTimeout(() => {
             togglePaper()
-            navigator.vibrate?.(15)
             longPressFired.current = true
-        }, 400)
+        }, 500)
     }
 
     const onResumeTouchEnd = () => {
