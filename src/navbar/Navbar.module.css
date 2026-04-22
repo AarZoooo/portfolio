@@ -110,6 +110,10 @@
   gap: 0;
   justify-content: flex-start;
   overflow: hidden;
+  /* Suppress iOS long-press context menu ("Open Link", "Save Link"...)
+     so long-press can trigger the paper-mode easter egg instead. */
+  -webkit-touch-callout: none;
+  user-select: none;
 }
 
 .resumeIcon {

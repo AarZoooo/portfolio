@@ -1,8 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { assets } from '../assets'
 import { smoothScrollToId } from '../utils/smoothScroll'
 import styles from './Navbar.module.css'
+
+/** Toggle the root data-paper attribute (same behavior as the `p` key). */
+function togglePaper() {
+    const root = document.documentElement
+    const next = root.getAttribute('data-paper') === 'on' ? 'off' : 'on'
+    root.setAttribute('data-paper', next)
+}
 
 interface NavLink {
     id: string
@@ -91,6 +98,37 @@ function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
 
     const scrollTo = (id: string) => smoothScrollToId(id, 900, 80)
 
+    // Long-press on the resume button toggles paper mode — mobile's
+    // equivalent of the `p` keyboard shortcut. Icon looks like a piece
+    // of paper, so the gesture is naturally thematic.
+    const longPressTimer = useRef<number | null>(null)
+    const longPressFired = useRef(false)
+
+    const onResumeTouchStart = () => {
+        longPressFired.current = false
+        longPressTimer.current = window.setTimeout(() => {
+            togglePaper()
+            navigator.vibrate?.(15)
+            longPressFired.current = true
+        }, 500)
+    }
+
+    const onResumeTouchEnd = () => {
+        if (longPressTimer.current !== null) {
+            window.clearTimeout(longPressTimer.current)
+            longPressTimer.current = null
+        }
+    }
+
+    const onResumeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        // If long-press already fired, suppress the link navigation
+        // that follows the touchend synthetic click.
+        if (longPressFired.current) {
+            e.preventDefault()
+            longPressFired.current = false
+        }
+    }
+
     return (
         <header className={`${styles.bar} ${scrolled ? styles.scrolled : ''}`}>
             <div className={`${styles.inner} container`}>
@@ -106,7 +144,19 @@ function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
                         </svg>
                     </a>
                     {resumeUrl && (
-                        <a href={resumeUrl} target="_blank" rel="noreferrer" aria-label="Resume" className={`${styles.iconBtn} ${styles.resume}`}>
+                        <a
+                            href={resumeUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label="Resume"
+                            className={`${styles.iconBtn} ${styles.resume}`}
+                            onTouchStart={onResumeTouchStart}
+                            onTouchEnd={onResumeTouchEnd}
+                            onTouchCancel={onResumeTouchEnd}
+                            onTouchMove={onResumeTouchEnd}
+                            onClick={onResumeClick}
+                            onContextMenu={(e) => e.preventDefault()}
+                        >
                             <span className={styles.resumeIcon}>
                                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                                     <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
