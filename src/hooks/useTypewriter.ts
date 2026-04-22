@@ -17,15 +17,30 @@ const prefersReducedMotion = (): boolean =>
     typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+/** Pick a random index from [0, count) that isn't `exclude`. */
+function randomIndex(count: number, exclude: number): number {
+    if (count <= 1) return 0
+    let next = exclude
+    while (next === exclude) next = Math.floor(Math.random() * count)
+    return next
+}
+
 export function useTypewriter(lines: string[], opts: Options = {}): string {
     const { typeMs = 55, deleteMs = 30, holdMs = 1800, gapMs = 400 } = opts
-    const [index, setIndex] = useState(0)
-    // Seed text from the first line directly when reduced-motion is on,
-    // so the effect body never needs to call setState synchronously just
-    // to establish the static-text case.
-    const [text, setText] = useState<string>(() =>
-        prefersReducedMotion() && lines[0] ? lines[0] : '',
+    // Seed the starting index randomly so refreshes don't always open with
+    // the same line. Lazy init keeps Math.random outside the render body.
+    const [index, setIndex] = useState<number>(() =>
+        lines.length ? Math.floor(Math.random() * lines.length) : 0,
     )
+    // Seed text with a random static line when reduced-motion is on;
+    // otherwise start empty and let the effect type it out.
+    const [text, setText] = useState<string>(() => {
+        if (!lines.length) return ''
+        if (prefersReducedMotion()) {
+            return lines[Math.floor(Math.random() * lines.length)]
+        }
+        return ''
+    })
     const [phase, setPhase] = useState<Phase>('typing')
 
     useEffect(() => {
@@ -52,9 +67,10 @@ export function useTypewriter(lines: string[], opts: Options = {}): string {
                     deleteMs,
                 )
             } else {
-                // Fully deleted — gap, then advance to next line.
+                // Fully deleted — gap, then pick a new random line that
+                // isn't the one we just finished.
                 t = window.setTimeout(() => {
-                    setIndex((i) => i + 1)
+                    setIndex((i) => randomIndex(lines.length, i))
                     setPhase('typing')
                 }, gapMs)
             }
