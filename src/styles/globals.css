@@ -12,6 +12,14 @@ body {
     padding: 0;
 }
 
+/* Anything below the body — overscroll rubber-band, sub-pixel gap
+   under the last element — falls back to this color. Match the
+   footer's dark surface so the page ends on black, not a flash of
+   white. Paper mode retints --surface-dark via its token override. */
+html {
+    background: rgb(var(--surface-dark));
+}
+
 body {
     background: var(--bg);
     color: var(--text);
