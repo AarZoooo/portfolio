@@ -28,21 +28,39 @@
     border: 1px solid white;
 }
 
-/* Paper mode: swap the digital difference-blend cursor for direct ink
-   on paper. Color is the page ink (monochrome-aware per theme), no
-   blend tricks — reads as a printed mark, not a VFX overlay. */
-:global([data-paper="on"]) .dot,
-:global([data-paper="on"]) .ring {
-    mix-blend-mode: normal;
-}
-
+/* Paper mode: swap the dot+ring for a classic text I-beam. The dot
+   becomes the vertical stroke; its ::before / ::after are the top and
+   bottom serifs. Ring is hidden — the I-beam reads as a printed caret
+   and doesn't need a ring for hover. Direct ink, no blend tricks. */
 :global([data-paper="on"]) .dot {
+    mix-blend-mode: normal;
+    width: 1px;
+    height: 18px;
     background: var(--text);
+    border-radius: 0;
+}
+
+:global([data-paper="on"]) .dot::before,
+:global([data-paper="on"]) .dot::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    width: 7px;
+    height: 1px;
+    background: var(--text);
+    transform: translateX(-50%);
+}
+
+:global([data-paper="on"]) .dot::before {
+    top: 0;
+}
+
+:global([data-paper="on"]) .dot::after {
+    bottom: 0;
 }
 
 :global([data-paper="on"]) .ring {
-    background: transparent;
-    border-color: var(--text-muted);
+    display: none;
 }
 
 @media (hover: none) {
