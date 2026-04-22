@@ -190,35 +190,41 @@
   font-weight: var(--weight-medium);
 }
 
-/* Crossfade, no width animation. Both labels occupy the same grid
-   cell; one fades out, the other fades in. The button's width stays
-   sized to the longer label (long) always — that's a small cost in
-   narrow mode for much cleaner visual behavior (no weird expand/
-   contract from animating widths). Overall nav shrinkage is driven by
-   --content-max on the container, not per-button. */
+/* Button width animates from long-label width to short-label width;
+   labels crossfade on top. Long label clips as the button narrows,
+   but it's fading out at the same time so the clip is masked. */
 .navLink {
-  display: grid;
+  display: flex;
   align-items: center;
-  justify-items: center;
+  justify-content: center;
+  width: 11ch;
+  overflow: hidden;
+  position: relative;
+  transition:
+    width 520ms cubic-bezier(0.32, 0.72, 0, 1),
+    color 200ms ease,
+    font-weight 200ms ease;
 }
 
 .labelLong,
 .labelShort {
-  grid-area: 1 / 1;
   white-space: nowrap;
   transition: opacity 320ms ease;
 }
 
 .labelShort {
+  position: absolute;
   opacity: 0;
 }
 
 @media (max-width: 900px) {
+  .navLink { width: 4ch; }
   .labelLong { opacity: 0; }
   .labelShort { opacity: 1; }
 }
 
 /* Narrow mode (desktop only — mobile override in modes.css forces wide). */
+:global([data-width="narrow"]) .navLink { width: 4ch; }
 :global([data-width="narrow"]) .labelLong { opacity: 0; }
 :global([data-width="narrow"]) .labelShort { opacity: 1; }
 
