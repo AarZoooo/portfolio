@@ -45,6 +45,12 @@ function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
             const atBottom = window.innerHeight + window.scrollY >= doc.scrollHeight - 4
             if (atBottom && ids.length > 0) {
                 setActive(ids[ids.length - 1])
+                return
+            }
+            // Near the top: hero is showing and hero isn't a tracked link.
+            // Clear active so no nav entry is highlighted during hero view.
+            if (window.scrollY < window.innerHeight * 0.4) {
+                setActive(null)
             }
         }
         window.addEventListener('scroll', onScroll, { passive: true })
