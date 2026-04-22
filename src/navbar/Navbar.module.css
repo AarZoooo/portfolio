@@ -21,10 +21,20 @@
   .bar { animation: none; }
 }
 
-/* Paper mode: drop the glass blur for a flat printed-header feel. */
+/* Paper mode: drop the glass blur for a flat printed-header feel, and
+   paint the same grain on the navbar's own background so it reads as
+   part of the same paper stock. Body's grain sits behind the navbar
+   (opaque bar covers it), so the navbar has its own. */
 :global([data-paper="on"]) .bar {
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: var(--noise);
+  background-repeat: repeat;
+  background-blend-mode: multiply;
   backdrop-filter: none;
+}
+
+:global([theme="dark"][data-paper="on"]) .bar {
+  background-blend-mode: screen;
 }
 
 .bar.scrolled {
@@ -180,48 +190,37 @@
   font-weight: var(--weight-medium);
 }
 
-/* Both labels render inline-block, but only one has width + opacity.
-   max-width + opacity transitions together mean the active label
-   smoothly expands while the other collapses, instead of snapping via
-   display. The nav cell width follows naturally. */
+/* Crossfade, no width animation. Both labels occupy the same grid
+   cell; one fades out, the other fades in. The button's width stays
+   sized to the longer label (long) always — that's a small cost in
+   narrow mode for much cleaner visual behavior (no weird expand/
+   contract from animating widths). Overall nav shrinkage is driven by
+   --content-max on the container, not per-button. */
+.navLink {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
 .labelLong,
 .labelShort {
-  display: inline-block;
-  max-width: 12ch;
-  overflow: hidden;
-  vertical-align: bottom;
+  grid-area: 1 / 1;
   white-space: nowrap;
-  transition:
-    max-width 520ms cubic-bezier(0.32, 0.72, 0, 1),
-    opacity 320ms ease;
+  transition: opacity 320ms ease;
 }
 
 .labelShort {
-  max-width: 0;
   opacity: 0;
 }
 
 @media (max-width: 900px) {
-  .labelLong {
-    max-width: 0;
-    opacity: 0;
-  }
-  .labelShort {
-    max-width: 12ch;
-    opacity: 1;
-  }
+  .labelLong { opacity: 0; }
+  .labelShort { opacity: 1; }
 }
 
 /* Narrow mode (desktop only — mobile override in modes.css forces wide). */
-:global([data-width="narrow"]) .labelLong {
-  max-width: 0;
-  opacity: 0;
-}
-
-:global([data-width="narrow"]) .labelShort {
-  max-width: 12ch;
-  opacity: 1;
-}
+:global([data-width="narrow"]) .labelLong { opacity: 0; }
+:global([data-width="narrow"]) .labelShort { opacity: 1; }
 
 .right {
   display: flex;
