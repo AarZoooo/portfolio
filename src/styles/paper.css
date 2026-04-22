@@ -54,6 +54,13 @@
     background-image: var(--noise);
     background-repeat: repeat;
     background-blend-mode: multiply;
+    /* Force body into its own compositor layer so the blended bg paints
+       once and caches. Without this, content reflows inside body (e.g.
+       --content-max animation) can invalidate the body's paint, forcing
+       per-frame re-blending. will-change is the preferred hint, with
+       transform: translateZ(0) as a belt-and-suspenders fallback. */
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 /* Dark paper: swap in a light-speck noise and use screen blend so the
