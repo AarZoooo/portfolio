@@ -42,34 +42,30 @@
 }
 
 /* ---- 2. Paper grain --------------------------------------------------- */
-/* Absolute overlay on body (not fixed to viewport) so the texture scrolls
-   with the content — paper stays stuck to its text instead of the grain
-   sliding under a static window. Blend mode keeps the fiber showing
-   through both background and ink. Multiply in light, screen + invert
-   in dark (dark specks on dark surface would vanish mathematically). */
+/* Grain lives as a background image on body, not an overlay above
+   content. background-blend-mode blends the noise with the body's own
+   background-color ONCE at paint time — not per frame against every
+   element underneath, the way mix-blend-mode would. During width
+   transitions the grain sits quietly on the bg layer; only the content
+   on top re-renders. Much cheaper.
+   User testing: grain reads the same whether it's above or below text,
+   so moving it down costs no visible fidelity. */
 :root[data-paper="on"] body {
-    position: relative;
-}
-
-:root[data-paper="on"] body::after {
-    content: "";
-    position: absolute;
-    inset: 0;
     background-image: var(--noise);
     background-repeat: repeat;
-    pointer-events: none;
-    z-index: 9999;
-    mix-blend-mode: multiply;
-    opacity: 0.6;
+    background-blend-mode: multiply;
 }
 
-/* Dark paper: invert the noise so the specks become light, then screen
-   against the near-black bg to lighten — otherwise dark specks on a
-   dark surface vanish mathematically (screen of black is black). */
-:root[theme="dark"][data-paper="on"] body::after {
-    mix-blend-mode: screen;
-    opacity: 0.35;
-    filter: invert(1);
+/* Dark paper: swap in a light-speck noise and use screen blend so the
+   specks lighten the near-black paper. Dark specks on dark paper would
+   vanish mathematically (screen of black is black); a separate SVG
+   with inverted RGB keeps the grain visible without a costly filter. */
+:root[theme="dark"][data-paper="on"] {
+    --noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.5 1.35' numOctaves='2' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.22 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+:root[theme="dark"][data-paper="on"] body {
+    background-blend-mode: screen;
 }
 
 /* ---- 3. Hairline rule lines between sections ------------------------- */

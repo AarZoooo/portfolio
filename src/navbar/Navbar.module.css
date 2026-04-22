@@ -180,28 +180,47 @@
   font-weight: var(--weight-medium);
 }
 
+/* Both labels render inline-block, but only one has width + opacity.
+   max-width + opacity transitions together mean the active label
+   smoothly expands while the other collapses, instead of snapping via
+   display. The nav cell width follows naturally. */
+.labelLong,
 .labelShort {
-  display: none;
+  display: inline-block;
+  max-width: 12ch;
+  overflow: hidden;
+  vertical-align: bottom;
+  white-space: nowrap;
+  transition:
+    max-width 520ms cubic-bezier(0.32, 0.72, 0, 1),
+    opacity 320ms ease;
+}
+
+.labelShort {
+  max-width: 0;
+  opacity: 0;
 }
 
 @media (max-width: 900px) {
   .labelLong {
-    display: none;
+    max-width: 0;
+    opacity: 0;
   }
   .labelShort {
-    display: inline;
+    max-width: 12ch;
+    opacity: 1;
   }
 }
 
-/* Narrow mode: long labels won't fit in the tighter container.
-   Mobile already forces narrow off (see modes.css), so this only
-   matters on desktop with narrow toggled on. */
+/* Narrow mode (desktop only — mobile override in modes.css forces wide). */
 :global([data-width="narrow"]) .labelLong {
-  display: none;
+  max-width: 0;
+  opacity: 0;
 }
 
 :global([data-width="narrow"]) .labelShort {
-  display: inline;
+  max-width: 12ch;
+  opacity: 1;
 }
 
 .right {
