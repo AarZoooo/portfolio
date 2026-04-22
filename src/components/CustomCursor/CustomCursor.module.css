@@ -26,7 +26,6 @@
     width: 32px;
     height: 32px;
     border: 1px solid white;
-    transition: width 220ms ease, height 220ms ease;
 }
 
 /* Paper mode: swap the digital difference-blend cursor for direct ink

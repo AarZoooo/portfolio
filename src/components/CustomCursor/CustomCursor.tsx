@@ -11,12 +11,15 @@ function CustomCursor() {
 
         document.documentElement.classList.add(styles.hideNative)
 
+        const BASE_SIZE = 32
+        const HOVER_SIZE = 52
+
         let raf = 0
         let tx = -9999
         let ty = -9999
         let rx = -9999
         let ry = -9999
-        let scale = 1
+        let size = BASE_SIZE
         let hovering = false
 
         const dot = dotRef.current
@@ -25,10 +28,14 @@ function CustomCursor() {
         const tick = () => {
             rx += (tx - rx) * 0.18
             ry += (ty - ry) * 0.18
-            const target = hovering ? 1.6 : 1
-            scale += (target - scale) * 0.18
+            const target = hovering ? HOVER_SIZE : BASE_SIZE
+            size += (target - size) * 0.18
             if (dot) dot.style.transform = `translate3d(${tx}px, ${ty}px, 0) translate(-50%, -50%)`
-            if (ring) ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%) scale(${scale})`
+            if (ring) {
+                ring.style.width = `${size}px`
+                ring.style.height = `${size}px`
+                ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`
+            }
             raf = requestAnimationFrame(tick)
         }
 
