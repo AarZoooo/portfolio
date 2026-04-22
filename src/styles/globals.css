@@ -53,6 +53,17 @@ a {
     text-decoration: none;
 }
 
+/* Prevent drag ghosts on images. The mono-logo filter recolors images
+   for display, but the browser's drag preview uses the original pixels
+   — so dragging a grayscaled logo showed the colored version and broke
+   the monochrome immersion. Blocking drag across all images is fine
+   here (no use case for draggable portfolio imagery). */
+img {
+    -webkit-user-drag: none;
+    user-drag: none;
+    user-select: none;
+}
+
 /* Keyboard focus - visible ring (doesn't disturb layout). */
 :focus { outline: none; }
 :focus-visible {
