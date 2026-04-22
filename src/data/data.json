@@ -46,10 +46,11 @@
     },
     "hero": {
         "taglines": [
+            "Agentic Backend Engineer",
+            "Stitching backends with AI glue",
             "Backend systems. Smarter agents.",
             "Backend at heart. Agent-curious.",
-            "Mostly backend. Sometimes AI. Always shipping.",
-            "Stitching backends with a bit of AI glue."
+            "Mostly backend. Sometimes AI. Always shipping."
         ],
         "scrollHints": [
             "scroll",
