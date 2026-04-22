@@ -62,6 +62,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
+    white-space: nowrap;
     transition: color 220ms ease;
 }
 

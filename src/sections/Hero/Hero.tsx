@@ -22,12 +22,24 @@ function pickRandom<T>(pool: T[], fallback: T): T {
     return pool[Math.floor(Math.random() * pool.length)]
 }
 
+/** Touch-only device (no hover, coarse pointer). Keyboard shortcuts
+ *  are irrelevant here, so hints that tease them would mislead. */
+function isTouchOnlyDevice(): boolean {
+    if (typeof window === 'undefined') return false
+    return !window.matchMedia('(hover: hover) and (pointer: fine)').matches
+}
+
 function Hero({ personal, hero }: HeroProps) {
     // Both tagline and scroll hint pick once per page load. Static
     // during the visit; each refresh rolls fresh — matches the footer
     // pattern so the site's rotating bits all fire on the same cadence.
     const [tagline] = useState<string>(() => pickRandom(hero.taglines, ''))
-    const [hint] = useState<string>(() => pickRandom(hero.scrollHints, 'scroll'))
+    const [hint] = useState<string>(() => {
+        // On touch-only devices, keyboard-teasing hints are confusing
+        // since none of the shortcuts work. Fall back to plain "scroll".
+        if (isTouchOnlyDevice()) return 'scroll'
+        return pickRandom(hero.scrollHints, 'scroll')
+    })
 
     const scrollToNext = () => smoothScrollToId('experience', 900, 80)
 
