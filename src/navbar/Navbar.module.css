@@ -21,26 +21,14 @@
   .bar { animation: none; }
 }
 
-/* Paper mode: drop the glass blur for a flat printed-header feel, and
-   paint the same grain via a pseudo-element (alpha composite only —
-   no blend mode — so it stays cheap during width animations). */
+/* Paper mode: drop the glass blur for a flat printed-header feel.
+   The navbar intentionally has NO grain of its own — body's ::after
+   grain is at z-index 9999 (above navbar's z-index 100), so it paints
+   over the navbar region too, with the same tile and density as the
+   rest of the page. One source of truth, no duplicated styles. */
 :global([data-paper="on"]) .bar {
   background: var(--bg);
   backdrop-filter: none;
-  position: fixed; /* already fixed; kept explicit for pseudo positioning */
-}
-
-:global([data-paper="on"]) .bar::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: var(--noise);
-  background-repeat: repeat;
-  pointer-events: none;
-  /* Same grain density on a small band reads denser than on the full
-     body; dial opacity back so the navbar matches the body's perceived
-     intensity. */
-  opacity: 0.55;
 }
 
 .bar.scrolled {
