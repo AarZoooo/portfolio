@@ -37,6 +37,10 @@
   background-image: var(--noise);
   background-repeat: repeat;
   pointer-events: none;
+  /* Same grain density on a small band reads denser than on the full
+     body; dial opacity back so the navbar matches the body's perceived
+     intensity. */
+  opacity: 0.55;
 }
 
 .bar.scrolled {

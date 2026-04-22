@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState, type ReactNode } from 'react'
+import { useLayoutEffect, useRef, type ReactNode } from 'react'
 import styles from './Expandable.module.css'
 
 interface ExpandableProps {
@@ -17,27 +17,12 @@ interface ExpandableProps {
 }
 
 /**
- * Measures the current scrollHeight of `el` and subscribes to any size
- * changes via ResizeObserver. Used to drive exact max-height values so
- * the expand animation stays correct under width changes (narrow mode
- * toggle, viewport resize, etc.) without relying on the grid-rows 1fr
- * trick which caches intrinsic height.
+ * Height-driven view swap. Each view has a wrapper whose max-height
+ * is written directly to the DOM from a ResizeObserver — bypassing
+ * React state entirely so content reflow during width animations
+ * doesn't trigger cascading re-renders. Opacity cross-fade handled
+ * in CSS via the .open class on the root wrapper.
  */
-function useMeasuredHeight(el: HTMLElement | null): number {
-    const [h, setH] = useState(0)
-    useLayoutEffect(() => {
-        if (!el) return
-        // ResizeObserver fires an initial callback synchronously after
-        // observe, so we skip the manual setState here and let the
-        // observer drive the first measurement. Before that fires, the
-        // consumer should fall back to natural height (undefined max).
-        const ro = new ResizeObserver(() => setH(el.scrollHeight))
-        ro.observe(el)
-        return () => ro.disconnect()
-    }, [el])
-    return h
-}
-
 function Expandable({
     isOpen,
     onToggle,
@@ -48,10 +33,35 @@ function Expandable({
     expandLabel = 'read more',
     collapseLabel = 'collapse',
 }: ExpandableProps) {
-    const [shortEl, setShortEl] = useState<HTMLDivElement | null>(null)
-    const [fullEl, setFullEl] = useState<HTMLDivElement | null>(null)
-    const shortH = useMeasuredHeight(shortEl)
-    const fullH = useMeasuredHeight(fullEl)
+    const shortWrapRef = useRef<HTMLDivElement>(null)
+    const shortInnerRef = useRef<HTMLDivElement>(null)
+    const fullWrapRef = useRef<HTMLDivElement>(null)
+    const fullInnerRef = useRef<HTMLDivElement>(null)
+
+    useLayoutEffect(() => {
+        const apply = () => {
+            const si = shortInnerRef.current
+            const sw = shortWrapRef.current
+            const fi = fullInnerRef.current
+            const fw = fullWrapRef.current
+            if (sw && si) sw.style.maxHeight = isOpen ? '0px' : `${si.scrollHeight}px`
+            if (fw && fi) fw.style.maxHeight = isOpen ? `${fi.scrollHeight}px` : '0px'
+        }
+        apply()
+
+        const observers: ResizeObserver[] = []
+        const observe = (el: Element | null) => {
+            if (!el) return
+            const ro = new ResizeObserver(apply)
+            ro.observe(el)
+            observers.push(ro)
+        }
+        observe(shortInnerRef.current)
+        observe(fullInnerRef.current)
+        return () => {
+            for (const ro of observers) ro.disconnect()
+        }
+    }, [isOpen])
 
     return (
         <div className={`${styles.wrap} ${isOpen ? styles.open : ''}`}>
@@ -59,21 +69,21 @@ function Expandable({
 
             <div className={styles.rail}>
                 <div
+                    ref={shortWrapRef}
                     className={styles.viewWrap}
                     aria-hidden={isOpen}
-                    style={{ maxHeight: isOpen ? 0 : (shortH || undefined) }}
                 >
-                    <div ref={setShortEl} className={styles.viewInner}>
+                    <div ref={shortInnerRef} className={styles.viewInner}>
                         {short}
                     </div>
                 </div>
 
                 <div
+                    ref={fullWrapRef}
                     className={styles.viewWrap}
                     aria-hidden={!isOpen}
-                    style={{ maxHeight: isOpen ? (fullH || undefined) : 0 }}
                 >
-                    <div ref={setFullEl} className={styles.viewInner}>
+                    <div ref={fullInnerRef} className={styles.viewInner}>
                         {full}
                     </div>
                 </div>
