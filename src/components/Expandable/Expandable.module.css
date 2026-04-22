@@ -15,8 +15,8 @@
     margin-top: 1.25rem;
 }
 
-/* Vertical line: hairline by default, thickens + darkens on open.
-   Grows naturally with rail height. */
+/* Vertical line: stays a hairline at a single weight regardless of
+   open state. Height grows naturally with the rail container. */
 .rail::before {
     content: '';
     position: absolute;
@@ -25,12 +25,6 @@
     bottom: 0;
     width: 1px;
     background: rgb(var(--ink) / 0.18);
-    transition: background 420ms ease, width 420ms ease;
-}
-
-.wrap.open .rail::before {
-    background: rgb(var(--ink) / 0.45);
-    width: 2px;
 }
 
 /* Two view wrappers stacked inside the rail. max-height is set inline
@@ -97,8 +91,7 @@
 
 @media (prefers-reduced-motion: reduce) {
     .viewWrap,
-    .viewInner,
-    .rail::before {
+    .viewInner {
         transition: none;
     }
 }
