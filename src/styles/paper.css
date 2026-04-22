@@ -50,28 +50,14 @@
    on top re-renders. Much cheaper.
    User testing: grain reads the same whether it's above or below text,
    so moving it down costs no visible fidelity. */
+/* Grain as a background-image on body (stacks above body's bg-color,
+   below content in natural paint order). No pseudo-element overlay,
+   no blend mode — just alpha compositing via the SVG's own alpha.
+   Body's bg paints once per layout; content above reflows normally
+   without triggering blended re-paints. */
 :root[data-paper="on"] body {
-    position: relative;
-}
-
-/* Grain overlay as an absolutely-positioned pseudo on body, not a
-   background-image on body itself. No blend mode — alpha compositing
-   only (standard GPU path, way cheaper than mix-blend-mode or
-   background-blend-mode during animation).
-   will-change: transform goes on the PSEUDO, not on body — promotes
-   just the grain to its own compositor layer. Body doesn't get a
-   containing block, so the navbar's position: fixed still pins to
-   viewport. Content reflows on its own layer without invalidating
-   the grain's cached paint. */
-:root[data-paper="on"] body::after {
-    content: "";
-    position: absolute;
-    inset: 0;
     background-image: var(--noise);
     background-repeat: repeat;
-    pointer-events: none;
-    z-index: 9999;
-    will-change: transform;
 }
 
 /* Dark paper: swap in a light-speck noise SVG. No blend mode needed;
