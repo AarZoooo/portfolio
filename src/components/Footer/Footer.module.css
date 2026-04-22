@@ -52,7 +52,7 @@
     text-decoration: none;
     background-image: linear-gradient(currentColor, currentColor);
     background-size: 0 1px;
-    background-position: 0 100%;
+    background-position: 50% 100%;
     background-repeat: no-repeat;
     transition: background-size 250ms ease, color 200ms ease;
 }
