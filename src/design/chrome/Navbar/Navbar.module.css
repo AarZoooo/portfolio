@@ -57,7 +57,14 @@
   gap: 2rem;
 }
 
-@media (max-width: 900px) {
+/* Tablet / large phone in landscape (601–900px): keep one row but shrink
+   to short nav labels — see the .navLink width override below at 900px.
+   No grid restructure here; only the 2-row stack moves to a tighter
+   threshold. */
+
+/* Phone (≤ 600px): stack chrome into two rows so nav fills the top
+   and brand + clock sit below. */
+@media (max-width: 600px) {
   .inner {
     grid-template-columns: auto 1fr auto;
     grid-template-rows: auto auto;
