@@ -57,10 +57,9 @@
   gap: 2rem;
 }
 
-/* Tablet / large phone in landscape (601–900px): keep one row but shrink
-   to short nav labels — see the .navLink width override below at 900px.
-   No grid restructure here; only the 2-row stack moves to a tighter
-   threshold. */
+/* Tablet / small laptop (601–1024px): keep one row but shrink to short
+   nav labels — see the .navLink width override below at 1024px. No grid
+   restructure here; only the 2-row stack moves to a tighter threshold. */
 
 /* Phone (≤ 600px): stack chrome into two rows so nav fills the top
    and brand + clock sit below. */
@@ -235,7 +234,7 @@
   transform: scaleX(1);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .navLink { width: 4ch; }
   .labelLong { opacity: 0; }
   .labelShort { opacity: 1; }
@@ -271,7 +270,7 @@
 /* Hide the date (and the separator after it) on mobile and in narrow
    mode — time + toggle are enough; date is the first thing to drop when
    horizontal space is tight. */
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .date,
   .date + .sep {
     display: none;
