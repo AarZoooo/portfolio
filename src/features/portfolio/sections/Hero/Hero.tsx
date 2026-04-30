@@ -45,7 +45,7 @@ function Hero({ personal, hero }: HeroProps) {
         /* eslint-enable react-hooks/set-state-in-effect */
     }, [hero.taglines, hero.scrollHints])
 
-    const scrollToNext = () => smoothScrollToId('experience', 900, 80)
+    const scrollToNext = () => smoothScrollToId('experience')
 
     return (
         <section id="hero" className={styles.hero}>

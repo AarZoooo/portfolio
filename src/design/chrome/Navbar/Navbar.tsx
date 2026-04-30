@@ -26,6 +26,10 @@ interface NavbarProps {
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
+const NEAR_TOP_VIEWPORT_RATIO = 0.4
+const CLOCK_TICK_MS = 60_000
+const LONG_PRESS_MS = 500
+
 function formatTime(d: Date): string {
     const hh = String(d.getHours()).padStart(2, '0')
     const mm = String(d.getMinutes()).padStart(2, '0')
@@ -56,7 +60,7 @@ function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
             }
             // Near the top: hero is showing and hero isn't a tracked link.
             // Clear active so no nav entry is highlighted during hero view.
-            if (window.scrollY < window.innerHeight * 0.4) {
+            if (window.scrollY < window.innerHeight * NEAR_TOP_VIEWPORT_RATIO) {
                 setActive(null)
             }
         }
@@ -68,10 +72,10 @@ function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
     useEffect(() => {
         let interval: number | undefined
         const tick = () => setNow(new Date())
-        const delay = 60_000 - (Date.now() % 60_000)
+        const delay = CLOCK_TICK_MS - (Date.now() % CLOCK_TICK_MS)
         const timeout = window.setTimeout(() => {
             tick()
-            interval = window.setInterval(tick, 60_000)
+            interval = window.setInterval(tick, CLOCK_TICK_MS)
         }, delay)
         return () => {
             window.clearTimeout(timeout)
@@ -96,7 +100,7 @@ function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
         return () => observer.disconnect()
     }, [links])
 
-    const scrollTo = (id: string) => smoothScrollToId(id, 900, 80)
+    const scrollTo = (id: string) => smoothScrollToId(id)
 
     // Long-press on the resume button toggles paper mode — mobile's
     // equivalent of the `p` keyboard shortcut. Icon looks like a piece
@@ -112,7 +116,7 @@ function Navbar({ github, linkedin, resumeKey, links }: NavbarProps) {
         longPressTimer.current = window.setTimeout(() => {
             togglePaper()
             longPressFired.current = true
-        }, 500)
+        }, LONG_PRESS_MS)
     }
 
     const onResumeTouchEnd = () => {

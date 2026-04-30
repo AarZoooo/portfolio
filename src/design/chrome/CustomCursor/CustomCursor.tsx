@@ -13,6 +13,7 @@ function CustomCursor() {
 
         const BASE_SIZE = 32
         const HOVER_SIZE = 52
+        const LERP_FACTOR = 0.18
 
         let raf = 0
         let tx = -9999
@@ -26,10 +27,10 @@ function CustomCursor() {
         const ring = ringRef.current
 
         const tick = () => {
-            rx += (tx - rx) * 0.18
-            ry += (ty - ry) * 0.18
+            rx += (tx - rx) * LERP_FACTOR
+            ry += (ty - ry) * LERP_FACTOR
             const target = hovering ? HOVER_SIZE : BASE_SIZE
-            size += (target - size) * 0.18
+            size += (target - size) * LERP_FACTOR
             if (dot) dot.style.transform = `translate3d(${tx}px, ${ty}px, 0) translate(-50%, -50%)`
             if (ring) {
                 ring.style.width = `${size}px`

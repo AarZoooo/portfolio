@@ -1,6 +1,9 @@
 import { useEffect } from 'react'
-import { smoothScrollToId } from '@utils/smoothScroll'
+import { smoothScrollToId, NAVBAR_OFFSET_PX } from '@utils/smoothScroll'
 import { useTheme } from './useTheme'
+
+const SHORTCUT_SCROLL_DURATION_MS = 600
+const PROBE_VIEWPORT_RATIO = 0.3
 
 /**
  * Global keyboard shortcuts. Intentionally undocumented in-app — the only
@@ -75,7 +78,7 @@ export default function useShortcuts(sectionIds: string[]) {
         // the last-passed section based on scroll position.
         const currentSectionIndex = (): number => {
             const ids = sectionIds
-            const probe = window.scrollY + window.innerHeight * 0.3
+            const probe = window.scrollY + window.innerHeight * PROBE_VIEWPORT_RATIO
             let lastPassed = 0
             for (let i = 0; i < ids.length; i++) {
                 const el = document.getElementById(ids[i])
@@ -91,7 +94,7 @@ export default function useShortcuts(sectionIds: string[]) {
             const ids = sectionIds
             if (ids.length === 0) return
             const next = Math.max(0, Math.min(ids.length - 1, currentSectionIndex() + delta))
-            smoothScrollToId(ids[next], 600, 80)
+            smoothScrollToId(ids[next], SHORTCUT_SCROLL_DURATION_MS, NAVBAR_OFFSET_PX)
         }
 
         const onKey = (e: KeyboardEvent) => {
