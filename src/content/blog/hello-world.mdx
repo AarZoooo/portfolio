@@ -5,6 +5,16 @@ pubDate: 2026-05-01
 tags: ["meta", "astro"]
 ---
 
+import { Image } from 'astro:assets'
+import desk from './desk.jpg'
+
+<Image
+    src={desk}
+    alt="A wooden desk with a notebook, pen, and coffee cup in soft morning light"
+    widths={[720, 1280, 2000]}
+    sizes="(min-width: 1280px) 1280px, 100vw"
+/>
+
 This is the first post. Mostly placeholder content so I can see the prose styles
 work — headings, paragraphs, lists, code, links, blockquotes, all need to land
 on the same monochrome aesthetic as the rest of the site.
