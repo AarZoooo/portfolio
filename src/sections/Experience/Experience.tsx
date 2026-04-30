@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { Experience as ExperienceType } from '../../types/portfolio'
 import { assets } from '../../assets'
 import { techLine, renderParas } from '../../utils/workItem'
-import Expandable from '../../components/Expandable/Expandable'
+import Expandable from '../../design/primitives/Expandable/Expandable'
 import styles from './Experience.module.css'
 
 interface ExperienceProps {

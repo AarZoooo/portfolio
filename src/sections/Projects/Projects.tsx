@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { Project } from '../../types/portfolio'
 import { assets } from '../../assets'
 import { techLine, renderParas } from '../../utils/workItem'
-import Expandable from '../../components/Expandable/Expandable'
+import Expandable from '../../design/primitives/Expandable/Expandable'
 import styles from './Projects.module.css'
 
 interface ProjectsProps {

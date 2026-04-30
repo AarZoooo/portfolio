@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { useTheme } from '../hooks/useTheme'
-import { assets } from '../assets'
-import { smoothScrollToId } from '../utils/smoothScroll'
+import { useTheme } from '../../../hooks/useTheme'
+import { assets } from '../../../assets'
+import { smoothScrollToId } from '../../../utils/smoothScroll'
 import styles from './Navbar.module.css'
 
 /** Toggle the root data-paper attribute (same behavior as the `p` key). */
