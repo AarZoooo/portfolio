@@ -13,11 +13,10 @@ export default defineConfig({
     }),
     integrations: [react(), mdx(), sitemap()],
     markdown: {
-        // Always-dark code blocks. Reads as a "terminal" both in light and
-        // dark site modes — keeps a distinct visual identity from prose
-        // without picking a theme that's invisible on either page background.
+        // Nord — minimal blue-gray palette. Used always-dark so code blocks
+        // read like a terminal in both light and dark site modes.
         shikiConfig: {
-            theme: 'min-dark',
+            theme: 'nord',
         },
     },
     redirects: {
