@@ -33,7 +33,16 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
     const rightRef = useRef<HTMLDivElement>(null)
 
     const hasSections = !!sectionLinks && sectionLinks.length > 0
-    const hasSubApps = subApps.length > 0
+
+    const isSubAppActive = (href: string): boolean => {
+        if (href === '/') return currentPath === '/'
+        return currentPath === href || currentPath.startsWith(`${href}/`)
+    }
+
+    // The current page's sub-app is reachable via the logo / slug, so we
+    // hide its right-side duplicate.
+    const visibleSubApps = subApps.filter((app) => !isSubAppActive(app.href))
+    const hasSubApps = visibleSubApps.length > 0
 
     // Drawer dismiss: click outside, escape, or successful navigation.
     useEffect(() => {
@@ -95,11 +104,6 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
 
     const scrollTo = (id: string) => smoothScrollToId(id)
 
-    const isSubAppActive = (href: string): boolean => {
-        if (href === '/') return currentPath === '/'
-        return currentPath === href || currentPath.startsWith(`${href}/`)
-    }
-
     return (
         <header className={`${styles.bar} ${scrolled ? styles.scrolled : ''}`}>
             <div className={`${styles.inner} container`}>
@@ -150,21 +154,17 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
                                 className={`${styles.subApps} ${drawerOpen ? styles.subAppsOpen : ''}`}
                                 aria-label="Site sections"
                             >
-                                {subApps.map((app) => {
-                                    const active = isSubAppActive(app.href)
-                                    return (
-                                        <li key={app.href}>
-                                            <a
-                                                href={app.href}
-                                                onClick={() => setDrawerOpen(false)}
-                                                className={`${styles.subAppLink} ${active ? styles.subAppActive : ''}`}
-                                                aria-current={active ? 'page' : undefined}
-                                            >
-                                                {app.label}
-                                            </a>
-                                        </li>
-                                    )
-                                })}
+                                {visibleSubApps.map((app) => (
+                                    <li key={app.href}>
+                                        <a
+                                            href={app.href}
+                                            onClick={() => setDrawerOpen(false)}
+                                            className={styles.subAppLink}
+                                        >
+                                            {app.label}
+                                        </a>
+                                    </li>
+                                ))}
                             </ul>
                         </>
                     )}

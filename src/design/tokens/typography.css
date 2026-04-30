@@ -4,7 +4,8 @@
 :root {
     --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
     --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
-    --font-display: 'VT323', ui-monospace, monospace;
+    --font-display: 'Kode Mono', ui-monospace, monospace;
+    --font-display-weight: 500;
 
     /* Weights */
     --weight-light: 300;

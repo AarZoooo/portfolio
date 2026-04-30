@@ -2,20 +2,25 @@
     display: inline-flex;
     align-items: baseline;
     gap: var(--space-2);
-    color: var(--text);
-    text-decoration: none;
-    transition: color var(--duration-base) ease;
-}
-
-.logo:hover {
-    color: var(--text-secondary);
 }
 
 .brand {
     font-family: var(--font-display);
-    font-size: var(--text-xl);
+    font-size: var(--text-base);
+    font-weight: var(--font-display-weight);
     line-height: 1;
-    letter-spacing: 0.01em;
+    color: var(--text);
+    text-decoration: none;
+    transition: filter var(--duration-base) ease;
+}
+
+.brand:hover {
+    filter: drop-shadow(var(--glow-sm));
+}
+
+.slugs {
+    display: inline-flex;
+    align-items: baseline;
 }
 
 .slug {
@@ -23,5 +28,14 @@
     font-size: var(--text-sm);
     font-weight: var(--weight-light);
     line-height: 1;
+    /* Optical baseline correction: Plex Mono sits lower than Kode Mono
+       at the same font-size; nudge up so the two read as aligned. */
+    transform: translateY(calc(var(--space-px) * -1));
     color: var(--text-muted);
+    text-decoration: none;
+    transition: color var(--duration-base) ease;
+}
+
+.slug:hover {
+    color: var(--text);
 }
