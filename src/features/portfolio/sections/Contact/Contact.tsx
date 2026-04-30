@@ -11,7 +11,6 @@ function Contact({ heading, personal }: ContactProps) {
 
     const rows: { label: string; value: string; href?: string }[] = [
         { label: 'Email', value: personal.email, href: `mailto:${personal.email}` },
-        { label: 'Phone', value: personal.phone, href: `tel:${personal.phone.replace(/\s/g, '')}` },
         { label: 'Location', value: personal.location },
         { label: 'GitHub', value: stripProtocol(personal.github), href: personal.github },
         { label: 'LinkedIn', value: stripProtocol(personal.linkedin), href: personal.linkedin },
