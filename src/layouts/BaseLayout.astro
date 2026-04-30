@@ -13,6 +13,9 @@ interface Props {
         tags?: string[]
     }
     noindex?: boolean
+    /** Per-page default content width. User can override via the `w`
+     *  shortcut, but each navigation lands on the page's stated default. */
+    defaultWidth?: 'wide' | 'narrow'
 }
 
 const SITE_URL = 'https://aarju.dev'
@@ -24,13 +27,14 @@ const {
     ogImage = '/og.svg',
     article,
     noindex = false,
+    defaultWidth = 'wide',
 } = Astro.props
 
 const fullOgImage = ogImage.startsWith('http') ? ogImage : SITE_URL + ogImage
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-width={defaultWidth}>
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

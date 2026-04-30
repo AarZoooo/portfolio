@@ -159,11 +159,6 @@
     .labelShort { opacity: 1; }
 }
 
-/* Narrow mode (desktop only — mobile override in modes.css forces wide). */
-:global([data-width="narrow"]) .navLink { width: 4ch; }
-:global([data-width="narrow"]) .labelLong { opacity: 0; }
-:global([data-width="narrow"]) .labelShort { opacity: 1; }
-
 /* === Sub-app links (top-level destinations) ====================== */
 
 .subAppsInline {
