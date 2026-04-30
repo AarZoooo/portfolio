@@ -94,12 +94,13 @@
     color: var(--text);
 }
 
-/* Code blocks (Shiki) — dual-theme support via CSS variables. Shiki emits
-   --shiki-light/--shiki-dark on each token; the rules below pick the
-   active palette from the page's theme attribute. */
+/* Code blocks (Shiki) — Shiki applies background and token colors inline
+   from the configured theme. We only style the box (padding, radius,
+   overflow) and a faint outer border to anchor it against the page. */
 .prose pre {
     margin: var(--space-6) 0;
     padding: var(--space-5);
+    border: var(--border-hairline) solid rgb(var(--ink) / 0.12);
     border-radius: var(--radius-md);
     overflow-x: auto;
     font-size: var(--text-sm);
@@ -111,18 +112,6 @@
     background: none;
     padding: 0;
     font-size: inherit;
-}
-
-.prose .shiki,
-.prose .shiki span {
-    color: var(--shiki-light);
-    background-color: var(--shiki-light-bg);
-}
-
-:root[theme="dark"] .prose .shiki,
-:root[theme="dark"] .prose .shiki span {
-    color: var(--shiki-dark);
-    background-color: var(--shiki-dark-bg);
 }
 
 /* Horizontal rule */

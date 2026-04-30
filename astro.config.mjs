@@ -13,12 +13,11 @@ export default defineConfig({
     }),
     integrations: [react(), mdx(), sitemap()],
     markdown: {
-        // Minimal monochrome themes for code blocks. `defaultColor: false`
-        // emits CSS custom properties for both themes; prose.css picks the
-        // active one based on the `theme` attribute on <html>.
+        // Always-dark code blocks. Reads as a "terminal" both in light and
+        // dark site modes — keeps a distinct visual identity from prose
+        // without picking a theme that's invisible on either page background.
         shikiConfig: {
-            themes: { light: 'min-light', dark: 'min-dark' },
-            defaultColor: false,
+            theme: 'min-dark',
         },
     },
     redirects: {
