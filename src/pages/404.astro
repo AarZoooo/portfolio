@@ -1,0 +1,76 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro'
+
+import Navbar from '@design/chrome/Navbar/Navbar'
+import Footer from '@design/chrome/Footer/Footer'
+import CustomCursor from '@design/chrome/CustomCursor/CustomCursor'
+import Shortcuts from '@design/chrome/Shortcuts'
+
+import data from '@features/portfolio/data/data.json'
+import type { PortfolioData } from '@type/portfolio'
+import { SUB_APPS } from '@utils/navigation'
+
+const d = data as PortfolioData
+---
+
+<BaseLayout
+    title="404 — aarju.dev"
+    description="That path doesn't exist."
+    noindex
+>
+    <CustomCursor client:idle />
+
+    <Navbar currentPath={Astro.url.pathname} subApps={SUB_APPS} client:load />
+
+    <main id="main" class="container">
+        <div class="error">
+            <p class="code">404</p>
+            <p class="message">this path doesn't exist</p>
+            <a class="back" href="/">← back to portfolio</a>
+        </div>
+    </main>
+
+    <Footer footer={d.footer} client:idle />
+
+    <Shortcuts client:idle />
+</BaseLayout>
+
+<style>
+    .error {
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-6);
+        font-family: var(--font-mono);
+        text-align: center;
+    }
+
+    .code {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: var(--text-4xl);
+        font-weight: var(--font-display-weight);
+        color: var(--text);
+        letter-spacing: var(--tracking-wide);
+    }
+
+    .message {
+        margin: 0;
+        font-size: var(--text-md);
+        color: var(--text-secondary);
+    }
+
+    .back {
+        margin-top: var(--space-2);
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color var(--duration-base) ease;
+    }
+
+    .back:hover {
+        color: var(--text);
+    }
+</style>
