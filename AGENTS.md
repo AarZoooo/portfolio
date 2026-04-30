@@ -192,19 +192,49 @@ literals are violations whenever the same value could legitimately appear
 twice, or whenever a future change should propagate. This applies to CSS
 and TS/JS equally.
 
-- **CSS** → design tokens in `src/design/tokens/`. Colors, spacing,
-  typography, shadows, radii, z-index, durations, easings, breakpoints.
-  Breakpoints use `@custom-media` (CSS variables don't work inside
-  `@media` conditions).
-- **TS/JS** → named module-scope constants. Timeouts, thresholds, ratios,
-  sizes. Move shared constants to `@utils/`.
-- **Magic strings** → constants too. Storage keys, attribute names, event
-  names.
-
 The token *name* is documentation: `--bp-medium` says what it is;
 `1024px` does not. The only acceptable hardcode is a truly bespoke value
 that would never repeat and wouldn't propagate on change — and even then,
 a comment should justify it.
+
+### CSS — design tokens
+
+All tokens live in `src/design/tokens/`. When a value isn't in the
+catalog, extend the appropriate file rather than introducing a literal.
+
+| Category | Tokens | File |
+|---|---|---|
+| Colors | `--ink`, `--paper`, `--text`, `--text-secondary/muted/subtle`, `--accent`, `--accent-contrast`, `--surface-dark` | `tokens.css` |
+| Spacing | `--space-0-5` through `--space-40` (4px-based, half-steps for fine alignment) | `tokens.css` |
+| Durations | `--duration-fast` (150ms) through `--duration-slowest` (640ms) | `tokens.css` |
+| Easings | `--ease-out`, `--ease-spring` | `tokens.css` |
+| Radii | `--radius-sm/md/circle/pill` | `tokens.css` |
+| z-index | `--z-navbar/skip-link/cursor` | `tokens.css` |
+| Borders | `--border-hairline` | `tokens.css` |
+| Shadows | `--shadow-sm/md/xl` | `tokens.css` |
+| Layout | `--content-max`, `--content-gutter` | `tokens.css` |
+| Typography | `--text-xs` through `--text-xl`, `--weight-*`, `--leading-*`, `--tracking-*`, font families | `typography.css` |
+| Breakpoints | `--bp-medium` (≤1024px), `--bp-narrow` (≤700px) | `breakpoints.css` |
+
+**CSS modules + breakpoints:** each `.module.css` using `@media (--bp-X)`
+must `@import '@design/tokens/breakpoints.css';` at the top. Lightning
+CSS resolves `@custom-media` per compilation unit, so each consumer
+needs the declarations in scope.
+
+### TS/JS — named module constants
+
+Single-file magic numbers → file-local `const` at module top. Cross-file
+values → exported from `@utils/`. Existing examples:
+
+- `@utils/smoothScroll.ts` exports `NAVBAR_OFFSET_PX` (used by both
+  scroll callers and the keyboard-shortcut hook).
+- `Navbar.tsx` declares `LONG_PRESS_MS`, `CLOCK_TICK_MS`,
+  `NEAR_TOP_VIEWPORT_RATIO` (file-local).
+- `CustomCursor.tsx` declares `LERP_FACTOR` (file-local).
+
+### Magic strings
+
+Storage keys, attribute names, event names get constants too.
 
 ## Code style
 
