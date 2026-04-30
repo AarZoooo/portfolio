@@ -12,6 +12,15 @@ export default defineConfig({
         webAnalytics: { enabled: false },
     }),
     integrations: [react(), mdx(), sitemap()],
+    markdown: {
+        // Minimal monochrome themes for code blocks. `defaultColor: false`
+        // emits CSS custom properties for both themes; prose.css picks the
+        // active one based on the `theme` attribute on <html>.
+        shikiConfig: {
+            themes: { light: 'min-light', dark: 'min-dark' },
+            defaultColor: false,
+        },
+    },
     redirects: {
         '/portfolio': { status: 308, destination: '/' },
     },

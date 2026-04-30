@@ -94,7 +94,9 @@
     color: var(--text);
 }
 
-/* Code blocks (Shiki) */
+/* Code blocks (Shiki) — dual-theme support via CSS variables. Shiki emits
+   --shiki-light/--shiki-dark on each token; the rules below pick the
+   active palette from the page's theme attribute. */
 .prose pre {
     margin: var(--space-6) 0;
     padding: var(--space-5);
@@ -109,6 +111,18 @@
     background: none;
     padding: 0;
     font-size: inherit;
+}
+
+.prose .shiki,
+.prose .shiki span {
+    color: var(--shiki-light);
+    background-color: var(--shiki-light-bg);
+}
+
+:root[theme="dark"] .prose .shiki,
+:root[theme="dark"] .prose .shiki span {
+    color: var(--shiki-dark);
+    background-color: var(--shiki-dark-bg);
 }
 
 /* Horizontal rule */
