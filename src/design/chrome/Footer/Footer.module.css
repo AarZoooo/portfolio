@@ -15,6 +15,9 @@
     align-items: center;
     text-align: center;
     gap: var(--space-5);
+    /* Override .container's max-width so the footer doesn't track the
+       page-width toggle — chrome stays constant, only content responds. */
+    max-width: var(--content-max-wide);
 }
 
 .tagline {
