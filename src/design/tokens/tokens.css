@@ -46,6 +46,14 @@
     /* Glows - centered, theme-following (use via filter: drop-shadow(...)) */
     --glow-sm: 0 0 8px rgb(var(--ink) / 0.4);
 
+    /* Glass — translucent surfaces with backdrop-blur. Pair the bg with
+       --glass-blur on the same element. `--glass-bar` follows the page
+       paper (subtle tint on the chrome). `--glass-scrim` is always-dark
+       for modal-style dimming, regardless of theme. */
+    --glass-bar: rgb(var(--paper) / 0.25);
+    --glass-scrim: rgb(var(--surface-dark) / 0.4);
+    --glass-blur: 12px;
+
     /* Monochrome filter - forces any colored logo to current ink */
     --mono-logo: grayscale(1) brightness(0) contrast(1);
 

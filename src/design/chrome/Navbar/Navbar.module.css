@@ -6,8 +6,8 @@
     left: 0;
     right: 0;
     z-index: var(--z-navbar);
-    background: rgb(var(--paper) / 0.15);
-    backdrop-filter: blur(12px);
+    background: var(--glass-bar);
+    backdrop-filter: blur(var(--glass-blur));
     transition: box-shadow var(--duration-medium) ease, background var(--duration-medium) ease;
     animation: navbar-in var(--duration-slower) ease-out both;
 }
@@ -273,8 +273,8 @@
 }
 
 .menuOverlayOpen {
-    background: rgb(var(--surface-dark) / 0.4);
-    backdrop-filter: blur(10px);
+    background: var(--glass-scrim);
+    backdrop-filter: blur(var(--glass-blur));
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
