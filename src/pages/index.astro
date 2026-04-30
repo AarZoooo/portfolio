@@ -1,53 +1,54 @@
 ---
-// Phase 2a: minimal placeholder so the dev server has something to render
-// during the migration. Replaced wholesale in Phase 2d when the real
-// portfolio comes online via BaseLayout + section components.
+import BaseLayout from '@layouts/BaseLayout.astro'
+
+import Navbar from '@design/chrome/Navbar/Navbar'
+import Footer from '@design/chrome/Footer/Footer'
+import CustomCursor from '@design/chrome/CustomCursor/CustomCursor'
+import Shortcuts from '@design/chrome/Shortcuts'
+
+import Hero from '@features/portfolio/sections/Hero/Hero'
+import Experience from '@features/portfolio/sections/Experience/Experience'
+import Skills from '@features/portfolio/sections/Skills/Skills'
+import Projects from '@features/portfolio/sections/Projects/Projects'
+import Education from '@features/portfolio/sections/Education/Education'
+import Contact from '@features/portfolio/sections/Contact/Contact'
+
+import data from '@features/portfolio/data/data.json'
+import type { PortfolioData } from '@type/portfolio'
+
+const d = data as PortfolioData
+
+// Stable at module scope so Navbar effects do not re-bind per render.
+const NAV_LINKS = [
+    { id: 'experience', label: d.sections.experience, short: 'exp' },
+    { id: 'skills', label: d.sections.skills, short: 'skl' },
+    { id: 'projects', label: d.sections.projects, short: 'prj' },
+    { id: 'education', label: d.sections.education, short: 'edu' },
+    { id: 'contact', label: d.sections.contact, short: 'ctc' },
+]
 ---
 
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <title>aarju.dev — migrating</title>
-        <style is:global>
-            html,
-            body {
-                margin: 0;
-                font-family: ui-monospace, "SF Mono", Menlo, monospace;
-                background: #f7f7f5;
-                color: #1a1a1a;
-                min-height: 100vh;
-                display: grid;
-                place-items: center;
-            }
-            @media (prefers-color-scheme: dark) {
-                html,
-                body {
-                    background: #0e0e0d;
-                    color: #ededed;
-                }
-            }
-            .card {
-                text-align: center;
-                opacity: 0.7;
-                line-height: 1.7;
-            }
-            .card p {
-                margin: 0.25rem 0;
-            }
-            .card code {
-                font-size: 0.85em;
-                opacity: 0.7;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="card">
-            <p>aarju.dev</p>
-            <p>migrating to astro</p>
-            <p><code>webapp_v2</code></p>
-        </div>
-    </body>
-</html>
+<BaseLayout title={`Portfolio: ${d.personal.name}`} description={d.personal.summary}>
+    <CustomCursor client:idle />
+
+    <Navbar
+        github={d.personal.github}
+        linkedin={d.personal.linkedin}
+        resumeKey={d.personal.resume}
+        links={NAV_LINKS}
+        client:load
+    />
+
+    <main id="main" class="container">
+        <Hero personal={d.personal} hero={d.hero} client:load />
+        <Experience heading={d.sections.experience} items={d.experience} client:visible />
+        <Skills heading={d.sections.skills} skills={d.skills} />
+        <Projects heading={d.sections.projects} items={d.projects} client:visible />
+        <Education heading={d.sections.education} items={d.education} />
+        <Contact heading={d.sections.contact} personal={d.personal} />
+    </main>
+
+    <Footer footer={d.footer} client:idle />
+
+    <Shortcuts client:idle />
+</BaseLayout>
