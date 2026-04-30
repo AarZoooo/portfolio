@@ -9,8 +9,8 @@
 
 .rail {
     position: relative;
-    padding-left: 1.1rem;
-    margin-top: 1.25rem;
+    padding-left: var(--space-4-5);
+    margin-top: var(--space-5);
 }
 
 /* Vertical hairline. In shrunk state it fades to transparent at the bottom
@@ -23,13 +23,13 @@
     left: 0;
     top: 0;
     bottom: 0;
-    width: 1px;
+    width: var(--border-hairline);
     background: linear-gradient(
         to bottom,
         rgb(var(--ink) / 0.18),
         rgb(var(--ink) / 0)
     );
-    transition: background 400ms ease;
+    transition: background var(--duration-slow) ease;
 }
 
 .wrap.open .rail::before {
@@ -46,43 +46,43 @@
    triggered by narrow-column toggle or viewport resize. */
 .viewWrap {
     overflow: hidden;
-    transition: max-height 560ms cubic-bezier(0.32, 0.72, 0, 1);
+    transition: max-height var(--duration-slower) var(--ease-spring);
 }
 
 /* Active view is opaque; inactive is transparent. Entering view waits
-   for the container to grow (280ms delay) so content doesn't ghost
+   for the container to grow (var(--duration-medium) delay) so content doesn't ghost
    across during the max-height animation; outgoing view fades fast. */
 .wrap .viewWrap:nth-child(1) .viewInner {
     opacity: 1;
-    transition: opacity 500ms ease 280ms;
+    transition: opacity var(--duration-slower) ease var(--duration-medium);
 }
 .wrap .viewWrap:nth-child(2) .viewInner {
     opacity: 0;
-    transition: opacity 360ms ease;
+    transition: opacity var(--duration-slow) ease;
 }
 .wrap.open .viewWrap:nth-child(1) .viewInner {
     opacity: 0;
-    transition: opacity 360ms ease;
+    transition: opacity var(--duration-slow) ease;
 }
 .wrap.open .viewWrap:nth-child(2) .viewInner {
     opacity: 1;
-    transition: opacity 500ms ease 280ms;
+    transition: opacity var(--duration-slower) ease var(--duration-medium);
 }
 
 /* Gap above tech line so it reads as a footer separate from content. */
 .after {
-    margin-top: 1.1rem;
+    margin-top: var(--space-4-5);
 }
 
 /* Toggle: sits below the rail, flush-left with the rail's line.
    No curves, no indent. Just the label. */
 .toggle {
-    margin-top: 0.9rem;
+    margin-top: var(--space-3-5);
     padding: 0;
     display: block;
     color: var(--text-muted);
     text-align: left;
-    transition: color 200ms ease;
+    transition: color var(--duration-base) ease;
 }
 
 .toggle:hover {

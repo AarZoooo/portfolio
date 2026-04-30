@@ -8,9 +8,9 @@
     position: fixed;
     top: 0;
     left: 0;
-    border-radius: 50%;
+    border-radius: var(--radius-circle);
     pointer-events: none;
-    z-index: 10000;
+    z-index: var(--z-cursor);
     mix-blend-mode: difference;
     will-change: transform;
     transform: translate3d(-9999px, -9999px, 0);
@@ -25,7 +25,7 @@
 .ring {
     width: 32px;
     height: 32px;
-    border: 1px solid white;
+    border: var(--border-hairline) solid white;
 }
 
 /* Paper mode: swap the dot+ring for a classic text I-beam. The dot
@@ -34,7 +34,7 @@
    and doesn't need a ring for hover. Direct ink, no blend tricks. */
 :global([data-paper="on"]) .dot {
     mix-blend-mode: normal;
-    width: 1px;
+    width: var(--border-hairline);
     height: 18px;
     background: var(--text);
     border-radius: 0;
@@ -46,7 +46,7 @@
     position: absolute;
     left: 50%;
     width: 7px;
-    height: 1px;
+    height: var(--border-hairline);
     background: var(--text);
     transform: translateX(-50%);
 }

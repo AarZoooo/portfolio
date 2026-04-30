@@ -1,11 +1,11 @@
 @import '@design/tokens/breakpoints.css';
 
 .education {
-    padding: 6rem 0;
+    padding: var(--space-24) 0;
 }
 
 .heading {
-    margin: 0 0 3rem;
+    margin: 0 0 var(--space-12);
     font-family: var(--font-mono);
     font-size: var(--text-sm);
     font-weight: var(--weight-light);
@@ -17,33 +17,33 @@
 .list {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: var(--space-16);
 }
 
 .item {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: var(--space-3);
 }
 
 .head {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: 2rem;
+    gap: var(--space-8);
 }
 
 .primary {
     display: flex;
     flex-direction: column;
-    gap: 0.125rem;
+    gap: var(--space-0-5);
 }
 
 .institution {
     margin: 0;
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: var(--space-2-5);
     font-size: var(--text-lg);
     font-weight: var(--weight-medium);
     color: var(--text);
@@ -74,11 +74,11 @@
 
 .bullets {
     margin: 0;
-    padding-left: 1.25rem;
+    padding-left: var(--space-5);
     list-style: disc outside;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .bullet {
@@ -99,7 +99,7 @@
         grid-template-areas:
             "name name"
             "degree date";
-        gap: 0.25rem 1rem;
+        gap: var(--space-1) var(--space-4);
         align-items: baseline;
     }
     .primary {

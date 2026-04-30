@@ -8,9 +8,9 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 0 1.5rem;
+    padding: 0 var(--space-6);
     font-family: var(--font-mono);
-    animation: hero-in 640ms ease-out both;
+    animation: hero-in var(--duration-slowest) ease-out both;
 }
 
 @keyframes hero-in {
@@ -43,7 +43,7 @@
 }
 
 .tagline {
-    margin: 0.75rem 0 0;
+    margin: var(--space-3) 0 0;
     font-size: var(--text-xl);
     font-weight: var(--weight-light);
     color: var(--text-secondary);
@@ -51,11 +51,11 @@
 }
 
 .socials {
-    margin: 1.25rem 0 0;
+    margin: var(--space-5) 0 0;
     padding: 0;
     list-style: none;
     display: flex;
-    gap: 1.5rem;
+    gap: var(--space-6);
 }
 
 .socialBtn {
@@ -63,7 +63,7 @@
     align-items: center;
     justify-content: center;
     color: var(--text-secondary);
-    transition: color 200ms ease, transform 200ms ease;
+    transition: color var(--duration-base) ease, transform var(--duration-base) ease;
 }
 
 .socialBtn:hover {
@@ -73,7 +73,7 @@
 
 .scrollHint {
     position: absolute;
-    bottom: 3rem;
+    bottom: var(--space-12);
     left: 50%;
     transform: translateX(-50%);
     font-family: var(--font-mono);
@@ -84,9 +84,9 @@
     color: var(--text-muted);
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
+    gap: var(--space-2);
     white-space: nowrap;
-    transition: color 220ms ease;
+    transition: color var(--duration-base) ease;
 }
 
 .scrollHint:hover {
