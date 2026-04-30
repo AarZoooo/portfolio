@@ -1,14 +1,6 @@
 ---
-// Inline FOUC-prevention script. Runs synchronously in <head> before paint
-// so dark-mode users do not get a flash of light theme.
-//
-// Read logic mirrors @hooks/useTheme.getInitial(). Keep them aligned: any
-// change to one must be mirrored in the other, or you will see a flicker
-// on first paint as the two disagree.
-//
-// Paper and width modes are not persisted (they reset on reload), so they
-// do not need pre-paint setup — their absence in localStorage is the
-// default state.
+// Pre-paint script that sets `theme` from localStorage so dark-mode
+// visitors don't flash light. Mirror any change in @hooks/useTheme.getInitial().
 ---
 
 <script is:inline>

@@ -2,11 +2,7 @@ import useShortcuts from '@hooks/useShortcuts'
 
 const SECTION_IDS = ['hero', 'experience', 'skills', 'projects', 'education', 'contact']
 
-/**
- * Mounts the global keyboard-shortcuts hook. Renders nothing — pure
- * behavior island. Hydrate with `client:idle`; shortcuts can wait until
- * the browser is otherwise quiet.
- */
+/** Pure behavior island — mounts the global keyboard shortcuts. Hydrate `client:idle`. */
 export default function Shortcuts() {
     useShortcuts(SECTION_IDS)
     return null
