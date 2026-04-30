@@ -1,0 +1,147 @@
+/* Typography for rendered MDX content. Scoped to .prose. */
+
+.prose {
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-relaxed);
+    color: var(--text-secondary);
+}
+
+/* Headings */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+    color: var(--text);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+}
+
+.prose h2 {
+    margin: var(--space-12) 0 var(--space-5);
+    font-size: var(--text-xl);
+}
+
+.prose h3 {
+    margin: var(--space-8) 0 var(--space-4);
+    font-size: var(--text-lg);
+}
+
+.prose h4 {
+    margin: var(--space-6) 0 var(--space-3);
+    font-size: var(--text-md);
+}
+
+/* Paragraphs */
+.prose p {
+    margin: 0 0 var(--space-5);
+}
+
+/* Links — subtle underline that bolds on hover. */
+.prose a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: rgb(var(--ink) / 0.3);
+    text-underline-offset: 0.2em;
+    transition: text-decoration-color var(--duration-base) ease;
+}
+
+.prose a:hover {
+    text-decoration-color: var(--text);
+}
+
+/* Lists */
+.prose ul,
+.prose ol {
+    margin: 0 0 var(--space-5);
+    padding-left: var(--space-6);
+}
+
+.prose li {
+    margin-bottom: var(--space-2);
+}
+
+.prose li::marker {
+    color: var(--text-muted);
+}
+
+/* Blockquote */
+.prose blockquote {
+    margin: var(--space-6) 0;
+    padding-left: var(--space-5);
+    border-left: var(--border-hairline) solid rgb(var(--ink) / 0.3);
+    color: var(--text);
+    font-style: italic;
+}
+
+.prose blockquote p {
+    margin-bottom: var(--space-2);
+}
+
+.prose blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+/* Inline code */
+.prose :not(pre) > code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    padding: 0.1em var(--space-1);
+    background: rgb(var(--ink) / 0.06);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+}
+
+/* Code blocks (Shiki) */
+.prose pre {
+    margin: var(--space-6) 0;
+    padding: var(--space-5);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+}
+
+.prose pre code {
+    font-family: var(--font-mono);
+    background: none;
+    padding: 0;
+    font-size: inherit;
+}
+
+/* Horizontal rule */
+.prose hr {
+    margin: var(--space-12) 0;
+    border: 0;
+    border-top: var(--border-hairline) solid rgb(var(--ink) / 0.2);
+}
+
+/* Images */
+.prose img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: var(--space-6) auto;
+    border-radius: var(--radius-sm);
+}
+
+/* Emphasis */
+.prose strong {
+    font-weight: var(--weight-medium);
+    color: var(--text);
+}
+
+.prose em {
+    font-style: italic;
+}
+
+/* Tighten spacing for the very first/last block. */
+.prose > :first-child {
+    margin-top: 0;
+}
+
+.prose > :last-child {
+    margin-bottom: 0;
+}
