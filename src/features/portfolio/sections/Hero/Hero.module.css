@@ -63,12 +63,16 @@
     align-items: center;
     justify-content: center;
     color: var(--text-secondary);
-    transition: color var(--duration-base) ease, transform var(--duration-base) ease;
+    transition:
+        color var(--duration-base) ease,
+        transform var(--duration-base) ease,
+        filter var(--duration-base) ease;
 }
 
 .socialBtn:hover {
     color: var(--text);
     transform: translateY(-1px);
+    filter: drop-shadow(var(--glow-sm));
 }
 
 .scrollHint {
