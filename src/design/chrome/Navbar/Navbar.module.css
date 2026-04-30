@@ -1,243 +1,140 @@
 @import '@design/tokens/breakpoints.css';
 
 .bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: var(--z-navbar);
-  background: rgb(var(--paper) / 0.15);
-  backdrop-filter: blur(12px);
-  transition: box-shadow var(--duration-medium) ease, background var(--duration-medium) ease;
-  animation: navbar-in var(--duration-slower) ease-out both;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-navbar);
+    background: rgb(var(--paper) / 0.15);
+    backdrop-filter: blur(12px);
+    transition: box-shadow var(--duration-medium) ease, background var(--duration-medium) ease;
+    animation: navbar-in var(--duration-slower) ease-out both;
 }
 
 /* Opacity-only fade — a translate would create a new containing block
    and break position: fixed. */
 @keyframes navbar-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bar { animation: none; }
+    .bar { animation: none; }
 }
 
-/* Paper mode: drop the glass blur for a flat printed-header feel, and
-   stack the same grain SVG onto the bar's own background. Paint order:
-   bg-color, then bg-image (noise), then content. Same --noise token as
-   body — single source of truth for the grain SVG. */
+/* Paper mode: drop the glass blur for a flat printed feel. */
 :global([data-paper="on"]) .bar {
-  background-color: var(--bg);
-  background-image: var(--noise);
-  background-repeat: repeat;
-  backdrop-filter: none;
+    background-color: var(--bg);
+    background-image: var(--noise);
+    background-repeat: repeat;
+    backdrop-filter: none;
 }
 
 .bar.scrolled {
-  box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-sm);
 }
 
-/* Dark + paper: default shadow alpha is too light to read against the
-   already-dark paper bg. --shadow-md is a deeper cast that still stays
-   pure black, matching the intent: softer alpha on light paper,
-   denser on dark. */
 :global([theme="dark"][data-paper="on"]) .bar.scrolled {
-  box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-md);
 }
 
 .inner {
-  display: grid;
-  /* minmax(0, 1fr) instead of 1fr — 1fr resolves to minmax(auto, 1fr),
-     which lets side columns grow when content (e.g. expanded Resume
-     hover label) exceeds their fraction share. That growth bumps the
-     center nav slightly rightward. Forcing a 0 minimum locks columns
-     to their fr share; resume's expand stays inside its column. */
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: center;
-  height: var(--space-16);
-  gap: var(--space-8);
-}
-
-@media (--bp-narrow) {
-  .inner {
-    grid-template-columns: auto 1fr auto;
-    grid-template-rows: auto auto;
-    height: auto;
-    padding-top: var(--space-2-5);
-    padding-bottom: var(--space-2-5);
-    row-gap: var(--space-2);
-    gap: var(--space-2);
-  }
-  .center {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    justify-self: stretch;
-    justify-content: space-between;
-    gap: 0;
-  }
-  .navLink {
-    padding: var(--space-1) var(--space-0-5);
-  }
-  .left {
-    grid-column: 1;
-    grid-row: 2;
-  }
-  .right {
-    grid-column: 3;
-    grid-row: 2;
-  }
-  .date,
-  .date + .sep {
-    display: none;
-  }
+    display: grid;
+    /* minmax(0, 1fr) instead of 1fr — locks side columns to their fr share so
+       expanding content (e.g. sub-app text) doesn't push the center nav. */
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    height: var(--space-16);
+    gap: var(--space-8);
 }
 
 .left {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  justify-self: start;
-}
-
-.iconBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--space-8);
-  height: var(--space-8);
-  border-radius: var(--radius-pill);
-  color: var(--text-secondary);
-  transition: color var(--duration-base) ease, width var(--duration-medium) var(--ease-out);
-}
-
-.iconBtn:hover {
-  color: var(--text);
-}
-
-.resume {
-  width: auto;
-  padding: 0;
-  gap: 0;
-  justify-content: flex-start;
-  overflow: hidden;
-  /* Suppress iOS long-press context menu ("Open Link", "Save Link"...)
-     so long-press can trigger the paper-mode easter egg instead. */
-  -webkit-touch-callout: none;
-  user-select: none;
-}
-
-.resumeIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--space-8);
-  height: var(--space-8);
-  flex-shrink: 0;
-}
-
-.resume .label {
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-light);
-  max-width: 0;
-  opacity: 0;
-  padding-right: 0;
-  white-space: nowrap;
-  transition:
-    max-width var(--duration-medium) var(--ease-out),
-    opacity var(--duration-base) ease,
-    padding-right var(--duration-medium) var(--ease-out);
-}
-
-.resume:hover .label {
-  max-width: var(--space-20);
-  opacity: 1;
-  padding-right: var(--space-3);
+    display: flex;
+    align-items: center;
+    justify-self: start;
 }
 
 .center {
-  display: flex;
-  align-items: center;
-  gap: var(--space-5);
-  justify-self: center;
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    justify-self: center;
 }
 
+.right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    justify-self: end;
+}
+
+/* === Section anchors (page-local nav) ============================ */
+
 .navLink {
-  position: relative;
-  padding: var(--space-1-5) var(--space-1-5);
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-light);
-  color: var(--text-secondary);
-  transition:
-    color var(--duration-base) ease,
-    font-weight var(--duration-base) ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 11ch;
+    overflow: hidden;
+    padding: var(--space-1-5) var(--space-1-5);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    color: var(--text-secondary);
+    transition:
+        width var(--duration-slower) var(--ease-spring),
+        color var(--duration-base) ease,
+        font-weight var(--duration-base) ease;
 }
 
 .navLink:hover {
-  color: var(--text);
+    color: var(--text);
 }
 
 .navActive {
-  color: var(--text);
-  font-weight: var(--weight-medium);
+    color: var(--text);
+    font-weight: var(--weight-medium);
 }
 
-/* Button width animates from long-label width to short-label width;
-   labels crossfade on top. Long label clips as the button narrows,
-   but it's fading out at the same time so the clip is masked. */
-.navLink {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 11ch;
-  overflow: hidden;
-  position: relative;
-  transition:
-    width var(--duration-slower) var(--ease-spring),
-    color var(--duration-base) ease,
-    font-weight var(--duration-base) ease;
-}
-
-/* `position: relative` anchors each label's underline ::after to the
-   label's own width (not the fixed button width), so short words like
-   `skl` don't overshoot. */
+/* `position: relative` anchors each label's underline to the label's own
+   width, so short words like `skl` don't overshoot the button. */
 .labelLong,
 .labelShort {
-  position: relative;
-  white-space: nowrap;
-  transition: opacity var(--duration-medium) ease;
+    position: relative;
+    white-space: nowrap;
+    transition: opacity var(--duration-medium) ease;
 }
 
 .labelShort {
-  position: absolute;
-  opacity: 0;
+    position: absolute;
+    opacity: 0;
 }
 
 .labelLong::after,
 .labelShort::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -3px;
-  height: var(--border-hairline);
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform var(--duration-medium) var(--ease-out);
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -3px;
+    height: var(--border-hairline);
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform var(--duration-medium) var(--ease-out);
 }
 
 .navLink:hover .labelLong::after,
 .navLink:hover .labelShort::after {
-  transform: scaleX(1);
+    transform: scaleX(1);
 }
 
 @media (--bp-medium) {
-  .navLink { width: 4ch; }
-  .labelLong { opacity: 0; }
-  .labelShort { opacity: 1; }
+    .navLink { width: 4ch; }
+    .labelLong { opacity: 0; }
+    .labelShort { opacity: 1; }
 }
 
 /* Narrow mode (desktop only — mobile override in modes.css forces wide). */
@@ -245,46 +142,71 @@
 :global([data-width="narrow"]) .labelLong { opacity: 0; }
 :global([data-width="narrow"]) .labelShort { opacity: 1; }
 
-.right {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  justify-self: end;
-  font-family: var(--font-mono);
-  font-size: var(--space-3-5);
-  font-weight: var(--weight-light);
-  color: var(--text);
-  font-feature-settings: 'tnum' 1;
+/* === Sub-app links (top-level destinations) ====================== */
+
+.subApps {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
-.time,
-.date {
-  line-height: 1;
+.subAppLink {
+    position: relative;
+    display: inline-block;
+    padding: var(--space-1) 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--duration-base) ease, font-weight var(--duration-base) ease;
 }
 
-.sep {
-  color: var(--text-subtle);
-  line-height: 1;
+.subAppLink::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--border-hairline);
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform var(--duration-medium) var(--ease-out);
 }
 
-:global([data-width="narrow"]) .date,
-:global([data-width="narrow"]) .date + .sep {
-  display: none;
+.subAppLink:hover {
+    color: var(--text);
 }
+
+.subAppLink:hover::after {
+    transform: scaleX(1);
+}
+
+.subAppActive {
+    color: var(--text);
+    font-weight: var(--weight-medium);
+}
+
+/* === Theme toggle ================================================ */
 
 .toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--space-7);
-  height: var(--space-7);
-  border-radius: var(--radius-pill);
-  background: var(--accent);
-  color: var(--accent-contrast);
-  box-shadow: var(--shadow-xl);
-  transition: background var(--duration-base) ease, color var(--duration-base) ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--space-7);
+    height: var(--space-7);
+    margin-left: var(--space-2);
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    color: var(--accent-contrast);
+    box-shadow: var(--shadow-xl);
+    transition: background var(--duration-base) ease, color var(--duration-base) ease;
 }
 
 .toggle svg {
-  display: block;
+    display: block;
 }

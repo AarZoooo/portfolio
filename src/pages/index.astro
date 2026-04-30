@@ -15,11 +15,12 @@ import Contact from '@features/portfolio/sections/Contact/Contact'
 
 import data from '@features/portfolio/data/data.json'
 import type { PortfolioData } from '@type/portfolio'
+import { SUB_APPS } from '@utils/navigation'
 
 const d = data as PortfolioData
 
 // Stable at module scope so Navbar effects do not re-bind per render.
-const NAV_LINKS = [
+const SECTION_LINKS = [
     { id: 'experience', label: d.sections.experience, short: 'exp' },
     { id: 'skills', label: d.sections.skills, short: 'skl' },
     { id: 'projects', label: d.sections.projects, short: 'prj' },
@@ -32,10 +33,9 @@ const NAV_LINKS = [
     <CustomCursor client:idle />
 
     <Navbar
-        github={d.personal.github}
-        linkedin={d.personal.linkedin}
-        resumeKey={d.personal.resume}
-        links={NAV_LINKS}
+        currentPath={Astro.url.pathname}
+        sectionLinks={SECTION_LINKS}
+        subApps={SUB_APPS}
         client:load
     />
 
