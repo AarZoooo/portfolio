@@ -177,12 +177,12 @@
     position: relative;
     display: inline-block;
     padding: var(--space-1) 0;
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: var(--text-sm);
-    font-weight: var(--weight-light);
+    font-weight: var(--weight-medium);
     color: var(--text-secondary);
     text-decoration: none;
-    transition: color var(--duration-base) ease, font-weight var(--duration-base) ease;
+    transition: color var(--duration-base) ease;
 }
 
 .subAppLink::after {
@@ -306,9 +306,9 @@
 }
 
 .menuLink {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: var(--text-md);
-    font-weight: var(--weight-light);
+    font-weight: var(--weight-medium);
     color: rgb(var(--on-surface-dark));
     text-decoration: none;
     transition: opacity var(--duration-base) ease;
