@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTheme } from '@hooks/useTheme'
 import { smoothScrollToId } from '@utils/smoothScroll'
 import type { SubAppLink } from '@utils/navigation'
@@ -28,9 +28,31 @@ interface NavbarProps {
 function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
     const [scrolled, setScrolled] = useState(false)
     const [active, setActive] = useState<string | null>(null)
+    const [drawerOpen, setDrawerOpen] = useState(false)
     const { theme, toggle } = useTheme()
+    const rightRef = useRef<HTMLDivElement>(null)
 
     const hasSections = !!sectionLinks && sectionLinks.length > 0
+    const hasSubApps = subApps.length > 0
+
+    // Drawer dismiss: click outside, escape, or successful navigation.
+    useEffect(() => {
+        if (!drawerOpen) return
+        const onClickOutside = (e: MouseEvent) => {
+            if (rightRef.current && !rightRef.current.contains(e.target as Node)) {
+                setDrawerOpen(false)
+            }
+        }
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') setDrawerOpen(false)
+        }
+        document.addEventListener('click', onClickOutside)
+        document.addEventListener('keydown', onKey)
+        return () => {
+            document.removeEventListener('click', onClickOutside)
+            document.removeEventListener('keydown', onKey)
+        }
+    }, [drawerOpen])
 
     useEffect(() => {
         const onScroll = () => {
@@ -102,24 +124,49 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
                     </nav>
                 )}
 
-                <div className={styles.right}>
-                    {subApps.length > 0 && (
-                        <ul className={styles.subApps} aria-label="Site sections">
-                            {subApps.map((app) => {
-                                const active = isSubAppActive(app.href)
-                                return (
-                                    <li key={app.href}>
-                                        <a
-                                            href={app.href}
-                                            className={`${styles.subAppLink} ${active ? styles.subAppActive : ''}`}
-                                            aria-current={active ? 'page' : undefined}
-                                        >
-                                            {app.label}
-                                        </a>
-                                    </li>
-                                )
-                            })}
-                        </ul>
+                <div className={styles.right} ref={rightRef}>
+                    {hasSubApps && (
+                        <>
+                            <button
+                                type="button"
+                                onClick={() => setDrawerOpen((o) => !o)}
+                                aria-expanded={drawerOpen}
+                                aria-controls="subapp-drawer"
+                                aria-label={drawerOpen ? 'Close menu' : 'Open menu'}
+                                className={styles.hamburger}
+                            >
+                                {drawerOpen ? (
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M6 6l12 12M6 18L18 6" />
+                                    </svg>
+                                ) : (
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M4 7h16M4 12h16M4 17h16" />
+                                    </svg>
+                                )}
+                            </button>
+                            <ul
+                                id="subapp-drawer"
+                                className={`${styles.subApps} ${drawerOpen ? styles.subAppsOpen : ''}`}
+                                aria-label="Site sections"
+                            >
+                                {subApps.map((app) => {
+                                    const active = isSubAppActive(app.href)
+                                    return (
+                                        <li key={app.href}>
+                                            <a
+                                                href={app.href}
+                                                onClick={() => setDrawerOpen(false)}
+                                                className={`${styles.subAppLink} ${active ? styles.subAppActive : ''}`}
+                                                aria-current={active ? 'page' : undefined}
+                                            >
+                                                {app.label}
+                                            </a>
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        </>
                     )}
 
                     <button

@@ -63,10 +63,31 @@
 }
 
 .right {
+    position: relative;
     display: flex;
     align-items: center;
     gap: var(--space-2);
     justify-self: end;
+}
+
+/* === Hamburger (narrow only) ===================================== */
+
+.hamburger {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--space-7);
+    height: var(--space-7);
+    color: var(--text);
+    transition: color var(--duration-base) ease;
+}
+
+.hamburger:hover {
+    color: var(--text-secondary);
+}
+
+.hamburger svg {
+    display: block;
 }
 
 /* === Section anchors (page-local nav) ============================ */
@@ -189,6 +210,40 @@
 .subAppActive {
     color: var(--text);
     font-weight: var(--weight-medium);
+}
+
+/* At narrow, sub-apps collapse into a drawer behind the hamburger.
+   Drawer anchors to the right edge of the navbar's right group, drops
+   below the navbar, and slides in on open. */
+@media (--bp-narrow) {
+    .hamburger {
+        display: inline-flex;
+    }
+    .subApps {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: var(--space-2);
+        padding: var(--space-3) var(--space-4);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-2);
+        background: rgb(var(--paper) / 0.95);
+        backdrop-filter: blur(12px);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-4px);
+        transition:
+            opacity var(--duration-base) ease,
+            transform var(--duration-base) var(--ease-out);
+    }
+    .subAppsOpen {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
 }
 
 /* === Theme toggle ================================================ */
