@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# post-checkout: if switching branches changed package(-lock).json between
+# the two refs, run `npm install` so the new tree's deps are in sync.
+#
+# Args: $1=previous HEAD, $2=new HEAD, $3=1 for branch checkout, 0 for file checkout
+
+set -e
+
+prev="$1"
+next="$2"
+branch_checkout="$3"
+
+# Only act on branch / full checkouts. File-level checkouts (e.g. `git checkout -- foo.tsx`)
+# never affect deps and shouldn't trigger an install.
+[ "$branch_checkout" = "1" ] || exit 0
+
+# Skip the no-op case where prev == next (e.g. cloning, or checking out current branch).
+[ "$prev" != "$next" ] || exit 0
+
+if git diff --name-only "$prev" "$next" | grep -qE '(^|/)package(-lock)?\.json$'; then
+    echo "→ post-checkout: package(-lock).json changed; running npm install..."
+    npm install
+fi
