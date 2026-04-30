@@ -11,10 +11,7 @@ interface LogoProps {
  * is genuinely navigable, not just decorative.
  */
 export default function Logo({ currentPath }: LogoProps) {
-    // TEMP: showing `/portfolio` on root for layout testing.
-    // Revert to `currentPath === '/' ? null : currentPath` to hide on root.
-    const path = currentPath === '/' ? '/portfolio' : currentPath
-    const segments = path.split('/').filter(Boolean)
+    const segments = currentPath === '/' ? [] : currentPath.split('/').filter(Boolean)
 
     return (
         <span className={styles.logo}>
