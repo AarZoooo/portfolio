@@ -1,3 +1,5 @@
+@import '@design/tokens/breakpoints.css';
+
 .hero {
     position: relative;
     min-height: 100vh;
@@ -75,7 +77,7 @@
     color: var(--text);
 }
 
-@media (max-width: 900px) {
+@media (--bp-medium) {
     .greeting,
     .tagline {
         font-size: var(--text-md);
