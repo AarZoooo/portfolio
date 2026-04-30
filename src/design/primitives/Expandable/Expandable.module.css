@@ -13,8 +13,10 @@
     margin-top: 1.25rem;
 }
 
-/* Vertical line: stays a hairline at a single weight regardless of
-   open state. Height grows naturally with the rail container. */
+/* Vertical hairline. In shrunk state it fades to transparent at the bottom
+   so the rail feels open and invites expansion; in open state it stays a
+   solid hairline through the full content. Both states use the same
+   gradient shape so the transition is smooth. */
 .rail::before {
     content: '';
     position: absolute;
@@ -22,7 +24,20 @@
     top: 0;
     bottom: 0;
     width: 1px;
-    background: rgb(var(--ink) / 0.18);
+    background: linear-gradient(
+        to bottom,
+        rgb(var(--ink) / 0.18),
+        rgb(var(--ink) / 0)
+    );
+    transition: background 400ms ease;
+}
+
+.wrap.open .rail::before {
+    background: linear-gradient(
+        to bottom,
+        rgb(var(--ink) / 0.18),
+        rgb(var(--ink) / 0.18)
+    );
 }
 
 /* Two view wrappers stacked inside the rail. max-height is set inline
