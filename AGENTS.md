@@ -1,0 +1,232 @@
+# AGENTS.md
+
+Project charter for AI agents and human contributors working on this repo.
+This file is the source of truth — read it before making any change.
+
+## Project context
+
+Personal portfolio + (soon) blog at [aarju.dev](https://aarju.dev). Single
+author, single deploy, hand-built monochrome aesthetic. Hosted on Vercel.
+
+**Owner:** Aarju Pal — backend engineer (PayPal, Rippling), Bangalore.
+
+**Tone of the site:** minimal, opinionated, vim-flavored, zero clutter.
+Every detail is intentional. Match that voice when adding to it.
+
+## Stack
+
+- **Astro** (static output) + **React 19** islands + **TypeScript** (strict)
+- **CSS Modules** + custom design tokens
+- **MDX** for blog content, **Shiki** for build-time syntax highlighting
+- **IBM Plex Sans / Mono** typography
+- **Vercel** hosting via `@astrojs/vercel/static`
+
+> **Migration status (Apr 2026):** master is currently a Vite + React SPA
+> (tagged `v1-vite`). This file describes the *target* architecture being
+> built on the `webapp_v2` branch. When in doubt about which state applies,
+> check `git branch --show-current`.
+
+## Architecture
+
+```
+src/
+├── design/                   # SHARED — importable from anywhere
+│   ├── tokens/               # CSS variables (colors, spacing, typography, paper, modes)
+│   ├── typography/           # prose.css for MDX content
+│   ├── primitives/           # reusable UI atoms (Expandable, QuirkyText)
+│   └── chrome/               # site shell (Navbar, Footer, CustomCursor, Shortcuts)
+│
+├── features/                 # SUB-APP-SPECIFIC — private to each feature
+│   ├── portfolio/            # Hero, Experience, Skills, Projects, Education, Contact
+│   └── blog/                 # PostCard, TagPill, post-specific components
+│
+├── content/                  # typed content collections
+│   └── blog/                 # MDX posts
+│
+├── hooks/                    # shared hooks (useTheme, useShortcuts)
+├── utils/                    # shared utilities (smoothScroll, highlightMetrics, ...)
+├── types/                    # shared TS types
+├── assets/                   # global asset resolver (logos, avatar, resume)
+├── layouts/                  # Astro layouts (BaseLayout, BlogPostLayout)
+└── pages/                    # routes (file-based)
+    ├── index.astro           # portfolio at /
+    ├── blog/
+    │   ├── index.astro
+    │   └── [...slug].astro
+    └── rss.xml.ts
+```
+
+### Boundary rules
+
+- `design/`, `hooks/`, `utils/`, `types/`, `assets/`, `layouts/` are universal.
+  Any file may import from them.
+- `features/<X>/` is **private to feature X**. No cross-feature imports.
+  If two features need the same code, promote it to `design/primitives/`
+  (UI) or `utils/` (logic).
+- `content/` is data, not code. It is read by features and layouts, never
+  the other way around.
+- New shared code must justify its placement: tokens vs primitives vs
+  chrome vs hooks vs utils. When unsure, ask in the PR description.
+
+### Sub-app expansion
+
+Adding a new sub-app (e.g. `/notes`, `/photos`, `/tools`):
+
+1. Create `src/features/<name>/` for sub-app-specific code.
+2. Create `src/pages/<name>/` for routes.
+3. Reuse `design/` components and `layouts/BaseLayout.astro`.
+4. If a sub-app needs its own layout, add `src/layouts/<Name>Layout.astro`
+   that wraps `BaseLayout`.
+5. Update navbar with a top-level link to the new sub-app.
+6. **Never** import across features. Promote to `design/` if shared.
+
+## Library policy
+
+**UI components and styles: written from scratch. Always.** No exceptions.
+
+Forbidden in this repo:
+
+- Component libraries: shadcn/ui, Radix, Headless UI, Ariakit, MUI, Mantine,
+  Chakra, Ant Design, NextUI, daisyUI, Park UI, Bootstrap.
+- CSS frameworks: Tailwind, UnoCSS, Bootstrap CSS.
+- Animation kits: Framer Motion, Motion One (use pure CSS + RAF).
+- Pre-built site/blog templates from npm or starter repos.
+- Icon libraries shipped as components: lucide-react, react-icons,
+  heroicons-react, etc. (Custom SVGs in `public/icons.svg` or per-asset.)
+- Tailwind plugins like `@tailwindcss/typography`.
+
+**Allowed (these are framework / build / logic, not UI):**
+
+- Astro and `@astrojs/*` integrations.
+- Build-time tools: Shiki, MDX compiler, Vite (under Astro).
+- Vendor SDKs: `@vercel/analytics`, `@vercel/speed-insights`.
+- Small focused logic utilities for non-UI concerns (date formatting,
+  slugifying, etc.) — pick the smallest dependency that does the job.
+
+**Gray zone: ask before installing.** Default answer is "build it from
+scratch." If a library saves significant non-UI work and adds <10KB
+bundle weight, raise it explicitly with a justification.
+
+## Accessibility — non-negotiable
+
+1. **Semantic HTML first.** `<button>`, `<a>`, `<nav>`, `<main>`,
+   `<article>`, `<section>` with proper headings. Never `<div onClick>`
+   when a real element exists.
+2. **Heading hierarchy.** Single `<h1>` per page. No skipped levels
+   (`h2` → `h4` is a bug).
+3. **Keyboard reachable.** Every interactive element reachable via Tab.
+   No keyboard traps. Standard interaction patterns:
+   - Button: Enter + Space activates
+   - Link: Enter activates
+   - Disclosure (Expandable): Enter/Space toggles, sets `aria-expanded`
+   - Dialog: Escape closes, focus trapped, focus restored on close
+4. **Visible focus.** `:focus-visible` styling preserved/enhanced. Never
+   `outline: none` without an equivalent replacement.
+5. **ARIA last resort.** Use only when semantic HTML cannot express
+   the relationship: `aria-expanded`, `aria-controls`, `aria-label` for
+   icon-only buttons, `aria-current="page"`, `aria-hidden="true"` for
+   decorative content.
+6. **Color contrast.** WCAG AA minimum: 4.5:1 body text, 3:1 large text.
+   Verified in **both** light and dark themes.
+7. **Reduced motion.** `prefers-reduced-motion: reduce` respected for
+   every animation. No exceptions.
+8. **Touch targets.** Minimum 44×44 CSS px for any tappable element.
+9. **Alt text.** Meaningful images get descriptive `alt`. Decorative
+   images (logos beside visible labels, ornamental SVGs) get `alt=""`.
+10. **Skip link.** Preserved in BaseLayout.
+
+## Performance — always
+
+1. **Ship JS only when needed.** Default to no `client:*` directive.
+   - `client:load` — only for above-the-fold interactivity (Navbar,
+     CustomCursor).
+   - `client:idle` — low-priority interactivity (Shortcuts).
+   - `client:visible` — below-the-fold interactive (Expandable cards).
+   - No directive — pure HTML, zero runtime JS.
+2. **Build-time over runtime.** Pre-compute everything possible: RSS,
+   sitemap, syntax highlighting, image optimization. The browser does
+   as little as possible.
+3. **No layout shift.** CLS target = 0. Reserve space for dynamic content.
+4. **CSS over JS for animation.** Pure CSS transitions and
+   `requestAnimationFrame` for scripted motion. No animation libraries.
+5. **Image discipline.** Astro `<Image>` for raster (WebP/AVIF +
+   responsive sizes). SVGs ship as-is.
+6. **No render-blocking JS** in `<head>` except the inline FOUC-prevention
+   script that sets `theme` / `data-paper` / `data-width` before paint.
+
+## Code style
+
+1. **CSS Modules colocated** with components: `Component.tsx` next to
+   `Component.module.css` in the same folder.
+2. **Design tokens, not magic numbers.** `var(--space-md)`, never `12px`.
+   Same for colors, fonts, shadows, radii, z-index.
+3. **TypeScript strict.** No `any`. No `as` casts unless a comment
+   explains why. Preserve `verbatimModuleSyntax` and use `import type`
+   for type-only imports.
+4. **Functional components only.** No class components.
+5. **`useSyncExternalStore`** for any cross-component reactive state.
+   Module-level stores for global state (the `useTheme` pattern).
+6. **Comments explain *why*, never *what*.** Match the voice of existing
+   comments — short, surface trade-offs and constraints, link to context
+   when relevant.
+7. **No barrel files** (`index.ts` re-exports) unless they earn their
+   place. `src/assets/index.ts` is the only legitimate exception.
+8. **Long, descriptive names** over short ones. `currentSectionIndex`,
+   not `cs`. Clarity over keystrokes.
+9. **No dead code.** No commented-out blocks. No leftover `console.log`.
+   No bare `TODO` — include an actual plan or remove the comment.
+
+## Astro specifics
+
+1. **`.astro` frontmatter runs at build time only.** If something looks
+   like it needs runtime data in the frontmatter, that is a bug — move
+   it into a React island.
+2. **Every `client:*` directive needs a justification** — either
+   obviously interactive (Navbar) or commented for subtle cases.
+3. **MDX content inherits the design system.** Blog post styling lives
+   in `design/typography/prose.css`, not as one-off overrides per post.
+4. **No bare `window` / `document` access** inside `.astro` frontmatter
+   or unguarded React render bodies. Use `typeof window !== 'undefined'`
+   guards or move into `useEffect`.
+5. **Per-page metadata** flows through `BaseLayout` props
+   (`title`, `description`, `canonical`, `ogImage`, optional `article`).
+   Never inline `<meta>` tags ad hoc.
+
+## Quality gates — every commit
+
+- `npm run lint` — clean.
+- `npm run check` (Astro type-check) — clean.
+- `npm run build` — succeeds.
+- Manual smoke test via `npm run preview` for any UI-affecting change:
+  click through, verify keyboard shortcuts, verify theme toggle, verify
+  no FOUC on dark-preference users.
+
+## Commit conventions
+
+- **Conventional Commits**: `<type>(<scope>): <imperative summary>`.
+- **One-line subject.** No body, no bullet lists, no `Co-Authored-By`
+  trailer.
+- **Imperative mood**, lowercase, no trailing period.
+- **Granular commits** — split distinct concerns into separate commits.
+- **Subject ≤ 72 chars.**
+
+Types in use: `feat`, `fix`, `refactor`, `perf`, `style`, `content`,
+`docs`, `chore`.
+
+Examples:
+
+- `feat(blog): add post listing page with tag filters`
+- `refactor(design): move tokens from styles/ to design/tokens/`
+- `fix(hero): randomize tagline pick on client mount`
+- `perf(navbar): debounce scroll-spy observer`
+
+## Working with this repo
+
+- **Read this file first.** Then read the closest module-level docs if
+  they exist.
+- **Match existing patterns** before inventing new ones. If `Expandable`
+  solves a similar problem, extend it; don't write a parallel component.
+- **Flag deviations.** If a task can't follow this charter, raise it
+  explicitly in the PR or chat — don't silently bend a rule.
+- **Small, reviewable PRs.** One concern per PR. The migration is the
+  exception (cohesive framework swap), not the rule.
