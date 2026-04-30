@@ -50,6 +50,27 @@
     min-height: 1.5em;
 }
 
+.socials {
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.socialBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    transition: color 200ms ease, transform 200ms ease;
+}
+
+.socialBtn:hover {
+    color: var(--text);
+    transform: translateY(-1px);
+}
+
 .scrollHint {
     position: absolute;
     bottom: 3rem;
