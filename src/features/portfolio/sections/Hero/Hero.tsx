@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import type { Personal, Hero as HeroContent } from '@type/portfolio'
 import { smoothScrollToId } from '@utils/smoothScroll'
 import styles from './Hero.module.css'
@@ -30,16 +30,20 @@ function isTouchOnlyDevice(): boolean {
 }
 
 function Hero({ personal, hero }: HeroProps) {
-    // Both tagline and scroll hint pick once per page load. Static
-    // during the visit; each refresh rolls fresh — matches the footer
-    // pattern so the site's rotating bits all fire on the same cadence.
-    const [tagline] = useState<string>(() => pickRandom(hero.taglines, ''))
-    const [hint] = useState<string>(() => {
-        // On touch-only devices, keyboard-teasing hints are confusing
-        // since none of the shortcuts work. Fall back to plain "scroll".
-        if (isTouchOnlyDevice()) return 'scroll'
-        return pickRandom(hero.scrollHints, 'scroll')
-    })
+    // First items are deterministic SSR fallbacks; useEffect rolls a fresh
+    // pick per page load on the client. Picking at SSG time would bake one
+    // tagline for the lifetime of the deploy.
+    const [tagline, setTagline] = useState<string>(hero.taglines[0] ?? '')
+    const [hint, setHint] = useState<string>('scroll')
+
+    useEffect(() => {
+        /* eslint-disable react-hooks/set-state-in-effect -- random per page load */
+        setTagline(pickRandom(hero.taglines, hero.taglines[0] ?? ''))
+        // Touch-only devices have no keyboard shortcuts — keyboard-teasing
+        // hints would be misleading there.
+        setHint(isTouchOnlyDevice() ? 'scroll' : pickRandom(hero.scrollHints, 'scroll'))
+        /* eslint-enable react-hooks/set-state-in-effect */
+    }, [hero.taglines, hero.scrollHints])
 
     const scrollToNext = () => smoothScrollToId('experience', 900, 80)
 

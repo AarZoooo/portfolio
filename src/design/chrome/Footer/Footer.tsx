@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import type { Footer as FooterContent } from '@type/portfolio'
 import styles from './Footer.module.css'
 
@@ -17,10 +17,13 @@ function renderTagline(text: string): ReactNode[] {
 }
 
 function Footer({ footer }: FooterProps) {
-    const [tagline] = useState(() => {
+    const [tagline, setTagline] = useState<string>(footer.taglines[0] ?? '')
+
+    useEffect(() => {
         const list = footer.taglines
-        return list[Math.floor(Math.random() * list.length)] ?? ''
-    })
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- random per page load
+        setTagline(list[Math.floor(Math.random() * list.length)] ?? '')
+    }, [footer.taglines])
 
     return (
         <footer className={styles.footer}>
