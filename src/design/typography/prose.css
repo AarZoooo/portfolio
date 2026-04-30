@@ -94,9 +94,11 @@
     color: var(--text);
 }
 
-/* Code blocks (Shiki) — Shiki applies background and token colors inline
-   from the configured theme. We only style the box (padding, radius,
-   overflow) and a faint outer border to anchor it against the page. */
+/* Code blocks (Shiki) — dual-theme. Shiki emits CSS variables for both
+   palettes (`--shiki-light` / `--shiki-dark` for fg, plus font-style /
+   font-weight / text-decoration variants). We pick the right pair based
+   on the site theme attribute, and use a relative ink tint for the box
+   bg so it always reads as a distinct surface in either theme. */
 .prose pre {
     position: relative;
     margin: var(--space-6) 0;
@@ -106,6 +108,9 @@
     overflow-x: auto;
     font-size: var(--text-sm);
     line-height: var(--leading-snug);
+    color: var(--shiki-light);
+    background-color: rgb(var(--ink) / 0.05);
+    font-weight: var(--weight-medium);
 }
 
 .prose pre code {
@@ -113,6 +118,25 @@
     background: none;
     padding: 0;
     font-size: inherit;
+}
+
+.prose pre code span {
+    color: var(--shiki-light);
+    font-style: var(--shiki-light-font-style);
+    font-weight: var(--shiki-light-font-weight, var(--weight-medium));
+    text-decoration: var(--shiki-light-text-decoration);
+}
+
+:root[theme='dark'] .prose pre {
+    color: var(--shiki-dark);
+    background-color: rgb(var(--ink) / 0.06);
+}
+
+:root[theme='dark'] .prose pre code span {
+    color: var(--shiki-dark);
+    font-style: var(--shiki-dark-font-style);
+    font-weight: var(--shiki-dark-font-weight, var(--weight-medium));
+    text-decoration: var(--shiki-dark-text-decoration);
 }
 
 /* Copy button — injected client-side. Always-white tones since the code

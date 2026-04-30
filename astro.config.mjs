@@ -13,10 +13,14 @@ export default defineConfig({
     }),
     integrations: [react(), mdx(), sitemap()],
     markdown: {
-        // Nord — minimal blue-gray palette. Used always-dark so code blocks
-        // read like a terminal in both light and dark site modes.
+        // Dual-theme code blocks. Shiki emits CSS variables for both
+        // palettes; prose.css picks the right pair based on [theme].
         shikiConfig: {
-            theme: 'nord',
+            themes: {
+                light: 'material-theme-lighter',
+                dark: 'vitesse-dark',
+            },
+            defaultColor: false,
         },
     },
     redirects: {
