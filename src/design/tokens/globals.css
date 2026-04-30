@@ -21,6 +21,11 @@ html {
 }
 
 body {
+    /* Flex column with min-height pushes footer to viewport bottom on
+       short pages (e.g. /blog with no posts, or /404). */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     background: var(--bg);
     color: var(--text);
     font-family: var(--font-sans);
@@ -31,6 +36,10 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+}
+
+main {
+    flex: 1;
 }
 
 code,
@@ -100,6 +109,19 @@ img {
     max-width: var(--content-max);
     margin-inline: auto;
     padding-inline: var(--content-gutter);
+}
+
+/* Visually hide content while keeping it available to screen readers. */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 /* Metric - bolder + full ink inside otherwise muted prose. */

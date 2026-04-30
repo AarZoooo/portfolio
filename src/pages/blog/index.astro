@@ -1,0 +1,139 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '@layouts/BaseLayout.astro'
+
+import Navbar from '@design/chrome/Navbar/Navbar'
+import Footer from '@design/chrome/Footer/Footer'
+import CustomCursor from '@design/chrome/CustomCursor/CustomCursor'
+
+import data from '@features/portfolio/data/data.json'
+import type { PortfolioData } from '@type/portfolio'
+import { SUB_APPS } from '@utils/navigation'
+
+const d = data as PortfolioData
+
+const posts = (await getCollection('blog'))
+    .filter((post) => !post.data.draft)
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+
+const formatDate = (date: Date): string =>
+    date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+---
+
+<BaseLayout
+    title="Blog — aarju.dev"
+    description="Writing about backend systems, AI tooling, and developer experience."
+>
+    <CustomCursor client:idle />
+
+    <Navbar currentPath={Astro.url.pathname} subApps={SUB_APPS} client:load />
+
+    <main id="main" class="container">
+        <section class="index">
+            <h1 class="sr-only">Blog</h1>
+            <header class="index-head">
+                <p class="tagline">Inked thoughts, mostly software. Not bound to it.</p>
+            </header>
+
+            {posts.length === 0 ? (
+                <p class="empty">No posts yet. Come back soon.</p>
+            ) : (
+                <ul class="post-list">
+                    {posts.map((post) => (
+                        <li>
+                            <a href={`/blog/${post.id}`} class="post-card">
+                                <time datetime={post.data.pubDate.toISOString()} class="post-date">
+                                    {formatDate(post.data.pubDate)}
+                                </time>
+                                <h2 class="post-title">{post.data.title}</h2>
+                                <p class="post-description">{post.data.description}</p>
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </section>
+    </main>
+
+    <Footer footer={d.footer} client:idle />
+</BaseLayout>
+
+<style>
+    .index {
+        max-width: 60ch;
+        margin: 0 auto;
+        padding: var(--space-24) 0;
+    }
+
+    .index-head {
+        margin-bottom: var(--space-16);
+    }
+
+    .tagline {
+        margin: 0;
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+    }
+
+    .empty {
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--text-muted);
+    }
+
+    .post-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-8);
+    }
+
+    .post-card {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+        padding: var(--space-5) 0;
+        text-decoration: none;
+        color: inherit;
+        border-bottom: var(--border-hairline) solid rgb(var(--ink) / 0.08);
+        transition: border-color var(--duration-base) ease;
+    }
+
+    .post-card:hover {
+        border-bottom-color: rgb(var(--ink) / 0.4);
+    }
+
+    .post-date {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        font-weight: var(--weight-light);
+        letter-spacing: var(--tracking-wide);
+        color: var(--text-muted);
+        text-transform: uppercase;
+    }
+
+    .post-title {
+        margin: 0;
+        font-family: var(--font-sans);
+        font-size: var(--text-lg);
+        font-weight: var(--weight-medium);
+        color: var(--text);
+        transition: color var(--duration-base) ease;
+    }
+
+    .post-card:hover .post-title {
+        color: var(--text-secondary);
+    }
+
+    .post-description {
+        margin: 0;
+        font-family: var(--font-sans);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-light);
+        color: var(--text-secondary);
+        line-height: var(--leading-relaxed);
+    }
+</style>

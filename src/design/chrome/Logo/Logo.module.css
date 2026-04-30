@@ -27,7 +27,10 @@
     font-family: var(--font-mono);
     font-size: var(--text-sm);
     font-weight: var(--weight-light);
-    line-height: 1;
+    /* Default line-height: 1 was clipping descenders ('g', 'p', 'y') because
+       the tight em box sits flush at the bottom. 1.2 leaves room for descenders
+       without changing the typographic baseline. */
+    line-height: 1.2;
     /* Optical baseline correction: Plex Mono sits lower than Kode Mono
        at the same font-size; nudge up so the two read as aligned. */
     transform: translateY(calc(var(--space-px) * -1));
