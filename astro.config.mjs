@@ -9,12 +9,18 @@ export default defineConfig({
     site: 'https://aarju.dev',
     output: 'static',
     adapter: vercel({
-        // We inject @vercel/analytics and @vercel/speed-insights ourselves
-        // from BaseLayout, so the adapter does not need to handle them.
         webAnalytics: { enabled: false },
     }),
     integrations: [react(), mdx(), sitemap()],
     redirects: {
         '/portfolio': { status: 308, destination: '/' },
+    },
+    vite: {
+        css: {
+            transformer: 'lightningcss',
+            lightningcss: {
+                drafts: { customMedia: true },
+            },
+        },
     },
 })
