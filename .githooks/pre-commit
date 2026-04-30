@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# pre-commit: lint the working tree before allowing the commit.
+# Skip with `git commit --no-verify` if you really must.
+
+set -e
+
+echo "→ pre-commit: lint"
+npm run --silent lint
