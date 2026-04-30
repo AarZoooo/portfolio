@@ -57,12 +57,6 @@
   gap: 2rem;
 }
 
-/* Tablet / small laptop (601–1024px): keep one row but shrink to short
-   nav labels — see the .navLink width override below at 1024px. No grid
-   restructure here; only the 2-row stack moves to a tighter threshold. */
-
-/* Phone (≤ 600px): stack chrome into two rows so nav fills the top
-   and brand + clock sit below. */
 @media (max-width: 600px) {
   .inner {
     grid-template-columns: auto 1fr auto;
@@ -90,6 +84,10 @@
   .right {
     grid-column: 3;
     grid-row: 2;
+  }
+  .date,
+  .date + .sep {
+    display: none;
   }
 }
 
@@ -265,16 +263,6 @@
 .sep {
   color: var(--text-subtle);
   line-height: 1;
-}
-
-/* Hide the date (and the separator after it) on mobile and in narrow
-   mode — time + toggle are enough; date is the first thing to drop when
-   horizontal space is tight. */
-@media (max-width: 1024px) {
-  .date,
-  .date + .sep {
-    display: none;
-  }
 }
 
 :global([data-width="narrow"]) .date,
