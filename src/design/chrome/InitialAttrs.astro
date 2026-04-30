@@ -1,0 +1,37 @@
+---
+// Inline FOUC-prevention script. Runs synchronously in <head> before paint
+// so dark-mode users do not get a flash of light theme.
+//
+// Read logic mirrors @hooks/useTheme.getInitial(). Keep them aligned: any
+// change to one must be mirrored in the other, or you will see a flicker
+// on first paint as the two disagree.
+//
+// Paper and width modes are not persisted (they reset on reload), so they
+// do not need pre-paint setup — their absence in localStorage is the
+// default state.
+---
+
+<script is:inline>
+    ;(function () {
+        try {
+            const stored = localStorage.getItem('theme')
+            const theme =
+                stored === 'light' || stored === 'dark'
+                    ? stored
+                    : matchMedia('(prefers-color-scheme: dark)').matches
+                      ? 'dark'
+                      : 'light'
+            document.documentElement.setAttribute('theme', theme)
+        } catch (_) {
+            // localStorage blocked (private mode, etc.) — fall back to system pref.
+            try {
+                const theme = matchMedia('(prefers-color-scheme: dark)').matches
+                    ? 'dark'
+                    : 'light'
+                document.documentElement.setAttribute('theme', theme)
+            } catch (__) {
+                // matchMedia unavailable — leave the attribute unset; CSS default applies.
+            }
+        }
+    })()
+</script>
