@@ -15,6 +15,9 @@ export default defineConfig({
     redirects: {
         '/portfolio': { status: 308, destination: '/' },
     },
+    server: {
+        host: true,
+    },
     vite: {
         css: {
             transformer: 'lightningcss',
