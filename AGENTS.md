@@ -185,12 +185,32 @@ Aliases (defined in `tsconfig.json` `paths`):
 **Same-folder imports stay relative** because `./Foo` is shorter and
 clearer than aliasing your own neighbors.
 
+## No magic values
+
+If a value has meaning, it lives in a named constant. Period. Hardcoded
+literals are violations whenever the same value could legitimately appear
+twice, or whenever a future change should propagate. This applies to CSS
+and TS/JS equally.
+
+- **CSS** → design tokens in `src/design/tokens/`. Colors, spacing,
+  typography, shadows, radii, z-index, durations, easings, breakpoints.
+  Breakpoints use `@custom-media` (CSS variables don't work inside
+  `@media` conditions).
+- **TS/JS** → named module-scope constants. Timeouts, thresholds, ratios,
+  sizes. Move shared constants to `@utils/`.
+- **Magic strings** → constants too. Storage keys, attribute names, event
+  names.
+
+The token *name* is documentation: `--bp-medium` says what it is;
+`1024px` does not. The only acceptable hardcode is a truly bespoke value
+that would never repeat and wouldn't propagate on change — and even then,
+a comment should justify it.
+
 ## Code style
 
 1. **CSS Modules colocated** with components: `Component.tsx` next to
    `Component.module.css` in the same folder.
-2. **Design tokens, not magic numbers.** `var(--space-md)`, never `12px`.
-   Same for colors, fonts, shadows, radii, z-index.
+2. **No magic values** — see the section above.
 3. **TypeScript strict.** No `any`. No `as` casts unless a comment
    explains why. Preserve `verbatimModuleSyntax` and use `import type`
    for type-only imports.
