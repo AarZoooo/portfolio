@@ -1,11 +1,11 @@
-import data from '../../data/data.json'
+import data from '@features/portfolio/data/data.json'
 import type { PortfolioData } from '@type/portfolio'
-import Hero from '../../sections/Hero/Hero'
-import Experience from '../../sections/Experience/Experience'
-import Skills from '../../sections/Skills/Skills'
-import Projects from '../../sections/Projects/Projects'
-import Education from '../../sections/Education/Education'
-import Contact from '../../sections/Contact/Contact'
+import Hero from '@features/portfolio/sections/Hero/Hero'
+import Experience from '@features/portfolio/sections/Experience/Experience'
+import Skills from '@features/portfolio/sections/Skills/Skills'
+import Projects from '@features/portfolio/sections/Projects/Projects'
+import Education from '@features/portfolio/sections/Education/Education'
+import Contact from '@features/portfolio/sections/Contact/Contact'
 
 function PortfolioLayout() {
     const d = data as PortfolioData
