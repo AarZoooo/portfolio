@@ -1,4 +1,4 @@
-import type { Personal } from '../../types/portfolio'
+import type { Personal } from '@type/portfolio'
 import styles from './Contact.module.css'
 
 interface ContactProps {

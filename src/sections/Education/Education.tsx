@@ -1,6 +1,6 @@
-import type { Education as EducationType } from '../../types/portfolio'
-import { assets } from '../../assets'
-import { highlightMetrics } from '../../utils/highlightMetrics'
+import type { Education as EducationType } from '@type/portfolio'
+import { assets } from '@assets'
+import { highlightMetrics } from '@utils/highlightMetrics'
 import styles from './Education.module.css'
 
 interface EducationProps {

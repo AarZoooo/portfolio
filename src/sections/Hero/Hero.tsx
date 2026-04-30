@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react'
-import type { Personal, Hero as HeroContent } from '../../types/portfolio'
-import { smoothScrollToId } from '../../utils/smoothScroll'
+import type { Personal, Hero as HeroContent } from '@type/portfolio'
+import { smoothScrollToId } from '@utils/smoothScroll'
 import styles from './Hero.module.css'
 
 interface HeroProps {

@@ -1,5 +1,5 @@
-import type { Skills as SkillsType, SkillItem } from '../../types/portfolio'
-import { assets } from '../../assets'
+import type { Skills as SkillsType, SkillItem } from '@type/portfolio'
+import { assets } from '@assets'
 import styles from './Skills.module.css'
 
 interface SkillsProps {

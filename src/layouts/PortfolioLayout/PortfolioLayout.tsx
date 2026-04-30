@@ -1,5 +1,5 @@
 import data from '../../data/data.json'
-import type { PortfolioData } from '../../types/portfolio'
+import type { PortfolioData } from '@type/portfolio'
 import Hero from '../../sections/Hero/Hero'
 import Experience from '../../sections/Experience/Experience'
 import Skills from '../../sections/Skills/Skills'

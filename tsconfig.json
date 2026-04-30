@@ -5,7 +5,19 @@
         "jsxImportSource": "react",
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "noFallthroughCasesInSwitch": true
+        "noFallthroughCasesInSwitch": true,
+        "baseUrl": ".",
+        "paths": {
+            "@design/*": ["src/design/*"],
+            "@features/*": ["src/features/*"],
+            "@hooks/*": ["src/hooks/*"],
+            "@utils/*": ["src/utils/*"],
+            "@type/*": ["src/types/*"],
+            "@layouts/*": ["src/layouts/*"],
+            "@assets": ["src/assets/index.ts"],
+            "@assets/*": ["src/assets/*"],
+            "@content/*": ["src/content/*"]
+        }
     },
     "include": [".astro/types.d.ts", "**/*"],
     "exclude": ["dist", "node_modules"]

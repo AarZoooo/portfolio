@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react'
-import type { Footer as FooterContent } from '../../../types/portfolio'
+import type { Footer as FooterContent } from '@type/portfolio'
 import styles from './Footer.module.css'
 
 interface FooterProps {

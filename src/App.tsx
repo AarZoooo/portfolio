@@ -1,12 +1,12 @@
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
-import Navbar from './design/chrome/Navbar/Navbar'
-import Footer from './design/chrome/Footer/Footer'
-import CustomCursor from './design/chrome/CustomCursor/CustomCursor'
+import Navbar from '@design/chrome/Navbar/Navbar'
+import Footer from '@design/chrome/Footer/Footer'
+import CustomCursor from '@design/chrome/CustomCursor/CustomCursor'
 import PortfolioLayout from './layouts/PortfolioLayout/PortfolioLayout'
 import data from './data/data.json'
-import type { PortfolioData } from './types/portfolio'
-import useShortcuts from './hooks/useShortcuts'
+import type { PortfolioData } from '@type/portfolio'
+import useShortcuts from '@hooks/useShortcuts'
 
 const d = data as PortfolioData
 

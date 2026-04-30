@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { smoothScrollToId } from '../utils/smoothScroll'
+import { smoothScrollToId } from '@utils/smoothScroll'
 import { useTheme } from './useTheme'
 
 /**

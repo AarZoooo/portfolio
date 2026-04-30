@@ -154,6 +154,37 @@ bundle weight, raise it explicitly with a justification.
 6. **No render-blocking JS** in `<head>` except the inline FOUC-prevention
    script that sets `theme` / `data-paper` / `data-width` before paint.
 
+## Imports
+
+Use **path aliases for any cross-folder import.** Use relative `./` only
+for same-folder imports (e.g. `./Foo.module.css`, sibling files).
+
+Aliases (defined in `tsconfig.json` `paths`):
+
+| Alias | Resolves to | Use for |
+|---|---|---|
+| `@design/*` | `src/design/*` | tokens, primitives, chrome (shared design system) |
+| `@features/*` | `src/features/*` | sub-app-specific code |
+| `@hooks/*` | `src/hooks/*` | shared React hooks |
+| `@utils/*` | `src/utils/*` | shared utilities |
+| `@type/*` | `src/types/*` | shared TS types (singular — `@types/*` collides with DefinitelyTyped) |
+| `@layouts/*` | `src/layouts/*` | Astro layouts |
+| `@assets` | `src/assets/index.ts` | the asset resolver |
+| `@assets/*` | `src/assets/*` | individual asset files |
+| `@content/*` | `src/content/*` | content collections |
+
+**Why aliases over relatives:**
+
+- Survive file moves — a feature relocating from `src/features/foo/` to
+  somewhere deeper doesn't break its consumers.
+- Self-documenting — `@features/portfolio/Foo` makes the boundary visible
+  in every import line; `../../features/portfolio/Foo` does not.
+- Pair with the architectural boundary rule: a feature importing
+  `@features/<other>/...` is a violation visible at a glance.
+
+**Same-folder imports stay relative** because `./Foo` is shorter and
+clearer than aliasing your own neighbors.
+
 ## Code style
 
 1. **CSS Modules colocated** with components: `Component.tsx` next to
