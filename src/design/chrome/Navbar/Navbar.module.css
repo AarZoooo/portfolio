@@ -47,6 +47,9 @@
     align-items: center;
     height: var(--space-16);
     gap: var(--space-8);
+    /* Override .container's max-width: navbar should NOT respond to the
+       page-width toggle. Stays pinned to the wide content width regardless. */
+    max-width: var(--content-max-wide);
 }
 
 .left {
