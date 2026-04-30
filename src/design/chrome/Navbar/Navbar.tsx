@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTheme } from '@hooks/useTheme'
 import { smoothScrollToId } from '@utils/smoothScroll'
 import type { SubAppLink } from '@utils/navigation'
@@ -28,9 +28,8 @@ interface NavbarProps {
 function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
     const [scrolled, setScrolled] = useState(false)
     const [active, setActive] = useState<string | null>(null)
-    const [drawerOpen, setDrawerOpen] = useState(false)
+    const [menuOpen, setMenuOpen] = useState(false)
     const { theme, toggle } = useTheme()
-    const rightRef = useRef<HTMLDivElement>(null)
 
     const hasSections = !!sectionLinks && sectionLinks.length > 0
 
@@ -39,29 +38,22 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
         return currentPath === href || currentPath.startsWith(`${href}/`)
     }
 
-    // The current page's sub-app is reachable via the logo / slug, so we
-    // hide its right-side duplicate.
+    // Current page's sub-app is reachable via logo / slug — drop its duplicate.
     const visibleSubApps = subApps.filter((app) => !isSubAppActive(app.href))
     const hasSubApps = visibleSubApps.length > 0
 
-    // Drawer dismiss: click outside, escape, or successful navigation.
+    const openMenu = () => setMenuOpen(true)
+    const closeMenu = () => setMenuOpen(false)
+
+    // Escape closes the menu.
     useEffect(() => {
-        if (!drawerOpen) return
-        const onClickOutside = (e: MouseEvent) => {
-            if (rightRef.current && !rightRef.current.contains(e.target as Node)) {
-                setDrawerOpen(false)
-            }
-        }
+        if (!menuOpen) return
         const onKey = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') setDrawerOpen(false)
+            if (e.key === 'Escape') closeMenu()
         }
-        document.addEventListener('click', onClickOutside)
         document.addEventListener('keydown', onKey)
-        return () => {
-            document.removeEventListener('click', onClickOutside)
-            document.removeEventListener('keydown', onKey)
-        }
-    }, [drawerOpen])
+        return () => document.removeEventListener('keydown', onKey)
+    }, [menuOpen])
 
     useEffect(() => {
         const onScroll = () => {
@@ -105,6 +97,7 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
     const scrollTo = (id: string) => smoothScrollToId(id)
 
     return (
+        <>
         <header className={`${styles.bar} ${scrolled ? styles.scrolled : ''}`}>
             <div className={`${styles.inner} container`}>
                 <div className={styles.left}>
@@ -128,44 +121,31 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
                     </nav>
                 )}
 
-                <div className={styles.right} ref={rightRef}>
+                <div className={styles.right}>
                     {hasSubApps && (
                         <>
-                            <button
-                                type="button"
-                                onClick={() => setDrawerOpen((o) => !o)}
-                                aria-expanded={drawerOpen}
-                                aria-controls="subapp-drawer"
-                                aria-label={drawerOpen ? 'Close menu' : 'Open menu'}
-                                className={styles.hamburger}
-                            >
-                                {drawerOpen ? (
-                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M6 6l12 12M6 18L18 6" />
-                                    </svg>
-                                ) : (
-                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M4 7h16M4 12h16M4 17h16" />
-                                    </svg>
-                                )}
-                            </button>
-                            <ul
-                                id="subapp-drawer"
-                                className={`${styles.subApps} ${drawerOpen ? styles.subAppsOpen : ''}`}
-                                aria-label="Site sections"
-                            >
+                            <ul className={styles.subAppsInline} aria-label="Site sections">
                                 {visibleSubApps.map((app) => (
                                     <li key={app.href}>
-                                        <a
-                                            href={app.href}
-                                            onClick={() => setDrawerOpen(false)}
-                                            className={styles.subAppLink}
-                                        >
+                                        <a href={app.href} className={styles.subAppLink}>
                                             {app.label}
                                         </a>
                                     </li>
                                 ))}
                             </ul>
+
+                            <button
+                                type="button"
+                                onClick={openMenu}
+                                aria-expanded={menuOpen}
+                                aria-controls="subapp-menu"
+                                aria-label="Open menu"
+                                className={styles.hamburger}
+                            >
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M4 7h16M4 12h16M4 17h16" />
+                                </svg>
+                            </button>
                         </>
                     )}
 
@@ -189,6 +169,35 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
                 </div>
             </div>
         </header>
+
+            {hasSubApps && (
+                <div
+                    id="subapp-menu"
+                    className={`${styles.menuOverlay} ${menuOpen ? styles.menuOverlayOpen : ''}`}
+                    onClick={(e) => {
+                        if (e.target === e.currentTarget) closeMenu()
+                    }}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="Site navigation"
+                    aria-hidden={!menuOpen}
+                >
+                    <ul className={styles.menuList}>
+                        {visibleSubApps.map((app) => (
+                            <li key={app.href}>
+                                <a
+                                    href={app.href}
+                                    onClick={closeMenu}
+                                    className={styles.menuLink}
+                                >
+                                    {app.label}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+        </>
     )
 }
 

@@ -164,7 +164,7 @@
 
 /* === Sub-app links (top-level destinations) ====================== */
 
-.subApps {
+.subAppsInline {
     display: flex;
     align-items: center;
     gap: var(--space-3);
@@ -212,8 +212,8 @@
 }
 
 /* Narrow viewports: stack into two rows — brand+controls on top, section
-   anchors stretched across the bottom. Sub-apps collapse into a drawer
-   behind the hamburger. */
+   anchors stretched across the bottom. Sub-apps move into the modal
+   dialog (see below) reachable via the hamburger. */
 @media (--bp-narrow) {
     .inner {
         grid-template-columns: 1fr auto;
@@ -243,34 +243,79 @@
     .hamburger {
         display: inline-flex;
     }
-    /* Drawer anchors to .bar (the next positioned ancestor) so it drops
-       below the full navbar height at narrow — including the row-2
-       section anchors — instead of overlapping them. */
-    .subApps {
-        position: absolute;
-        top: 100%;
-        right: var(--content-gutter);
-        margin-top: var(--space-2);
-        padding: var(--space-3) var(--space-4);
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--space-2);
-        background: rgb(var(--paper) / 0.95);
-        backdrop-filter: blur(12px);
-        border-radius: var(--radius-md);
-        box-shadow: var(--shadow-md);
-        opacity: 0;
-        pointer-events: none;
-        transform: translateY(-4px);
-        transition:
-            opacity var(--duration-base) ease,
-            transform var(--duration-base) var(--ease-out);
+    .subAppsInline {
+        display: none;
     }
-    .subAppsOpen {
-        opacity: 1;
-        pointer-events: auto;
-        transform: translateY(0);
-    }
+}
+
+/* === Sub-app menu overlay (narrow only) ==========================
+   Full-screen backdrop blurs and dims the page. Backdrop and link color
+   are theme-invariant (same tokens the footer uses to stay dark in both
+   themes), so "dim" reads as dim regardless of which theme is active. */
+
+.menuOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-skip-link);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(var(--surface-dark) / 0);
+    backdrop-filter: blur(0);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        opacity var(--duration-base) ease,
+        background var(--duration-base) ease,
+        backdrop-filter var(--duration-base) ease,
+        visibility 0s linear var(--duration-base);
+}
+
+.menuOverlayOpen {
+    background: rgb(var(--surface-dark) / 0.4);
+    backdrop-filter: blur(10px);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition:
+        opacity var(--duration-base) ease,
+        background var(--duration-base) ease,
+        backdrop-filter var(--duration-base) ease,
+        visibility 0s linear 0s;
+}
+
+.menuList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    transform: translateY(var(--space-2));
+    opacity: 0;
+    transition:
+        transform var(--duration-medium) var(--ease-out),
+        opacity var(--duration-medium) ease;
+}
+
+.menuOverlayOpen .menuList {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.menuLink {
+    font-family: var(--font-mono);
+    font-size: var(--text-md);
+    font-weight: var(--weight-light);
+    color: rgb(var(--on-surface-dark));
+    text-decoration: none;
+    transition: opacity var(--duration-base) ease;
+}
+
+.menuLink:hover {
+    opacity: 0.7;
 }
 
 /* === Theme toggle ================================================ */
