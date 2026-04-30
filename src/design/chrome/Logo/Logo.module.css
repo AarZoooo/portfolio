@@ -31,6 +31,12 @@
     /* Optical baseline correction: Plex Mono sits lower than Kode Mono
        at the same font-size; nudge up so the two read as aligned. */
     transform: translateY(calc(var(--space-px) * -1));
+    /* Cap each segment so long/invalid paths can't crowd the navbar.
+       20ch fits typical post slugs; longer segments truncate with `…`. */
+    max-width: 20ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     color: var(--text-muted);
     text-decoration: none;
     transition: color var(--duration-base) ease;
