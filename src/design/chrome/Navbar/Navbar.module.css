@@ -50,6 +50,7 @@
 }
 
 .left {
+    grid-column: 1;
     display: flex;
     align-items: center;
     justify-self: start;
@@ -63,6 +64,7 @@
 }
 
 .right {
+    grid-column: 3;
     display: flex;
     align-items: center;
     gap: var(--space-2);
