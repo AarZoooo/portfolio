@@ -206,10 +206,40 @@
     color: rgb(var(--ink) / 0.95);
 }
 
-.code-copy .check-icon { display: none; }
-.code-copy.copied .copy-icon { display: none; }
-.code-copy.copied .check-icon { display: inline-block; }
-.code-copy.copied { color: rgb(var(--ink) / 0.95); }
+/* Copy/check icon swap — driven by [data-copied] (set by the shared copy
+   delegation in @utils/copy). Cross-fade via opacity, then [data-fading]
+   collapses the whole button while still showing the check. */
+.code-copy .copy-icon,
+.code-copy .check-icon {
+    transition: opacity var(--duration-base) ease;
+}
+
+.code-copy .check-icon {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+}
+
+.code-copy[data-copied] {
+    opacity: 1;
+    color: rgb(var(--ink) / 0.95);
+}
+
+.code-copy[data-copied] .copy-icon {
+    opacity: 0;
+}
+
+.code-copy[data-copied] .check-icon {
+    opacity: 1;
+}
+
+.code-copy[data-fading] {
+    opacity: 0;
+    transition: opacity var(--duration-medium) ease;
+}
 
 /* Horizontal rule */
 .prose hr {

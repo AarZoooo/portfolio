@@ -92,6 +92,8 @@ const formatDate = (date: Date): string =>
 
 <script>
     import { smoothScrollToId } from '@utils/smoothScroll'
+    import { attachClickCopyDelegation } from '@utils/copy'
+    import { copyIconHTML, checkIconHTML } from '@design/primitives/icons/icons'
 
     // Smooth-scroll any in-prose heading anchor (rehype-autolink-headings
     // wraps each heading in an <a class="heading-anchor" href="#slug">).
@@ -227,37 +229,22 @@ const formatDate = (date: Date): string =>
         })
     }
 
-    const COPY_FEEDBACK_MS = 1500
-
-    const COPY_ICON = `<svg class="copy-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`
-
-    const CHECK_ICON = `<svg class="check-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>`
-
-    function attachCopyButton(pre: HTMLElement): void {
+    // Inject [data-copy] copy buttons onto every code block. The actual
+    // click handling (clipboard write + animation) is owned by the shared
+    // copy delegation below — these buttons just expose the contract.
+    document.querySelectorAll<HTMLElement>('.prose pre').forEach((pre) => {
         if (pre.querySelector('.code-copy')) return
+        const code = pre.querySelector('code')?.textContent ?? ''
         const button = document.createElement('button')
         button.type = 'button'
         button.className = 'code-copy'
         button.setAttribute('aria-label', 'Copy code to clipboard')
-        button.innerHTML = COPY_ICON + CHECK_ICON
-        button.addEventListener('click', async () => {
-            const code = pre.querySelector('code')?.textContent ?? ''
-            try {
-                await navigator.clipboard.writeText(code)
-                button.classList.add('copied')
-                button.setAttribute('aria-label', 'Copied to clipboard')
-                window.setTimeout(() => {
-                    button.classList.remove('copied')
-                    button.setAttribute('aria-label', 'Copy code to clipboard')
-                }, COPY_FEEDBACK_MS)
-            } catch {
-                // Clipboard API unavailable (insecure context, blocked, etc.) — silent fail.
-            }
-        })
+        button.setAttribute('data-copy', code)
+        button.innerHTML = copyIconHTML() + checkIconHTML()
         pre.appendChild(button)
-    }
+    })
 
-    document.querySelectorAll<HTMLElement>('.prose pre').forEach(attachCopyButton)
+    attachClickCopyDelegation()
 </script>
 
 <style>
