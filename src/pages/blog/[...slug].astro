@@ -91,7 +91,7 @@ const formatDate = (date: Date): string =>
 </BaseLayout>
 
 <script>
-    import { smoothScrollToId } from '@utils/smoothScroll'
+    import { smoothScrollToId, easeInOutCubic } from '@utils/smoothScroll'
     import { attachClickCopyDelegation } from '@utils/copy'
     import { copyIconHTML, checkIconHTML } from '@design/primitives/icons/icons'
 
@@ -175,9 +175,6 @@ const formatDate = (date: Date): string =>
         wideMql.addEventListener('change', syncWideOpen)
 
         const ANIM_MS = 280
-        const ease = (t: number) =>
-            t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
-
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
         let animating = false
@@ -191,7 +188,7 @@ const formatDate = (date: Date): string =>
             const start = performance.now()
             const step = (now: number) => {
                 const p = Math.min((now - start) / ANIM_MS, 1)
-                const h = from + (to - from) * ease(p)
+                const h = from + (to - from) * easeInOutCubic(p)
                 details.style.height = `${h}px`
                 if (p < 1) requestAnimationFrame(step)
                 else {

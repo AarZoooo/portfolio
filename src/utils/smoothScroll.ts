@@ -1,4 +1,6 @@
-const easeInOutCubic = (t: number): number =>
+/** Cubic in/out — the canonical motion curve for the site. Reused
+ *  anywhere a scripted animation needs the same feel as smoothScrollToId. */
+export const easeInOutCubic = (t: number): number =>
     t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
 
 const SCROLL_DURATION_MS = 900
