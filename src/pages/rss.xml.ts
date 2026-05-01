@@ -10,11 +10,17 @@ export async function GET(context: APIContext) {
         .filter((post) => !post.data.draft)
         .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 
+    const site = context.site ?? new URL('https://aarju.dev')
+    const selfHref = new URL('/rss.xml', site).href
+
     return rss({
         title: SITE_TITLE,
         description: SITE_DESCRIPTION,
         // `context.site` reads astro.config.mjs `site` (https://aarju.dev).
-        site: context.site ?? 'https://aarju.dev',
+        site,
+        // The Atom namespace lets us declare a self-link so feed readers can
+        // round-trip back to this exact URL (W3C recommendation for RSS 2.0).
+        xmlns: { atom: 'http://www.w3.org/2005/Atom' },
         items: posts.map((post) => ({
             title: post.data.title,
             description: post.data.description,
@@ -22,6 +28,6 @@ export async function GET(context: APIContext) {
             link: `/blog/${post.id}/`,
             categories: post.data.tags,
         })),
-        customData: '<language>en-us</language>',
+        customData: `<atom:link href="${selfHref}" rel="self" type="application/rss+xml" /><language>en-us</language>`,
     })
 }
