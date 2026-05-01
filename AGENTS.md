@@ -21,39 +21,41 @@ Every detail is intentional. Match that voice when adding to it.
 - **IBM Plex Sans / Mono** typography
 - **Vercel** hosting via `@astrojs/vercel/static`
 
-> **Migration status (Apr 2026):** master is currently a Vite + React SPA
-> (tagged `v1-vite`). This file describes the *target* architecture being
-> built on the `webapp_v2` branch. When in doubt about which state applies,
-> check `git branch --show-current`.
+> The pre-Astro Vite + React SPA is preserved at the `v1-vite` tag for
+> reference / rollback. Anything in this file describes the current Astro
+> codebase.
 
 ## Architecture
 
 ```
 src/
 ├── design/                   # SHARED — importable from anywhere
-│   ├── tokens/               # CSS variables (colors, spacing, typography, paper, modes)
-│   ├── typography/           # prose.css for MDX content
-│   ├── primitives/           # reusable UI atoms (Expandable, QuirkyText)
-│   └── chrome/               # site shell (Navbar, Footer, CustomCursor, Shortcuts)
+│   ├── tokens/               # CSS variables (colors, spacing, typography, glass, paper, modes)
+│   ├── typography/           # prose.css for rendered MDX
+│   ├── primitives/           # reusable atoms (Expandable, QuirkyText, icons/)
+│   └── chrome/               # site shell (Navbar, Logo, Footer, CustomCursor, Shortcuts, InitialAttrs)
 │
 ├── features/                 # SUB-APP-SPECIFIC — private to each feature
-│   ├── portfolio/            # Hero, Experience, Skills, Projects, Education, Contact
-│   └── blog/                 # PostCard, TagPill, post-specific components
+│   └── portfolio/            # sections (Hero, Experience, Skills, Projects, Education, Contact),
+│                             # PortfolioLayout, data.json
 │
 ├── content/                  # typed content collections
-│   └── blog/                 # MDX posts
+│   ├── blog/                 # MDX posts
+│   └── content.config.ts     # Zod schema for frontmatter
 │
 ├── hooks/                    # shared hooks (useTheme, useShortcuts)
-├── utils/                    # shared utilities (smoothScroll, highlightMetrics, ...)
+├── utils/                    # shared utilities (smoothScroll, copy, navigation, highlightMetrics, …)
 ├── types/                    # shared TS types
-├── assets/                   # global asset resolver (logos, avatar, resume)
-├── layouts/                  # Astro layouts (BaseLayout, BlogPostLayout)
+├── assets/                   # logos, avatar, resume + asset resolver
+├── layouts/                  # BaseLayout.astro
 └── pages/                    # routes (file-based)
     ├── index.astro           # portfolio at /
+    ├── shortcuts.astro       # keyboard reference at /shortcuts
+    ├── 404.astro             # fallback
     ├── blog/
-    │   ├── index.astro
-    │   └── [...slug].astro
-    └── rss.xml.ts
+    │   ├── index.astro       # post listing
+    │   └── [...slug].astro   # individual post
+    └── rss.xml.ts            # RSS feed
 ```
 
 ### Boundary rules
@@ -97,8 +99,8 @@ Forbidden in this repo:
 
 **Allowed (these are framework / build / logic, not UI):**
 
-- Astro and `@astrojs/*` integrations.
-- Build-time tools: Shiki, MDX compiler, Vite (under Astro).
+- Astro and `@astrojs/*` integrations (`react`, `mdx`, `sitemap`, `rss`, `vercel`).
+- Build-time markdown plugins: Shiki, `rehype-slug`, `rehype-autolink-headings`.
 - Vendor SDKs: `@vercel/analytics`, `@vercel/speed-insights`.
 - Small focused logic utilities for non-UI concerns (date formatting,
   slugifying, etc.) — pick the smallest dependency that does the job.
@@ -212,7 +214,8 @@ catalog, extend the appropriate file rather than introducing a literal.
 | z-index | `--z-navbar/skip-link/cursor` | `tokens.css` |
 | Borders | `--border-hairline` | `tokens.css` |
 | Shadows | `--shadow-sm/md/xl` | `tokens.css` |
-| Layout | `--content-max`, `--content-gutter` | `tokens.css` |
+| Glow / Glass | `--glow-sm`, `--glass-bar`, `--glass-scrim`, `--glass-blur` | `tokens.css` |
+| Layout | `--content-max`, `--content-max-wide`, `--content-gutter` | `tokens.css` |
 | Typography | `--text-xs` through `--text-xl`, `--weight-*`, `--leading-*`, `--tracking-*`, font families | `typography.css` |
 | Breakpoints | `--bp-medium` (≤1024px), `--bp-narrow` (≤700px) | `breakpoints.css` |
 
@@ -226,11 +229,16 @@ needs the declarations in scope.
 Single-file magic numbers → file-local `const` at module top. Cross-file
 values → exported from `@utils/`. Existing examples:
 
-- `@utils/smoothScroll.ts` exports `NAVBAR_OFFSET_PX` (used by both
-  scroll callers and the keyboard-shortcut hook).
-- `Navbar.tsx` declares `LONG_PRESS_MS`, `CLOCK_TICK_MS`,
-  `NEAR_TOP_VIEWPORT_RATIO` (file-local).
-- `CustomCursor.tsx` declares `LERP_FACTOR` (file-local).
+- `@utils/smoothScroll.ts` exports `NAVBAR_OFFSET_PX` and the easing curve
+  reused by every scripted scroll on the site.
+- `@utils/copy.ts` owns the click-to-copy delegation and animation
+  contract (`[data-copy]`, `[data-copied]`, `[data-fading]`) shared by
+  the blog code blocks and the Contact section.
+- `@utils/navigation.ts` exports the `SUB_APPS` list consumed by the
+  Navbar.
+- `Logo.tsx` declares `HOLD_MS`, `HOLD_MOVE_THRESHOLD_PX` (file-local).
+- `CustomCursor.tsx` declares `BASE_SIZE`, `HOVER_SIZE`, `LERP_FACTOR`
+  (file-local).
 
 ### Magic strings
 
