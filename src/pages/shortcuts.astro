@@ -9,6 +9,7 @@ import Shortcuts from '@design/chrome/Shortcuts'
 import data from '@features/portfolio/data/data.json'
 import type { PortfolioData } from '@type/portfolio'
 import { SUB_APPS } from '@utils/navigation'
+import { withBuildDate } from '@utils/buildInfo'
 
 const d = data as PortfolioData
 
@@ -98,7 +99,7 @@ const groups: Group[] = [
         </section>
     </main>
 
-    <Footer footer={d.footer} client:idle />
+    <Footer footer={withBuildDate(d.footer)} client:idle />
 
     <Shortcuts client:idle />
 </BaseLayout>

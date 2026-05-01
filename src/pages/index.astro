@@ -16,6 +16,7 @@ import Contact from '@features/portfolio/sections/Contact/Contact'
 import data from '@features/portfolio/data/data.json'
 import type { PortfolioData } from '@type/portfolio'
 import { SUB_APPS } from '@utils/navigation'
+import { withBuildDate } from '@utils/buildInfo'
 
 const d = data as PortfolioData
 
@@ -48,7 +49,7 @@ const SECTION_LINKS = [
         <Contact heading={d.sections.contact} personal={d.personal} />
     </main>
 
-    <Footer footer={d.footer} client:idle />
+    <Footer footer={withBuildDate(d.footer)} client:idle />
 
     <Shortcuts client:idle />
 </BaseLayout>

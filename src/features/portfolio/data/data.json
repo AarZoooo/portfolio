@@ -36,8 +36,7 @@
         "meta": [
             "© 2026 Aarju Pal",
             "Typeset in IBM Plex",
-            "Built with Astro + React",
-            "Last updated May 2026"
+            "Built with Astro + React"
         ],
         "source": {
             "label": "View source on GitHub",
