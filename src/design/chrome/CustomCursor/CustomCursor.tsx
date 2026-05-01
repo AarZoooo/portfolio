@@ -89,9 +89,9 @@ function CustomCursor() {
             <div ref={dotRef} className={styles.dot} aria-hidden />
             <div ref={ringRef} className={styles.ring} aria-hidden />
             <div ref={nibRef} className={styles.nib} aria-hidden>
+                {/* Tip at top (writing point), neck at bottom. CSS fills the
+                    body and inverts the slit + breather on [data-cursor-hover]. */}
                 <svg viewBox="0 0 18 40" width="13" height="28" strokeLinecap="round" strokeLinejoin="round">
-                    {/* Outer nib body: tip at top (writing point), neck at bottom.
-                        Outline by default; hover fills via .nibBody/.nibFill swap. */}
                     <path
                         className={styles.nibBody}
                         d="M9 1 L17 24 L9 39 L1 24 Z"
@@ -99,8 +99,6 @@ function CustomCursor() {
                         stroke="currentColor"
                         strokeWidth="1.2"
                     />
-                    {/* Center slit running from just below the tip down through
-                        the body to the breather hole. */}
                     <line
                         className={styles.nibDetail}
                         x1="9" y1="5" x2="9" y2="22"
@@ -108,7 +106,6 @@ function CustomCursor() {
                         stroke="currentColor"
                         strokeWidth="1"
                     />
-                    {/* Breather hole at the bottom end of the slit. */}
                     <circle
                         className={styles.nibDetail}
                         cx="9" cy="25" r="1.6"
