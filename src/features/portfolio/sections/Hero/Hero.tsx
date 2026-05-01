@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState } from 'react'
 import type { Personal, Hero as HeroContent } from '@type/portfolio'
 import { smoothScrollToId } from '@utils/smoothScroll'
+import { assets } from '@assets'
 import styles from './Hero.module.css'
 
 interface HeroProps {
@@ -82,17 +83,23 @@ function Hero({ personal, hero }: HeroProps) {
                             </svg>
                         </a>
                     </li>
-                    <li>
-                        <a
-                            href={`mailto:${personal.email}`}
-                            aria-label="Email"
-                            className={styles.socialBtn}
-                        >
-                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden>
-                                <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z" />
-                            </svg>
-                        </a>
-                    </li>
+                    {assets.resume(personal.resume) && (
+                        <li>
+                            <a
+                                href={assets.resume(personal.resume)}
+                                target="_blank"
+                                rel="noreferrer"
+                                aria-label="Resume (PDF)"
+                                className={styles.socialBtn}
+                            >
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                                    <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+                                    <path d="M14 3v6h6" />
+                                    <path d="M9 13h6M9 17h6" />
+                                </svg>
+                            </a>
+                        </li>
+                    )}
                 </ul>
             </div>
 
