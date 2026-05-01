@@ -34,14 +34,14 @@
     font-size: var(--text-xs);
     font-weight: var(--weight-light);
     letter-spacing: var(--tracking-wide);
-    color: rgb(var(--on-surface-dark) / 0.45);
+    /* 0.55 alpha clears WCAG AA (~4.75:1) on the dark footer surface;
+       0.45 was visually fine but Lighthouse flagged it at ~4.4:1. */
+    color: rgb(var(--on-surface-dark) / 0.55);
 }
 
 .sep {
     margin: 0 var(--space-2);
-    /* WCAG AA wants 4.5:1 for body text; 0.45 alpha on the footer's dark
-       surface gives ~5:1. Keep this in sync with .meta. */
-    color: rgb(var(--on-surface-dark) / 0.45);
+    color: rgb(var(--on-surface-dark) / 0.55);
 }
 
 .source {

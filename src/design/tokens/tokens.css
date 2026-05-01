@@ -22,10 +22,11 @@
     /* Surface */
     --bg: rgb(var(--paper));
 
-    /* Text */
+    /* Text. Alphas tuned to clear WCAG AA (4.5:1) on the light page bg —
+       0.52 was visually right but landed at ~4.3:1 and failed Lighthouse. */
     --text: rgb(var(--ink) / 1);
     --text-secondary: rgb(var(--ink) / 0.72);
-    --text-muted: rgb(var(--ink) / 0.52);
+    --text-muted: rgb(var(--ink) / 0.6);
     --text-subtle: rgb(var(--ink) / 0.36);
 
     /* Accent = pure ink (monochrome accent) */
