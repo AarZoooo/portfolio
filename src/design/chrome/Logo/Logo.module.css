@@ -5,6 +5,7 @@
 }
 
 .brand {
+    position: relative;
     font-family: var(--font-display);
     font-size: var(--text-base);
     font-weight: var(--font-display-weight);
@@ -12,10 +13,44 @@
     color: var(--text);
     text-decoration: none;
     transition: filter var(--duration-base) ease;
+    /* Suppress mobile browsers' built-in long-press behavior (iOS callout,
+       Android selection menu) so our gesture wins. */
+    -webkit-touch-callout: none;
+    user-select: none;
 }
 
 .brand:hover {
     filter: drop-shadow(var(--glow-sm));
+}
+
+/* Long-press visual: an underline grows L→R during the hold. Snaps back
+   if released early; reaches full width exactly when paper mode toggles. */
+.brand::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -3px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.6;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--duration-base) ease;
+    pointer-events: none;
+}
+
+.brand.pressing::after {
+    transform: scaleX(1);
+    /* Match HOLD_MS in Logo.tsx (600ms). */
+    transition: transform 600ms linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .brand::after,
+    .brand.pressing::after {
+        transition: none;
+    }
 }
 
 .slugs {
