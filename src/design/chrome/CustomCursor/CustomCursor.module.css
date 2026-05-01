@@ -35,15 +35,29 @@
     display: none;
 }
 
-/* Pen nib — the always-on cursor in paper mode. Outlined at rest, fills
-   solid when hovering an interactive element. */
+/* Pen nib — the always-on cursor in paper mode.
+ *
+ * Color contract is "white through difference" instead of a fixed token,
+ * so the cursor inverts whatever's under it (page bg, footer, blockquote,
+ * code block — anything). Default mode's dot+ring use the same trick.
+ *
+ * Math:
+ *   body stroke  = white  → white − bg = inverse-bg  (visible on any bg)
+ *   body fill    = white  → same; on hover the silhouette = inverse-bg
+ *   detail stroke = black → black − bg = bg           (slit/breather show
+ *                                                       through the filled
+ *                                                       body as the original
+ *                                                       bg color, reading as
+ *                                                       cutouts)
+ */
 .nib {
     position: fixed;
     top: 0;
     left: 0;
     pointer-events: none;
     z-index: var(--z-cursor);
-    color: var(--text);
+    color: white;
+    mix-blend-mode: difference;
     opacity: 0;
     /* Pivot at the tip (top-center, ~2.5% from the top of the 18×40 box)
        so rotation keeps the writing point anchored to the cursor coords. */
@@ -57,11 +71,16 @@
     opacity: 1;
 }
 
-/* Fill the body on hover. Slit + breather stay outlined so the detail
-   reads as ink lines on a flat ink surface (a real inked nib). */
+/* Default: outlined nib, body fill empty. On hover the body fills white,
+   producing a solid inverse-bg silhouette; the detail strokes flip to
+   black so they read as cutouts through the difference. */
 .nibBody {
     fill: none;
     transition: fill var(--duration-base) ease;
+}
+
+.nibDetail {
+    transition: stroke var(--duration-base) ease;
 }
 
 :global([data-paper="on"][data-cursor-hover]) .nibBody {
@@ -69,7 +88,7 @@
 }
 
 :global([data-paper="on"][data-cursor-hover]) .nibDetail {
-    stroke: rgb(var(--paper));
+    stroke: black;
 }
 
 @media (hover: none) {
