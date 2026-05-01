@@ -3,10 +3,6 @@
 Open work for aarju.dev. Delete a line when it's done; no check marks, no
 "DONE" prefixes. The doc shrinks as work lands.
 
-## Soon
-
-- Submit sitemap to Google Search Console (`https://aarju.dev/sitemap-index.xml`)
-
 ## Performance
 
 - Self-host IBM Plex (separate `perf-fonts` branch). Drops Google Fonts as a
