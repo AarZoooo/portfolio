@@ -31,11 +31,14 @@ function isTouchOnlyDevice(): boolean {
 }
 
 function Hero({ personal, hero }: HeroProps) {
-    // First items are deterministic SSR fallbacks; useEffect rolls a fresh
-    // pick per page load on the client. Picking at SSG time would bake one
-    // tagline for the lifetime of the deploy.
+    // SSR uses deterministic first items so crawlers / screen readers see
+    // real content; useEffect swaps in a fresh random pick on each client
+    // load. `mounted` gates a fade-in so the swap never flickers visibly —
+    // the SSR'd value is rendered at opacity 0, then transitions to 1 once
+    // we've replaced it with the random pick.
     const [tagline, setTagline] = useState<string>(hero.taglines[0] ?? '')
     const [hint, setHint] = useState<string>('scroll')
+    const [mounted, setMounted] = useState(false)
 
     useEffect(() => {
         /* eslint-disable react-hooks/set-state-in-effect -- random per page load */
@@ -43,6 +46,7 @@ function Hero({ personal, hero }: HeroProps) {
         // Touch-only devices have no keyboard shortcuts — keyboard-teasing
         // hints would be misleading there.
         setHint(isTouchOnlyDevice() ? 'scroll' : pickRandom(hero.scrollHints, 'scroll'))
+        setMounted(true)
         /* eslint-enable react-hooks/set-state-in-effect */
     }, [hero.taglines, hero.scrollHints])
 
@@ -54,7 +58,7 @@ function Hero({ personal, hero }: HeroProps) {
                 <h1 className={styles.greeting}>
                     Hey, I'm <span className={styles.name}>{personal.name}</span>
                 </h1>
-                <p className={styles.tagline}>{tagline}</p>
+                <p className={styles.tagline} data-mounted={mounted ? '' : undefined}>{tagline}</p>
 
                 <ul className={styles.socials}>
                     <li>
@@ -103,7 +107,12 @@ function Hero({ personal, hero }: HeroProps) {
                 </ul>
             </div>
 
-            <button type="button" onClick={scrollToNext} className={styles.scrollHint}>
+            <button
+                type="button"
+                onClick={scrollToNext}
+                className={styles.scrollHint}
+                data-mounted={mounted ? '' : undefined}
+            >
                 <span>{renderHint(hint)}</span>
                 <span aria-hidden>↓</span>
             </button>

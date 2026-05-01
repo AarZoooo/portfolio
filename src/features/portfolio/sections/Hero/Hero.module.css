@@ -48,6 +48,14 @@
     font-weight: var(--weight-light);
     color: var(--text-secondary);
     min-height: 1.5em;
+    /* SSR'd value is invisible until React swaps in the random pick on
+       mount; the [data-mounted] attribute fades the final value in. */
+    opacity: 0;
+    transition: opacity var(--duration-medium) ease;
+}
+
+.tagline[data-mounted] {
+    opacity: 1;
 }
 
 .socials {
@@ -90,7 +98,16 @@
     align-items: center;
     gap: var(--space-2);
     white-space: nowrap;
-    transition: color var(--duration-base) ease;
+    /* Same fade-in pattern as .tagline — keeps the SSR placeholder
+       invisible until the touch-aware random hint is selected. */
+    opacity: 0;
+    transition:
+        color var(--duration-base) ease,
+        opacity var(--duration-medium) ease;
+}
+
+.scrollHint[data-mounted] {
+    opacity: 1;
 }
 
 .scrollHint:hover {
