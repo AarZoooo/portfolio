@@ -185,6 +185,10 @@
             {
                 "name": "Python",
                 "logo": "python"
+            },
+            {
+                "name": "SQL",
+                "logo": "sql"
             }
         ],
         "frameworks": [
@@ -206,6 +210,10 @@
             }
         ],
         "databases": [
+            {
+                "name": "MySQL",
+                "logo": "mysql"
+            },
             {
                 "name": "Milvus",
                 "logo": "milvus"
