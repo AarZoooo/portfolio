@@ -313,6 +313,8 @@ Examples:
 
 - **Read this file first.** Then read the closest module-level docs if
   they exist.
+- **Open work lives in [`ROADMAP.md`](ROADMAP.md).** Pick a line, ship it,
+  delete the line. The doc shrinks as work lands.
 - **Match existing patterns** before inventing new ones. If `Expandable`
   solves a similar problem, extend it; don't write a parallel component.
 - **Flag deviations.** If a task can't follow this charter, raise it
