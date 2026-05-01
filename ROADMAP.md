@@ -5,9 +5,7 @@ Open work for aarju.dev. Delete a line when it's done; no check marks, no
 
 ## Soon
 
-- Tag the launch: `git tag -a v2-astro -m "Astro migration shipped" && git push --tags`
 - Submit sitemap to Google Search Console (`https://aarju.dev/sitemap-index.xml`)
-- Delete stale local branches: `git branch -D paperize webapp_v2`
 
 ## Performance
 
