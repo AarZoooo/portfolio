@@ -1,6 +1,6 @@
 # aarju.dev
 
-Personal site at [aarju.dev](https://aarju.dev) — portfolio, blog, and a few
+Personal site at [aarju.dev](https://aarju.dev). Portfolio, blog, and a few
 other corners. Hand-built monochrome aesthetic, vim-flavored, zero clutter.
 
 ## Stack
@@ -23,7 +23,7 @@ npm run check      # type-check only
 npm run lint       # eslint
 ```
 
-A pre-commit hook runs `npm run lint` automatically — see `.githooks/`.
+A pre-commit hook runs `npm run lint` automatically; see `.githooks/`.
 `npm install` wires it up via the `prepare` script.
 
 ## Routes
@@ -41,13 +41,13 @@ A pre-commit hook runs `npm run lint` automatically — see `.githooks/`.
 
 ```
 src/
-├── design/                   # SHARED — importable from anywhere
+├── design/                   # SHARED, importable from anywhere
 │   ├── tokens/               # CSS variables (colors, spacing, typography, paper, glass, modes)
 │   ├── typography/           # prose.css for rendered MDX
 │   ├── primitives/           # reusable atoms (Expandable, icons)
 │   └── chrome/               # site shell (Navbar, Footer, CustomCursor, Logo, Shortcuts)
 │
-├── features/                 # SUB-APP-SPECIFIC — private to each feature
+├── features/                 # SUB-APP-SPECIFIC, private to each feature
 │   └── portfolio/            # sections, data.json, layout
 │
 ├── content/blog/             # MDX posts (typed via content.config.ts)
@@ -63,20 +63,20 @@ src/
 
 - Portfolio copy lives in [`src/features/portfolio/data/data.json`](src/features/portfolio/data/data.json).
   All text, taglines, skills, experience, projects, and education flow from
-  there. Edit freely — no code changes needed.
+  there. Edit freely; no code changes needed.
 - Blog posts live in [`src/content/blog/`](src/content/blog/) as `.mdx`.
   Frontmatter is type-checked by the schema in `src/content.config.ts`.
-  Drop a new file, set `pubDate`, write — it appears at `/blog`.
+  Drop a new file, set `pubDate`, write, and it appears at `/blog`.
 
 ## Design system
 
 Tokens live in [`src/design/tokens/`](src/design/tokens):
 
-- `tokens.css` — colors, spacing, durations, easings, radii, shadows, glass, layout
-- `typography.css` — font families, type scale, weights, leading, tracking
-- `breakpoints.css` — `--bp-medium`, `--bp-narrow` custom-media
-- `paper.css` — paper-mode treatment (toggle with `p`)
-- `modes.css` — narrow-column toggle (`w`)
+- `tokens.css`: colors, spacing, durations, easings, radii, shadows, glass, layout
+- `typography.css`: font families, type scale, weights, leading, tracking
+- `breakpoints.css`: `--bp-medium`, `--bp-narrow` custom-media
+- `paper.css`: paper-mode treatment (toggle with `p`)
+- `modes.css`: narrow-column toggle (`w`)
 
 Three orthogonal display modes layered onto the same content:
 
@@ -91,14 +91,14 @@ reference lives at [`/shortcuts`](https://aarju.dev/shortcuts).
 
 ## Architecture notes
 
-For everything else — boundary rules, library policy, accessibility,
-performance, code style, commit conventions — see [`AGENTS.md`](AGENTS.md).
+For everything else (boundary rules, library policy, accessibility,
+performance, code style, commit conventions), see [`AGENTS.md`](AGENTS.md).
 That file is the source of truth for how this codebase is built and
 extended.
 
 ## License
 
-Code in this repo is MIT-licensed — feel free to learn from it, copy
+Code in this repo is MIT-licensed. Feel free to learn from it, copy
 patterns, or run your own version. See [`LICENSE`](LICENSE).
 
 The **content** is not. Blog posts, the résumé PDF, the bio and project
@@ -106,4 +106,4 @@ copy in `data.json`, and any other text/image authored by me are
 copyrighted and reserved. Don't republish them as your own.
 
 If you want to use a substantial chunk of the design or content for
-something other than personal learning, reach out first — I'm friendly.
+something other than personal learning, reach out first. I'm friendly.
