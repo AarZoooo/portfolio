@@ -52,3 +52,63 @@ const SECTION_LINKS = [
 
     <Shortcuts client:idle />
 </BaseLayout>
+
+<script>
+    // Click-to-copy on Contact section values. Uses document-level event
+    // delegation so HMR / late React renders don't strand listeners.
+    // Falls back to execCommand when navigator.clipboard is unavailable
+    // or rejects (insecure context, document not focused, etc.).
+    const COPY_FEEDBACK_MS = 1500
+
+    async function copyText(text: string): Promise<boolean> {
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(text)
+                return true
+            }
+        } catch {
+            // fall through to legacy path
+        }
+        // Legacy fallback: an off-screen textarea + execCommand. Loud but reliable.
+        const ta = document.createElement('textarea')
+        ta.value = text
+        ta.setAttribute('readonly', '')
+        ta.style.position = 'fixed'
+        ta.style.opacity = '0'
+        document.body.appendChild(ta)
+        ta.select()
+        let ok = false
+        try {
+            ok = document.execCommand('copy')
+        } catch {
+            ok = false
+        }
+        document.body.removeChild(ta)
+        return ok
+    }
+
+    // CSS reads --duration-medium (280ms) for the tail-out fade. We hold
+    // the [data-copied] flag for COPY_FEEDBACK_MS, then add [data-fading]
+    // so the whole button fades out *while still showing the check*, and
+    // only after the fade do we strip both flags and reset.
+    const COPY_FADE_MS = 280
+
+    document.addEventListener('click', async (e) => {
+        const btn = (e.target as HTMLElement | null)?.closest<HTMLButtonElement>(
+            'button[data-copy]',
+        )
+        if (!btn) return
+        const text = btn.dataset.copy
+        if (!text) return
+        const ok = await copyText(text)
+        if (!ok) return
+        btn.setAttribute('data-copied', '')
+        window.setTimeout(() => {
+            btn.setAttribute('data-fading', '')
+            window.setTimeout(() => {
+                btn.removeAttribute('data-copied')
+                btn.removeAttribute('data-fading')
+            }, COPY_FADE_MS)
+        }, COPY_FEEDBACK_MS)
+    })
+</script>

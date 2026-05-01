@@ -51,18 +51,124 @@
     font-weight: var(--weight-light);
     color: var(--text);
     line-height: var(--leading-relaxed);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
 }
 
-.link {
+/* Copy icon button — fades in on row hover. Click smoothly cross-fades
+   to a checkmark for ~1.5s; on revert the whole button fades out while
+   still displaying the check (a [data-fading] phase) so the icon never
+   flips back to copy mid-view. */
+.copyBtn {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--space-6);
+    height: var(--space-6);
+    border-radius: var(--radius-sm);
+    opacity: 0;
+    transition:
+        opacity var(--duration-base) ease,
+        color var(--duration-base) ease;
+}
+
+.row:hover .copyBtn,
+.copyBtn:focus-visible {
+    opacity: 1;
+}
+
+/* Touch / coarse-pointer devices have no hover state. Keep the icon
+   persistently visible (slightly dimmed) so it stays discoverable. */
+@media (hover: none), (pointer: coarse) {
+    .copyBtn {
+        opacity: 0.5;
+    }
+}
+
+.copyBtn:hover {
+    color: var(--text);
+}
+
+.copyBtn:focus-visible {
+    outline: 2px solid rgb(var(--ink) / 0.2);
+    outline-offset: 2px;
+}
+
+/* Stack icons so they cross-fade cleanly. */
+.copyIcon,
+.checkIcon {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 14px;
+    height: 14px;
+    transition: opacity var(--duration-base) ease;
+}
+
+.copyIcon {
+    opacity: 1;
+}
+
+.checkIcon {
+    opacity: 0;
+    color: var(--text);
+}
+
+.copyBtn[data-copied] {
+    opacity: 1;
+    color: var(--text);
+}
+
+.copyBtn[data-copied] .copyIcon {
+    opacity: 0;
+}
+
+.copyBtn[data-copied] .checkIcon {
+    opacity: 1;
+}
+
+/* Tail-out: button itself fades while the check stays as the check. */
+.copyBtn[data-fading] {
+    opacity: 0;
+    transition: opacity var(--duration-medium) ease;
+}
+
+.labelLink {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
     color: inherit;
     text-decoration: none;
-    background-image: linear-gradient(currentColor, currentColor);
-    background-size: 0 1px;
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-    transition: background-size var(--duration-medium) ease;
+    transition: color var(--duration-base) ease;
 }
 
-.link:hover {
-    background-size: 100% 1px;
+.labelLink:hover {
+    color: var(--text);
+}
+
+.arrow {
+    font-size: 0.85em;
+    line-height: 1;
+    opacity: 0.5;
+    /* Optical correction: the ↗ glyph sits slightly below the label's
+       cap-line baseline, lift 2px so it reads centered at rest. Hover
+       overrides this with its own translate. */
+    transform: translateY(-1px);
+    transition:
+        opacity var(--duration-base) ease,
+        transform var(--duration-base) ease;
+}
+
+.labelLink:hover .arrow {
+    opacity: 1;
+    /* Subtle nudge along the arrow's direction. */
+    transform: translate(2px, -3px);
 }
