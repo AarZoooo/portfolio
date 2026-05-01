@@ -9,7 +9,7 @@
         "linkedin": "https://linkedin.com/in/aarjupal",
         "resume": "resume",
         "avatar": "avatar",
-        "summary": "Backend Software Engineer specialising in AI-driven systems and backend infrastructure, with production internship experience at PayPal and Rippling. At PayPal, built a LangGraph multi-agent system with Milvus that reduced ticket creation time by 92%; at Rippling, built backend frameworks and tooling now serving 560,000+ page saves/month across 78 countries."
+        "summary": "Backend Software Engineer. Built AI agents and platform frameworks at PayPal and Rippling. Java, Python, Spring Boot, Django, LangGraph."
     },
     "sections": {
         "experience": "Experience",
