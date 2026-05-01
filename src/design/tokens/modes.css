@@ -1,0 +1,19 @@
+/* Mode toggles — independent of paper mode.
+   Gated behind data-* attributes on <html>; see hooks/useShortcuts.ts
+   for the keyboard bindings. */
+
+/* ---- [w] Narrow reading column --------------------------------------
+   Tighter column width for a magazine/essay feel. Default (wide) stays
+   at --content-max-wide; narrow overrides --content-max. */
+:root[data-width="narrow"] {
+    --content-max: 720px;
+}
+
+/* On mobile / tablet, the viewport already constrains reading width —
+   forcing narrow on top makes wrapping awkward. Revert to the wide
+   default regardless of the data-width attribute. */
+@media (--bp-medium) {
+    :root[data-width="narrow"] {
+        --content-max: var(--content-max-wide);
+    }
+}

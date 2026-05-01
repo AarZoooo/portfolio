@@ -1,0 +1,131 @@
+/* Global resets and base element styles. */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Anything below the body — overscroll rubber-band, sub-pixel gap
+   under the last element — falls back to this color. Match the
+   footer's dark surface so the page ends on black, not a flash of
+   white. Paper mode retints --surface-dark via its token override. */
+html {
+    background: rgb(var(--surface-dark));
+}
+
+body {
+    /* Flex column with min-height pushes footer to viewport bottom on
+       short pages (e.g. /blog with no posts, or /404). */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-weight: var(--weight-light);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    overflow-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+main {
+    flex: 1;
+}
+
+code,
+kbd,
+pre,
+samp {
+    font-family: var(--font-mono);
+}
+
+button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Prevent drag ghosts on images. The mono-logo filter recolors images
+   for display, but the browser's drag preview uses the original pixels
+   — so dragging a grayscaled logo showed the colored version and broke
+   the monochrome immersion. Blocking drag across all images is fine
+   here (no use case for draggable portfolio imagery). */
+img {
+    -webkit-user-drag: none;
+    user-drag: none;
+    user-select: none;
+}
+
+/* Keyboard focus - visible ring (doesn't disturb layout). */
+:focus { outline: none; }
+:focus-visible {
+    outline: 2px solid var(--text);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+}
+
+/* Skip link - invisible until keyboard-focused. */
+.skip-link {
+    position: fixed;
+    top: var(--space-3);
+    left: var(--space-3);
+    padding: var(--space-2) var(--space-3-5);
+    background: var(--accent);
+    color: var(--accent-contrast);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    border-radius: var(--radius-md);
+    z-index: var(--z-skip-link);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-fast) ease;
+}
+
+.skip-link:focus {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Container - centered, capped at --content-max. */
+.container {
+    width: 100%;
+    max-width: var(--content-max);
+    margin-inline: auto;
+    padding-inline: var(--content-gutter);
+}
+
+/* Visually hide content while keeping it available to screen readers. */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Metric - bolder + full ink inside otherwise muted prose. */
+.metric {
+    font-weight: var(--weight-medium);
+    color: var(--text);
+}

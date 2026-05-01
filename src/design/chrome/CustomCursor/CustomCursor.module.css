@@ -1,0 +1,100 @@
+.hideNative,
+.hideNative * {
+    cursor: none !important;
+}
+
+.dot,
+.ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: var(--radius-circle);
+    pointer-events: none;
+    z-index: var(--z-cursor);
+    mix-blend-mode: difference;
+    will-change: transform;
+    transform: translate3d(-9999px, -9999px, 0);
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    background: white;
+}
+
+.ring {
+    width: 32px;
+    height: 32px;
+    border: var(--border-hairline) solid white;
+}
+
+/* Paper mode: hide the dot+ring entirely — the pen nib (below) is the
+   only cursor in this mode, both at rest and on hover. */
+:global([data-paper="on"]) .dot,
+:global([data-paper="on"]) .ring {
+    display: none;
+}
+
+/* Pen nib — the always-on cursor in paper mode.
+ *
+ * Color contract is "white through difference" instead of a fixed token,
+ * so the cursor inverts whatever's under it (page bg, footer, blockquote,
+ * code block — anything). Default mode's dot+ring use the same trick.
+ *
+ * Math:
+ *   body stroke  = white  → white − bg = inverse-bg  (visible on any bg)
+ *   body fill    = white  → same; on hover the silhouette = inverse-bg
+ *   detail stroke = black → black − bg = bg           (slit/breather show
+ *                                                       through the filled
+ *                                                       body as the original
+ *                                                       bg color, reading as
+ *                                                       cutouts)
+ */
+.nib {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: var(--z-cursor);
+    color: white;
+    mix-blend-mode: difference;
+    opacity: 0;
+    /* Pivot at the tip (top-center, ~2.5% from the top of the 18×40 box)
+       so rotation keeps the writing point anchored to the cursor coords. */
+    transform-origin: 50% 2.5%;
+    transform: translate3d(-9999px, -9999px, 0);
+    will-change: transform, opacity;
+    transition: opacity var(--duration-base) ease;
+}
+
+:global([data-paper="on"]) .nib {
+    opacity: 1;
+}
+
+/* Default: outlined nib, body fill empty. On hover the body fills white,
+   producing a solid inverse-bg silhouette; the detail strokes flip to
+   black so they read as cutouts through the difference. */
+.nibBody {
+    fill: none;
+    transition: fill var(--duration-base) ease;
+}
+
+.nibDetail {
+    transition: stroke var(--duration-base) ease;
+}
+
+:global([data-paper="on"][data-cursor-hover]) .nibBody {
+    fill: currentColor;
+}
+
+:global([data-paper="on"][data-cursor-hover]) .nibDetail {
+    stroke: black;
+}
+
+@media (hover: none) {
+    .dot,
+    .ring,
+    .nib {
+        display: none;
+    }
+}

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# post-merge: if a pull (or any merge) changed package(-lock).json,
+# run `npm install` so the working tree's deps match what was just merged.
+
+set -e
+
+changed="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD 2>/dev/null || true)"
+
+if echo "$changed" | grep -qE '(^|/)package(-lock)?\.json$'; then
+    echo "→ post-merge: package(-lock).json changed; running npm install..."
+    npm install
+fi

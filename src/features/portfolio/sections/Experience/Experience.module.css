@@ -1,0 +1,121 @@
+@import '@design/tokens/breakpoints.css';
+
+.experience {
+    padding: var(--space-24) 0;
+}
+
+.heading {
+    margin: 0 0 var(--space-12);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-8);
+}
+
+.primary {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-0-5);
+}
+
+.company {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2-5);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-medium);
+    color: var(--text);
+}
+
+.logo {
+    width: 1.1em;
+    height: 1.1em;
+    object-fit: contain;
+    filter: var(--mono-logo);
+}
+
+.role {
+    margin: 0;
+    font-size: var(--text-md);
+    font-weight: var(--weight-light);
+    color: var(--text-secondary);
+}
+
+.duration {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.bullets {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3-5);
+}
+
+.bullet {
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: var(--weight-light);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+}
+
+.tech {
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    color: var(--text-muted);
+}
+
+@media (--bp-medium) {
+    .head {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "name name"
+            "role date";
+        gap: var(--space-1) var(--space-4);
+        align-items: baseline;
+    }
+    .primary {
+        display: contents;
+    }
+    .company {
+        grid-area: name;
+    }
+    .role {
+        grid-area: role;
+    }
+    .duration {
+        grid-area: date;
+        justify-self: end;
+    }
+}

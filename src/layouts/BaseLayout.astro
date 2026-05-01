@@ -1,0 +1,123 @@
+---
+import InitialAttrs from '@design/chrome/InitialAttrs.astro'
+import '@design/tokens/index.css'
+import data from '@features/portfolio/data/data.json'
+import type { PortfolioData } from '@type/portfolio'
+
+interface Props {
+    title: string
+    description: string
+    canonical?: string
+    ogImage?: string
+    article?: {
+        publishedTime: string
+        modifiedTime?: string
+        tags?: string[]
+    }
+    noindex?: boolean
+    /** Per-page default content width. User can override via the `w`
+     *  shortcut, but each navigation lands on the page's stated default. */
+    defaultWidth?: 'wide' | 'narrow'
+}
+
+const SITE_URL = 'https://aarju.dev'
+
+const {
+    title,
+    description,
+    canonical = new URL(Astro.url.pathname, SITE_URL).href,
+    ogImage = '/og.png',
+    article,
+    noindex = false,
+    defaultWidth = 'wide',
+} = Astro.props
+
+const fullOgImage = ogImage.startsWith('http') ? ogImage : SITE_URL + ogImage
+
+// JSON-LD Person schema for the site owner. Tells Google "this site is by
+// a real person" so it can show a knowledge-panel-style result for name
+// searches. Fields pulled from data.json so the schema stays in sync with
+// the on-page bio.
+const d = data as PortfolioData
+const personSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: d.personal.name,
+    url: SITE_URL,
+    image: SITE_URL + '/apple-touch-icon.png',
+    jobTitle: d.personal.tagline,
+    worksFor: {
+        '@type': 'Organization',
+        name: d.experience[0]?.company ?? '',
+    },
+    sameAs: [d.personal.github, d.personal.linkedin],
+}
+---
+
+<!doctype html>
+<html lang="en" data-width={defaultWidth}>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonical} />
+        <link rel="alternate" type="application/rss+xml" title="aarju.dev — Blog" href="/rss.xml" />
+        <link rel="sitemap" href="/sitemap-index.xml" />
+        {noindex && <meta name="robots" content="noindex,nofollow" />}
+
+        <meta property="og:type" content={article ? 'article' : 'website'} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={fullOgImage} />
+        <meta property="og:site_name" content="aarju.dev" />
+        <meta property="og:locale" content="en_US" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={canonical} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={fullOgImage} />
+
+        {
+            article && (
+                <>
+                    <meta property="article:published_time" content={article.publishedTime} />
+                    {article.modifiedTime && (
+                        <meta property="article:modified_time" content={article.modifiedTime} />
+                    )}
+                    {article.tags?.map((tag) => <meta property="article:tag" content={tag} />)}
+                </>
+            )
+        }
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;500;700&family=IBM+Plex+Sans:wght@300;500;700&family=Kode+Mono:wght@400;500&display=swap"
+        />
+
+        <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+
+        <InitialAttrs />
+    </head>
+    <body>
+        <a href="#main" class="skip-link">Skip to content</a>
+        <slot />
+
+        <script>
+            import { inject } from '@vercel/analytics'
+            import { injectSpeedInsights } from '@vercel/speed-insights'
+            inject()
+            injectSpeedInsights()
+        </script>
+    </body>
+</html>

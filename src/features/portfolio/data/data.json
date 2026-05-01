@@ -1,0 +1,263 @@
+{
+    "personal": {
+        "name": "Aarju Pal",
+        "tagline": "Software Engineer | Backend & AI Systems",
+        "email": "aarju.pal1234@gmail.com",
+        "phone": "+91 790 863 6536",
+        "location": "Bangalore, India",
+        "github": "https://github.com/AarZoooo",
+        "linkedin": "https://linkedin.com/in/aarjupal",
+        "resume": "resume",
+        "avatar": "avatar",
+        "summary": "Backend Software Engineer. Built AI agents and platform frameworks at PayPal and Rippling. Java, Python, Spring Boot, Django, LangGraph."
+    },
+    "sections": {
+        "experience": "Experience",
+        "skills": "Skills",
+        "projects": "Projects",
+        "education": "Education",
+        "contact": "Contact"
+    },
+    "footer": {
+        "taglines": [
+            "You've reached the end of my portfolio.",
+            "That's all I've got. For now.",
+            "Vibecoded with ~~love~~ claude.",
+            "Brewed with too much coffee.",
+            "Runs on caffeine and stubborn optimism.",
+            "You've read enough already.",
+            "If you're still here, just email me already.",
+            "Thanks for scrolling through my life choices.",
+            "process.exit(0)",
+            "Rest of the story is in person.",
+            "Still here? Let's talk.",
+            "This is the part where recruiters usually leave."
+        ],
+        "meta": [
+            "© 2026 Aarju Pal",
+            "Typeset in IBM Plex",
+            "Built with Astro + React"
+        ],
+        "source": {
+            "label": "View source on GitHub",
+            "href": "https://github.com/AarZoooo/portfolio"
+        },
+        "links": [
+            { "label": "Keyboard shortcuts", "href": "/shortcuts" }
+        ]
+    },
+    "hero": {
+        "taglines": [
+            "A Backend Engineer",
+            "An Agentic Backend Engineer",
+            "A Software Engineer",
+            "An Engineer, mostly Backend",
+            "A vim user by default",
+            "Stitching backends with AI glue",
+            "Born to backend, forced to prompt",
+            "Raised on REST, now writing prompts"
+        ],
+        "scrollHints": [
+            "scroll",
+            "scroll",
+            "scroll",
+            "scroll",
+            "scroll",
+            "scroll",
+            "scroll",
+            "Why don't you **t**oggle the theme?",
+            "You might want to change **w**idth",
+            "might not need the mouse here",
+            "VIM users are welcome here",
+            "**p**aper might feel nice"
+        ]
+    },
+    "experience": [
+        {
+            "company": "Rippling People Center Inc.",
+            "role": "Software Engineer Intern",
+            "duration": "Nov 2025 – May 2026",
+            "logo": "rippling",
+            "summary": [
+                "Migrated 183 employee data fields across 20+ countries from a class-per-field legacy system to a unified, JSON-defined field framework.",
+                "Owned two complexity-5 migrations in the project, including a US regulatory compensation field rolled out over 8 staged PRs."
+            ],
+            "detail": [
+                "Rippling's legacy field system was deep in object-oriented sprawl. Every input field was its own class, with separate parallel classes for workflows, profile pages, and bulk flows. No standardization; the same concept lived in five places at once, and drift between them was constant. The new framework defines a field once as JSON and dynamically generates the object on any page; custom logic routes through a single lambda override registry. I migrated 183 fields into it, many of them country-agnostic, so my work sits on systems serving 560,000+ page saves per month and $114.25M in EOR ARR across 78 countries. Changes that used to mean threading through multiple classes now happen in one definition. Engineers and PMs both pick up the time.",
+                "The harder of the two migrations targets one of Rippling's oldest compensation fields, with five separate class implementations: US domestic, global EOR, global DH, profile, and bulk. Each had subtly different behavior for the same concept. Unifying them into one definition was hard because the stakes are high. It's a monetary, country-agnostic field, so any logical error could block hiring and job-transition flows, or silently drop compensation data if the field failed to render. Typical migrations in this project run 100 to 1000 lines in a single PR. Mine have landed closer to 4,000 lines each, and 5 of the planned 8 are done so far: tests first, then unifying constants and strings to enums, then migrating each variant group, then small alignment fixes, then moving eligible data to DB, then merging the unified variants. Each step could be reviewed, tested, and reverted on its own.",
+                "Rippling runs a week-long Quality Week, and I submitted the Conditionality Engine as an idea; four teammates joined and we built it together. It's a declarative rules system that replaces the growing pile of lambda overrides. Today there are 2,300+ of them in our registry, most shaped like 'if this then that'. The engine lets you compose and reuse those conditions as Rules, written through a UI instead of code. Each rule gets a plain-English explanation, a tree view of its structure, and a simulator that takes custom input values and shows live evaluation. It won the Foundational Fixes category at the company-wide event."
+            ],
+            "tech": [
+                "Python",
+                "Django",
+                "MCP",
+                "Buildkite",
+                "Jira"
+            ]
+        },
+        {
+            "company": "PayPal India Pvt. Ltd.",
+            "role": "Software Engineer Intern",
+            "duration": "May 2025 – Aug 2025",
+            "logo": "paypal",
+            "summary": [
+                "Designed an AI-driven Change Management PoC using Python, LangGraph, and Milvus, reducing ticket creation time by 90%.",
+                "Built backend automation tools and MCP integrations, reducing developer friction by 8,000 hours/month.",
+                "Developed and shipped Java Spring Boot REST APIs for backend services across QA and production environments as part of the full SDLC."
+            ],
+            "detail": [
+                "PayPal's Change Management process ran through a form that engineers filled out by hand: action plans, verification plans, revert plans, all typed manually with no AI in the loop and no reference to past tickets. Plan quality varied wildly. Good writers left clear tickets; bad writers left ones that hurt whoever had to revert or verify from them later. Devs felt it on recovery; SREs felt it when digging through history. I built an AI PoC that read only the good examples from past tickets and generated draft plans for new ones, plus a couple of adjacent use cases. Raise the floor on ticket quality before anything human saw it.",
+                "The second track was automating GitHub-domain RITM tickets away from manual handling. That meant analyzing the existing ticket load, categorizing by type, picking the highest-ROI candidates, writing design docs, coordinating with the GitHub team to get the endpoints we needed, building the automations in internal code, wrapping them as MCP tools, and rolling the whole thing through QA and Prod. The scale of what it replaced: 8,000 hours per month of ticket-resolver time on GitHub RITMs alone. Now workflows trigger emails, software moves the pieces, approvals happen in email, and a dashboard shows progress.",
+                "The automation ran on two Java Spring Boot applications we owned. The first exposed the APIs that the MCP tools called and hosted a Flowable engine that orchestrated each workflow. The engine routed through to the second application, which called the GitHub APIs. I designed and built the Flowable workflows myself. Full SDLC on both apps across QA and Prod."
+            ],
+            "tech": [
+                "Java",
+                "Spring Boot",
+                "Python",
+                "LangGraph",
+                "Milvus"
+            ]
+        }
+    ],
+    "education": [
+        {
+            "institution": "Chandigarh University",
+            "degree": "Bachelor of Engineering (B.E.), Computer Science",
+            "duration": "July 2022 – June 2026",
+            "logo": ""
+        }
+    ],
+    "projects": [
+        {
+            "name": "Conditionality Engine",
+            "context": "Rippling",
+            "date": "March 2026",
+            "logo": "rippling",
+            "github": "",
+            "live": "",
+            "summary": [
+                "Built a declarative rules engine on Django REST that lets non-engineers change field behavior in 5 minutes via a UI.",
+                "Replaces 2,300+ hand-written Python lambda overrides with composable, database-stored rules that support plain-English explanations and live simulation."
+            ],
+            "detail": [
+                "Field behavior in Rippling's new framework was meant to live in JSON definitions, but whenever the definition didn't quite cover a case, engineers dropped in a Python lambda override. Over time this stopped being an escape hatch and started being the norm. The same small patterns repeated across fields, and any behavior change meant touching code. Our team maintained most of them. PMs felt it from the other side: a change that should have been a config tweak cost an engineering cycle because the logic only lived in code.",
+                "The engine is built on Django REST, the existing Rippling stack. The UI has three panels: a plain-English explanation of what the rule does, an indented tree view of its structure, and a simulator that takes sample inputs and evaluates the rule against them live. The tree's edit button opens the Rule composer, a fully dynamic, backend-driven form that knows what operators, operands, and nesting each field supports. The simulator stays connected to the draft the composer is editing, so you can see how a rule behaves before saving it.",
+                "The engine sits at priority 3 in the field-resolution middleware chain, behind the existing JSON definition and override layers. Teams opt in one field at a time, and the old override path stays as a fallback. To size the target, we ran an AI pass over the 2,300+ overrides in the registry: about 1,200 (50%+) are directly migrateable to Rules as-is, and adding regex and feature-flag support pushes projected coverage to 70 to 80%."
+            ],
+            "tech": [
+                "Python",
+                "Django",
+                "REST"
+            ]
+        },
+        {
+            "name": "AI-Driven Change Management Automation",
+            "context": "PayPal",
+            "date": "July 2025",
+            "logo": "paypal",
+            "github": "",
+            "live": "",
+            "summary": [
+                "Designed and built an internal AI-driven backend system using Python to automate creation, validation, and enrichment of change management tickets.",
+                "Built a LangGraph-driven agent plugged into PayPal's internal multi-agent orchestration platform, with a Milvus vector store for semantic retrieval over past tickets.",
+                "Reduced average ticket creation time from 1 hour to 5 minutes (92% reduction), significantly improving engineering productivity and operational efficiency."
+            ],
+            "detail": [
+                "The Change Management form at PayPal was entirely manual. Engineers typed action plans, verification plans, and revert plans by hand, and the only way to reference a past ticket was to go find it yourself. Everyone in the chain felt the cost: engineers writing the plans, PMs coordinating around them, and anyone later trying to revert or verify from someone else's prose. A poorly-written ticket meant real engineering time spent reconstructing intent that should have been explicit in the first place.",
+                "The system is a single LangGraph-driven agent hosted on PayPal's internal multi-agent orchestration platform, with a Milvus vector store as the retrieval corpus. To build that corpus, I ran a heuristic evaluator over all 300,000 past change tickets: failed tickets scored an immediate 0, and the rest scored 1 to 10 on description quality. The high scorers became 'golden tickets', written back to the store with their scores as metadata so retrieval could prefer proven examples. The agent has a small toolset: look up a specific ticket, fetch high-scored random tickets, find tickets semantically similar to a query ticket, and generate draft plans for a query ticket from the retrieved examples.",
+                "This shipped as a PoC, not production. The entire project landed in roughly a month, so there were deliberate cuts. One of them was evaluation: instead of building an AI-based quality scorer, I wrote a heuristic algorithm that compared generated plans against the hand-written ones and showed a 100% improvement in description quality. Enough to validate the concept and make the case for a production version, even with a richer evaluation layer out of scope for the sprint."
+            ],
+            "tech": [
+                "Python",
+                "LangGraph",
+                "Milvus",
+                "RAG"
+            ]
+        }
+    ],
+    "skills": {
+        "languages": [
+            {
+                "name": "Java",
+                "logo": "java"
+            },
+            {
+                "name": "Python",
+                "logo": "python"
+            },
+            {
+                "name": "SQL",
+                "logo": "sql"
+            }
+        ],
+        "frameworks": [
+            {
+                "name": "Spring Boot",
+                "logo": "spring-boot"
+            },
+            {
+                "name": "Django",
+                "logo": "django"
+            },
+            {
+                "name": "LangGraph",
+                "logo": "langgraph"
+            },
+            {
+                "name": "MCP",
+                "logo": "mcp"
+            }
+        ],
+        "databases": [
+            {
+                "name": "MySQL",
+                "logo": "mysql"
+            },
+            {
+                "name": "Milvus",
+                "logo": "milvus"
+            }
+        ],
+        "tools": [
+            {
+                "name": "Git",
+                "logo": "git"
+            },
+            {
+                "name": "GitHub",
+                "logo": "github"
+            },
+            {
+                "name": "Postman",
+                "logo": "postman"
+            },
+            {
+                "name": "Buildkite",
+                "logo": "buildkite"
+            },
+            {
+                "name": "Linux",
+                "logo": "linux"
+            },
+            {
+                "name": "Jira",
+                "logo": "jira"
+            },
+            {
+                "name": "Confluence",
+                "logo": "confluence"
+            }
+        ],
+        "concepts": [
+            "Agentic AI",
+            "RAG",
+            "Vector Databases",
+            "Backend Systems",
+            "REST APIs",
+            "Microservices",
+            "CI/CD",
+            "Developer Tooling",
+            "Agile/Scrum"
+        ]
+    }
+}

@@ -1,0 +1,339 @@
+@import '@design/tokens/breakpoints.css';
+
+.bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-navbar);
+    background: var(--glass-bar);
+    backdrop-filter: blur(var(--glass-blur));
+    transition: box-shadow var(--duration-medium) ease, background var(--duration-medium) ease;
+    animation: navbar-in var(--duration-slower) ease-out both;
+}
+
+/* Opacity-only fade — a translate would create a new containing block
+   and break position: fixed. */
+@keyframes navbar-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bar { animation: none; }
+}
+
+/* Paper mode: drop the glass blur for a flat printed feel. */
+:global([data-paper="on"]) .bar {
+    background-color: var(--bg);
+    background-image: var(--noise);
+    background-repeat: repeat;
+    backdrop-filter: none;
+}
+
+.bar.scrolled {
+    box-shadow: var(--shadow-sm);
+}
+
+:global([theme="dark"][data-paper="on"]) .bar.scrolled {
+    box-shadow: var(--shadow-md);
+}
+
+.inner {
+    display: grid;
+    /* minmax(0, 1fr) instead of 1fr — locks side columns to their fr share so
+       expanding content (e.g. sub-app text) doesn't push the center nav. */
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    height: var(--space-16);
+    gap: var(--space-8);
+    /* Override .container's max-width: navbar should NOT respond to the
+       page-width toggle. Stays pinned to the wide content width regardless. */
+    max-width: var(--content-max-wide);
+}
+
+.left {
+    grid-column: 1;
+    display: flex;
+    align-items: center;
+    justify-self: start;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    justify-self: center;
+}
+
+.right {
+    grid-column: 3;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    justify-self: end;
+}
+
+/* === Hamburger (narrow only) ===================================== */
+
+.hamburger {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--space-7);
+    height: var(--space-7);
+    color: var(--text);
+    transition: color var(--duration-base) ease;
+}
+
+.hamburger:hover {
+    color: var(--text-secondary);
+}
+
+.hamburger svg {
+    display: block;
+}
+
+/* === Section anchors (page-local nav) ============================ */
+
+.navLink {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 11ch;
+    overflow: hidden;
+    padding: var(--space-1-5) var(--space-1-5);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    color: var(--text-secondary);
+    transition:
+        width var(--duration-slower) var(--ease-spring),
+        color var(--duration-base) ease,
+        font-weight var(--duration-base) ease;
+}
+
+.navLink:hover {
+    color: var(--text);
+}
+
+.navActive {
+    color: var(--text);
+    font-weight: var(--weight-medium);
+}
+
+/* `position: relative` anchors each label's underline to the label's own
+   width, so short words like `skl` don't overshoot the button. */
+.labelLong,
+.labelShort {
+    position: relative;
+    white-space: nowrap;
+    transition: opacity var(--duration-medium) ease;
+}
+
+.labelShort {
+    position: absolute;
+    opacity: 0;
+}
+
+.labelLong::after,
+.labelShort::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -3px;
+    height: var(--border-hairline);
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform var(--duration-medium) var(--ease-out);
+}
+
+.navLink:hover .labelLong::after,
+.navLink:hover .labelShort::after {
+    transform: scaleX(1);
+}
+
+@media (--bp-medium) {
+    .navLink { width: 4ch; }
+    .labelLong { opacity: 0; }
+    .labelShort { opacity: 1; }
+}
+
+/* === Sub-app links (top-level destinations) ====================== */
+
+.subAppsInline {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.subAppLink {
+    position: relative;
+    display: inline-block;
+    padding: var(--space-1) 0;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--duration-base) ease;
+}
+
+.subAppLink::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--border-hairline);
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform var(--duration-medium) var(--ease-out);
+}
+
+.subAppLink:hover {
+    color: var(--text);
+}
+
+.subAppLink:hover::after {
+    transform: scaleX(1);
+}
+
+.subAppActive {
+    color: var(--text);
+    font-weight: var(--weight-medium);
+}
+
+/* Narrow viewports: stack into two rows — brand+controls on top, section
+   anchors stretched across the bottom. Sub-apps move into the modal
+   dialog (see below) reachable via the hamburger. */
+@media (--bp-narrow) {
+    .inner {
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+        height: auto;
+        padding-top: var(--space-2);
+        padding-bottom: var(--space-2);
+        row-gap: var(--space-2);
+    }
+    .left {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .right {
+        grid-column: 2;
+        grid-row: 1;
+    }
+    .center {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        justify-self: stretch;
+        justify-content: space-between;
+        gap: 0;
+        padding: 0 var(--space-3);
+    }
+
+    .hamburger {
+        display: inline-flex;
+    }
+    .subAppsInline {
+        display: none;
+    }
+}
+
+/* === Sub-app menu overlay (narrow only) ==========================
+   Full-screen backdrop blurs and dims the page. Backdrop and link color
+   are theme-invariant (same tokens the footer uses to stay dark in both
+   themes), so "dim" reads as dim regardless of which theme is active. */
+
+.menuOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-skip-link);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(var(--surface-dark) / 0);
+    backdrop-filter: blur(0);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        opacity var(--duration-base) ease,
+        background var(--duration-base) ease,
+        backdrop-filter var(--duration-base) ease,
+        visibility 0s linear var(--duration-base);
+}
+
+.menuOverlayOpen {
+    background: var(--glass-scrim);
+    backdrop-filter: blur(var(--glass-blur));
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition:
+        opacity var(--duration-base) ease,
+        background var(--duration-base) ease,
+        backdrop-filter var(--duration-base) ease,
+        visibility 0s linear 0s;
+}
+
+.menuList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    transform: translateY(var(--space-2));
+    opacity: 0;
+    transition:
+        transform var(--duration-medium) var(--ease-out),
+        opacity var(--duration-medium) ease;
+}
+
+.menuOverlayOpen .menuList {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.menuLink {
+    font-family: var(--font-sans);
+    font-size: var(--text-md);
+    font-weight: var(--weight-medium);
+    color: rgb(var(--on-surface-dark));
+    text-decoration: none;
+    transition: opacity var(--duration-base) ease;
+}
+
+.menuLink:hover {
+    opacity: 0.7;
+}
+
+/* === Theme toggle ================================================ */
+
+.toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--space-7);
+    height: var(--space-7);
+    margin-left: var(--space-5);
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    color: var(--accent-contrast);
+    box-shadow: var(--shadow-xl);
+    transition: background var(--duration-base) ease, color var(--duration-base) ease;
+}
+
+.toggle svg {
+    display: block;
+}

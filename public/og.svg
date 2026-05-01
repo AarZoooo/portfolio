@@ -2,15 +2,15 @@
   <rect width="1200" height="630" fill="#ffffff"/>
 
   <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" fill="#000000">
-    <text x="600" y="280" font-size="48" font-weight="300" text-anchor="middle" letter-spacing="-1">
+    <text x="600" y="280" font-size="56" font-weight="300" text-anchor="middle" letter-spacing="-1">
       Hey, I'm <tspan font-weight="500">Aarju Pal</tspan>
     </text>
-    <text x="600" y="350" font-size="36" font-weight="300" fill="#555555" text-anchor="middle">
-      Backend systems. Smarter agents.
+    <text x="600" y="360" font-size="32" font-weight="300" fill="#555555" text-anchor="middle">
+      Backend Software Engineer · AI · Systems
     </text>
 
-    <text x="600" y="580" font-size="20" font-weight="300" fill="#999999" text-anchor="middle" letter-spacing="2">
-      AARJU.VERCEL.APP
+    <text x="600" y="580" font-size="22" font-weight="300" fill="#999999" text-anchor="middle" letter-spacing="3">
+      AARJU.DEV
     </text>
   </g>
 </svg>

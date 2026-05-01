@@ -1,0 +1,29 @@
+---
+// Pre-paint script that sets `theme` from localStorage so dark-mode
+// visitors don't flash light. Mirror any change in @hooks/useTheme.getInitial().
+---
+
+<script is:inline>
+    ;(function () {
+        try {
+            const stored = localStorage.getItem('theme')
+            const theme =
+                stored === 'light' || stored === 'dark'
+                    ? stored
+                    : matchMedia('(prefers-color-scheme: dark)').matches
+                      ? 'dark'
+                      : 'light'
+            document.documentElement.setAttribute('theme', theme)
+        } catch (_) {
+            // localStorage blocked (private mode, etc.) — fall back to system pref.
+            try {
+                const theme = matchMedia('(prefers-color-scheme: dark)').matches
+                    ? 'dark'
+                    : 'light'
+                document.documentElement.setAttribute('theme', theme)
+            } catch (__) {
+                // matchMedia unavailable — leave the attribute unset; CSS default applies.
+            }
+        }
+    })()
+</script>

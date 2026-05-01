@@ -1,34 +1,41 @@
+// Astro returns image metadata `{ src, ... }` for processed assets;
+// raw Vite returns URL strings. Normalize either shape to the URL.
+type AssetValue = string | { src: string }
+
 const companyLogoModules = import.meta.glob('./logos/companies/*.{svg,png}', {
     eager: true,
     import: 'default',
-}) as Record<string, string>
+}) as Record<string, AssetValue>
 
 const schoolLogoModules = import.meta.glob('./logos/schools/*.{svg,png}', {
     eager: true,
     import: 'default',
-}) as Record<string, string>
+}) as Record<string, AssetValue>
 
 const techLogoModules = import.meta.glob('./logos/tech/*.{svg,png}', {
     eager: true,
     import: 'default',
-}) as Record<string, string>
+}) as Record<string, AssetValue>
 
 const avatarModules = import.meta.glob('./avatar/*.{svg,png,jpg,jpeg}', {
     eager: true,
     import: 'default',
-}) as Record<string, string>
+}) as Record<string, AssetValue>
 
 const resumeModules = import.meta.glob('./resume/*.pdf', {
     eager: true,
     import: 'default',
-}) as Record<string, string>
+}) as Record<string, AssetValue>
 
-const byBasename = (mods: Record<string, string>): Record<string, string> => {
+const toUrl = (value: AssetValue): string =>
+    typeof value === 'string' ? value : value.src
+
+const byBasename = (mods: Record<string, AssetValue>): Record<string, string> => {
     const out: Record<string, string> = {}
-    for (const [path, url] of Object.entries(mods)) {
+    for (const [path, value] of Object.entries(mods)) {
         const file = path.slice(path.lastIndexOf('/') + 1)
         const base = file.replace(/\.[^.]+$/, '')
-        out[base] = url
+        out[base] = toUrl(value)
     }
     return out
 }

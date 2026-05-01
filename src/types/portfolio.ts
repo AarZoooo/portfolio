@@ -72,6 +72,7 @@ export interface Footer {
         label: string
         href: string
     }
+    links?: { label: string; href: string }[]
 }
 
 export interface SectionHeadings {
