@@ -1,6 +1,8 @@
 ---
 import InitialAttrs from '@design/chrome/InitialAttrs.astro'
 import '@design/tokens/index.css'
+import data from '@features/portfolio/data/data.json'
+import type { PortfolioData } from '@type/portfolio'
 
 interface Props {
     title: string
@@ -31,6 +33,25 @@ const {
 } = Astro.props
 
 const fullOgImage = ogImage.startsWith('http') ? ogImage : SITE_URL + ogImage
+
+// JSON-LD Person schema for the site owner. Tells Google "this site is by
+// a real person" so it can show a knowledge-panel-style result for name
+// searches. Fields pulled from data.json so the schema stays in sync with
+// the on-page bio.
+const d = data as PortfolioData
+const personSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: d.personal.name,
+    url: SITE_URL,
+    image: SITE_URL + '/apple-touch-icon.png',
+    jobTitle: d.personal.tagline,
+    worksFor: {
+        '@type': 'Organization',
+        name: d.experience[0]?.company ?? '',
+    },
+    sameAs: [d.personal.github, d.personal.linkedin],
+}
 ---
 
 <!doctype html>
@@ -83,6 +104,8 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : SITE_URL + ogImage
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;500;700&family=IBM+Plex+Sans:wght@300;500;700&family=Kode+Mono:wght@400;500&display=swap"
         />
+
+        <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 
         <InitialAttrs />
     </head>
