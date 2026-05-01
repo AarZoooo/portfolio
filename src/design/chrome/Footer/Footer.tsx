@@ -40,6 +40,14 @@ function Footer({ footer }: FooterProps) {
                 </p>
 
                 <p className={styles.source}>
+                    {footer.links?.map((link) => (
+                        <span key={link.href}>
+                            <a href={link.href} className={styles.link}>
+                                {link.label}
+                            </a>
+                            <span className={styles.sep}>·</span>
+                        </span>
+                    ))}
                     <a href={footer.source.href} target="_blank" rel="noreferrer" className={styles.link}>
                         {footer.source.label} <span aria-hidden>↗</span>
                     </a>

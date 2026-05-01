@@ -6,24 +6,8 @@ const SHORTCUT_SCROLL_DURATION_MS = 600
 const PROBE_VIEWPORT_RATIO = 0.3
 
 /**
- * Global keyboard shortcuts. Intentionally undocumented in-app — the only
- * discovery mechanism is the rotating hint under the hero. The vault stays
- * sealed; visitors find shortcuts by experimenting.
- *
- * Navigation (vim):
- *   gg      scroll to top
- *   G       scroll to bottom
- *   j / k   next / previous section
- *   d / u   half-viewport down / up
- *   H       jump to 25% of the document
- *   M       jump to 50%
- *   L       jump to 75%
- *
- * Modes:
- *   t       toggle theme (light / dark)
- *   p       toggle paper mode
- *   w       toggle narrow reading column
- *
+ * Global keyboard shortcuts. The full list lives at /shortcuts; the rotating
+ * hint under the hero is the discovery surface for anyone landing fresh.
  * Typing inputs / modifier keys (Cmd/Ctrl/Alt) are always ignored.
  * Two-key sequences (gg) expire after a short window.
  */

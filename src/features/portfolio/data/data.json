@@ -42,7 +42,10 @@
         "source": {
             "label": "View source on GitHub",
             "href": "https://github.com/AarZoooo/portfolio"
-        }
+        },
+        "links": [
+            { "label": "Keyboard shortcuts", "href": "/shortcuts" }
+        ]
     },
     "hero": {
         "taglines": [
