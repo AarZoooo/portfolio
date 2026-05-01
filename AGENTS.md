@@ -309,6 +309,45 @@ Examples:
 - `fix(hero): randomize tagline pick on client mount`
 - `perf(navbar): debounce scroll-spy observer`
 
+## Where things live
+
+Common edits and the files they touch.
+
+| Task | Where |
+|---|---|
+| Update text content (bio, taglines, experience, projects, skills, footer) | `src/features/portfolio/data/data.json` |
+| Replace the résumé PDF | `src/assets/resume/resume.pdf` (filename must stay; resolved by `@assets`) |
+| Swap an avatar / logo | `src/assets/avatar/` or `public/favicon.png` (then re-run the favicon generator if needed) |
+| Add a tech / company / school logo | `src/assets/logos/{tech,companies,schools}/<name>.svg`, then reference by `name` in `data.json` |
+| Add or edit a section (Hero / Experience / etc.) | `src/features/portfolio/sections/<Name>/` |
+| Add a new sub-app (e.g. `/notes`) | `src/features/<name>/` + `src/pages/<name>/` (see "Sub-app expansion" above) |
+| Change a design token (color, spacing, duration, glass, breakpoint) | `src/design/tokens/*` |
+| Edit blog prose styling | `src/design/typography/prose.css` |
+| Add a keyboard shortcut | `src/hooks/useShortcuts.ts` (and add a row to `src/pages/shortcuts.astro`) |
+| Tweak the navbar | `src/design/chrome/Navbar/` |
+| Tweak the footer (taglines, meta, links) | `data.json` for content; `src/design/chrome/Footer/` for layout |
+| Edit a blog post | `src/content/blog/*.mdx` |
+| Change the per-post frontmatter schema | `src/content.config.ts` |
+| Adjust per-page `<head>` (title, og, jsonld, fonts) | `src/layouts/BaseLayout.astro` |
+| Change site-wide motion curve / scroll behavior | `src/utils/smoothScroll.ts` (`easeInOutCubic` is reused everywhere) |
+| Adjust click-to-copy animation timing | `src/utils/copy.ts` |
+
+## Deploy & rollback
+
+- **Deploy:** push to `master` → Vercel auto-builds and deploys to
+  `aarju.dev` in ~30–60s. No manual step. Build status visible on the
+  Vercel dashboard.
+- **Preview deploys:** every push to a non-master branch (or PR) gets
+  its own URL `aarju-git-<branch>-<team>.vercel.app`. Useful for testing
+  before merging.
+- **Rollback:** `v1-vite` and `v2-astro` tags mark known-good states.
+  To roll back, `git checkout <tag>` and redeploy that commit from the
+  Vercel dashboard (Deployments → find the tagged commit → "Promote to
+  Production").
+- **Tag a new release:** after a meaningful milestone, tag with the
+  pattern `vN-<short-name>` and push: `git tag -a v3-foo -m "..."` then
+  `git push --tags`.
+
 ## Working with this repo
 
 - **Read this file first.** Then read the closest module-level docs if
