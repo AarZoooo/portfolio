@@ -16,8 +16,17 @@ Open work for aarju.dev. Delete a line when it's done; no check marks, no
 
 ## Authoring & content
 
-- Build a publishing UI so blog posts don't require `git commit && git push`
-  (markdown editor + live preview + publish to repo).
+- Build a self-hosted admin UI for the site. Hand-rolled (matches the rest
+  of the codebase — no Decap / Tina / vendored CMS). Scope:
+  - Auth (own implementation, single-user).
+  - Markdown editor with live preview for blog posts; publish flow lands
+    them in `src/content/blog/`.
+  - Edit profile content (`data.json`): bio, taglines, experience,
+    projects, skills, contact links, footer.
+  - Replace the résumé PDF.
+  - Storage decision pending: stay git-backed via the GitHub API, or
+    attach a DB (free tiers like Supabase / Neon / Turso). Either works;
+    pick when scope is clearer.
 - Write the first real blog post.
 
 ## Blog features (defer until they earn their place)
