@@ -4,6 +4,7 @@ import styles from './CustomCursor.module.css'
 function CustomCursor() {
     const dotRef = useRef<HTMLDivElement>(null)
     const ringRef = useRef<HTMLDivElement>(null)
+    const nibRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         const canHover = window.matchMedia('(hover: hover)').matches
@@ -25,6 +26,7 @@ function CustomCursor() {
 
         const dot = dotRef.current
         const ring = ringRef.current
+        const nib = nibRef.current
 
         const tick = () => {
             rx += (tx - rx) * LERP_FACTOR
@@ -37,6 +39,11 @@ function CustomCursor() {
                 ring.style.height = `${size}px`
                 ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`
             }
+            // Anchor the nib's tip (top-center) at the cursor; rotate slightly
+            // anti-clockwise so the body angles down-right like a held pen.
+            // CSS .nib transform-origin pins the pivot at the tip.
+            if (nib)
+                nib.style.transform = `translate3d(${tx}px, ${ty}px, 0) translate(-50%, 0) rotate(-20deg)`
             raf = requestAnimationFrame(tick)
         }
 
@@ -45,14 +52,21 @@ function CustomCursor() {
             ty = e.clientY
         }
 
+        const isInteractive = (t: HTMLElement | null) =>
+            !!t && !!t.closest('a, button, [role="button"]')
+
         const onOver = (e: MouseEvent) => {
-            const t = e.target as HTMLElement | null
-            if (t && t.closest('a, button, [role="button"]')) hovering = true
+            if (isInteractive(e.target as HTMLElement | null)) {
+                hovering = true
+                document.documentElement.setAttribute('data-cursor-hover', '')
+            }
         }
 
         const onOut = (e: MouseEvent) => {
-            const t = e.target as HTMLElement | null
-            if (t && t.closest('a, button, [role="button"]')) hovering = false
+            if (isInteractive(e.target as HTMLElement | null)) {
+                hovering = false
+                document.documentElement.removeAttribute('data-cursor-hover')
+            }
         }
 
         window.addEventListener('mousemove', onMove)
@@ -65,6 +79,7 @@ function CustomCursor() {
             window.removeEventListener('mousemove', onMove)
             document.removeEventListener('mouseover', onOver)
             document.removeEventListener('mouseout', onOut)
+            document.documentElement.removeAttribute('data-cursor-hover')
             document.documentElement.classList.remove(styles.hideNative)
         }
     }, [])
@@ -73,6 +88,36 @@ function CustomCursor() {
         <>
             <div ref={dotRef} className={styles.dot} aria-hidden />
             <div ref={ringRef} className={styles.ring} aria-hidden />
+            <div ref={nibRef} className={styles.nib} aria-hidden>
+                <svg viewBox="0 0 18 40" width="13" height="28" strokeLinecap="round" strokeLinejoin="round">
+                    {/* Outer nib body: tip at top (writing point), neck at bottom.
+                        Outline by default; hover fills via .nibBody/.nibFill swap. */}
+                    <path
+                        className={styles.nibBody}
+                        d="M9 1 L17 24 L9 39 L1 24 Z"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.2"
+                    />
+                    {/* Center slit running from just below the tip down through
+                        the body to the breather hole. */}
+                    <line
+                        className={styles.nibDetail}
+                        x1="9" y1="5" x2="9" y2="22"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1"
+                    />
+                    {/* Breather hole at the bottom end of the slit. */}
+                    <circle
+                        className={styles.nibDetail}
+                        cx="9" cy="25" r="1.6"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1"
+                    />
+                </svg>
+            </div>
         </>
     )
 }

@@ -28,44 +28,54 @@
     border: var(--border-hairline) solid white;
 }
 
-/* Paper mode: swap the dot+ring for a classic text I-beam. The dot
-   becomes the vertical stroke; its ::before / ::after are the top and
-   bottom serifs. Ring is hidden — the I-beam reads as a printed caret
-   and doesn't need a ring for hover. Direct ink, no blend tricks. */
-:global([data-paper="on"]) .dot {
-    mix-blend-mode: normal;
-    width: var(--border-hairline);
-    height: 18px;
-    background: var(--text);
-    border-radius: 0;
-}
-
-:global([data-paper="on"]) .dot::before,
-:global([data-paper="on"]) .dot::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    width: 7px;
-    height: var(--border-hairline);
-    background: var(--text);
-    transform: translateX(-50%);
-}
-
-:global([data-paper="on"]) .dot::before {
-    top: 0;
-}
-
-:global([data-paper="on"]) .dot::after {
-    bottom: 0;
-}
-
+/* Paper mode: hide the dot+ring entirely — the pen nib (below) is the
+   only cursor in this mode, both at rest and on hover. */
+:global([data-paper="on"]) .dot,
 :global([data-paper="on"]) .ring {
     display: none;
 }
 
+/* Pen nib — the always-on cursor in paper mode. Outlined at rest, fills
+   solid when hovering an interactive element. */
+.nib {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: var(--z-cursor);
+    color: var(--text);
+    opacity: 0;
+    /* Pivot at the tip (top-center, ~2.5% from the top of the 18×40 box)
+       so rotation keeps the writing point anchored to the cursor coords. */
+    transform-origin: 50% 2.5%;
+    transform: translate3d(-9999px, -9999px, 0);
+    will-change: transform, opacity;
+    transition: opacity var(--duration-base) ease;
+}
+
+:global([data-paper="on"]) .nib {
+    opacity: 1;
+}
+
+/* Fill the body on hover. Slit + breather stay outlined so the detail
+   reads as ink lines on a flat ink surface (a real inked nib). */
+.nibBody {
+    fill: none;
+    transition: fill var(--duration-base) ease;
+}
+
+:global([data-paper="on"][data-cursor-hover]) .nibBody {
+    fill: currentColor;
+}
+
+:global([data-paper="on"][data-cursor-hover]) .nibDetail {
+    stroke: rgb(var(--paper));
+}
+
 @media (hover: none) {
     .dot,
-    .ring {
+    .ring,
+    .nib {
         display: none;
     }
 }
