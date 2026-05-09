@@ -11,11 +11,12 @@ import data from '@features/portfolio/data/data.json'
 import type { PortfolioData } from '@type/portfolio'
 import { SUB_APPS } from '@utils/navigation'
 import { withBuildDate } from '@utils/buildInfo'
+import { isTemplateBlogPostId } from '@utils/blogContent'
 
 const d = data as PortfolioData
 
 const posts = (await getCollection('blog'))
-    .filter((post) => !post.data.draft && !post.id.includes('BLOG_TEMPLATE'))
+    .filter((post) => !post.data.draft && !isTemplateBlogPostId(post.id))
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 
 const formatDate = (date: Date): string =>

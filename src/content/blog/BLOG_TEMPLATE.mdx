@@ -1,0 +1,69 @@
+---
+title: "Hello, blog playground"
+description: "A visible MDX starter post for checking the blog layout before real writing begins."
+pubDate: 2026-05-09
+draft: false
+tags:
+  - meta
+  - template
+---
+
+import { Image } from 'astro:assets'
+import sampleBlogImage from '@assets/blog/chris-kursikowski-rQ3yO2GnO_M-unsplash.jpg'
+
+This is a temporary visible post. It exists to exercise the blog page, the
+post layout, the table of contents, and the MDX typography without using the
+reserved template filename.
+
+Replace this opening with the actual thesis of the post. Keep it direct: what
+changed, why it matters, and what the reader should carry forward.
+
+## Shape
+
+Use a short first section to state the context. Avoid turning the intro into a
+tour of the page; the reader is already here.
+
+Good posts on this site should feel like engineering notes that survived a few
+rounds of deletion. Leave the useful parts. Cut the throat-clearing.
+
+## Notes
+
+Use lists when the rhythm needs them:
+
+- One idea per bullet.
+- Prefer concrete nouns over soft claims.
+- Keep each item short enough to scan.
+
+Use paragraphs when the reasoning needs a little air. The typography is tuned
+for narrow reading, so dense prose will show quickly.
+
+<Image
+    src={sampleBlogImage}
+    alt="High-resolution sample photograph used to test blog image rendering"
+/>
+
+### Trade-off
+
+When a post has a trade-off, name it plainly. For example, build-time work
+keeps the browser quiet, but it can make the authoring path stricter.
+
+> A good constraint should remove decisions, not hide them.
+
+## Code
+
+Code blocks get highlighted at build time and receive a copy button on the
+client.
+
+```ts
+const visiblePostFilename = 'hello-blog-playground.mdx'
+const reservedTemplateMarker = 'BLOG_TEMPLATE'
+
+export const shouldRenderInBlogIndex = !visiblePostFilename.includes(
+    reservedTemplateMarker,
+)
+```
+
+## Closing
+
+End with the smallest useful conclusion. If the post needs a next step, make it
+specific. If it does not, stop cleanly.

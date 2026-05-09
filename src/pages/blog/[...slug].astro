@@ -12,12 +12,13 @@ import data from '@features/portfolio/data/data.json'
 import type { PortfolioData } from '@type/portfolio'
 import { SUB_APPS } from '@utils/navigation'
 import { withBuildDate } from '@utils/buildInfo'
+import { isTemplateBlogPostId } from '@utils/blogContent'
 import '@design/typography/prose.css'
 
 const d = data as PortfolioData
 
 export const getStaticPaths = (async () => {
-    const posts = (await getCollection('blog')).filter((post) => !post.id.includes('BLOG_TEMPLATE'))
+    const posts = (await getCollection('blog')).filter((post) => !isTemplateBlogPostId(post.id))
     return posts.map((post) => ({
         params: { slug: post.id },
         props: { post },
