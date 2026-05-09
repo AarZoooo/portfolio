@@ -411,13 +411,17 @@ const formatDate = (date: Date): string =>
 
     .toc-text {
         min-width: 0;
+        display: -webkit-box;
         overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow-wrap: anywhere;
     }
 
     .post-header {
         margin-bottom: var(--space-12);
+        padding-bottom: var(--space-8);
+        border-bottom: var(--border-hairline) solid rgb(var(--ink) / 0.12);
     }
 
     .post-date {
