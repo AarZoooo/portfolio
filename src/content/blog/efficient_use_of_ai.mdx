@@ -1,0 +1,303 @@
+---
+title: "How I actually use coding agents"
+description: "The AI workflows that survived real engineering work: durable context, scoped delegation, explicit review, and tool-connected reporting."
+pubDate: 2026-05-10
+draft: false
+tags:
+  - ai
+  - engineering
+  - agents
+---
+
+import { Image } from 'astro:assets'
+import image from '@assets/blog/pexels_code-ai-context-menu.jpg'
+
+<Image
+  src={image}
+  alt="An image showing an AI context menu on some code"
+/>
+
+AI became genuinely useful to me once I stopped treating it like smarter autocomplete.
+
+Autocomplete helps with local problems. It writes the next function, fills repetitive code, and speeds up small edits. The bigger productivity jump came from using AI as an operational layer around engineering work, not just writing code.
+
+Holding context. Running checks. Coordinating parallel tasks. Updating documentation. Collecting evidence. Keeping repetitive loops moving without constantly stealing attention. These are the patterns that consistently worked for me.
+
+## Keep a durable scratchpad
+
+At the start of longer AI sessions, I usually ask the agent to create a markdown file somewhere temporary like `/tmp/session-context.md`. That file becomes the working memory for the session.
+
+It contains:
+
+- goals
+- assumptions
+- commands already run
+- findings
+- open questions
+- failing tests
+- pending tasks
+- links
+- decisions made during the session
+
+This sounds boring. That is why it works.
+
+Chat history is fragile. Sessions get compacted. Context gets summarized. Important details disappear quietly. Sometimes the model still sounds confident while forgetting why a decision was made two hours earlier.
+
+A markdown file is much less sophisticated, but it is stable. The agent can continuously read from it and update it throughout the session. If I need to restart the session entirely, the context survives.
+
+It also makes review easier. Instead of reconstructing the reasoning from chat history, I can inspect one evolving document.
+
+```md
+# session-context
+
+## Goal
+- Create a functional UI for configurability of dynamic component behaviour
+
+## Findings
+- Control Center exists and should host this UI
+- Existing values are static placeholders
+- Backend should own all business logic
+
+## To Do
+- [x] Scan UI library for reusable components
+- [x] Plan structure and layout
+- [x] Define backend endpoints
+- [ ] Implement frontend UI
+- [ ] Write frontend and backend tests
+
+## In Progress
+- Implementing the UI
+
+## Completion Criteria
+- UI matches requirements
+- tests pass
+- frontend stays presentation-only
+```
+
+The exact format does not matter. The important part is that the session has durable state outside the chat window.
+
+## Build reusable operational skills
+
+Another thing that changed my workflows completely was building reusable Claude skills.
+
+Over time, I started collecting markdown instruction files for recurring tasks:
+
+- debugging patterns
+- frontend cleanup
+- PR preparation
+- release validation
+- test writing
+- migration work
+- architecture review
+- reporting workflows
+
+Instead of repeatedly re-explaining expectations, constraints, style, verification steps, and operational habits, I could attach a skill and instantly bootstrap a much more reliable session.
+
+The compounding effect became huge. Once the skills existed, I could spin up fresh agents on barely initialized branches and let them work in parallel across completely separate workstreams while sharing the same operational behavior.
+
+The branch itself stayed lightweight. The real leverage came from the accumulated workflow knowledge encoded into those reusable instruction files. That changed agents from "temporary assistants" into something much closer to reusable operational workers.
+
+This became especially powerful with cloud agents. I could create multiple isolated branches, attach the same skills, assign narrowly scoped tasks, and let them execute independently in parallel:
+
+- one branch handling tests
+- one cleaning a module
+- one fixing CI
+- one preparing migrations
+- one validating rollout behavior
+
+The productivity improvement was honestly absurd. Not because the agents became smarter, but because startup cost and coordination overhead collapsed.
+
+There are definitely more sophisticated systems for this. Better orchestration layers. Better memory systems. Better agent coordination frameworks. A lot of what I currently use is still intentionally low-tech: markdown files, reusable instruction files, isolated branches, explicit task boundaries. I simply never felt enough pressure to replace the workflows once they became reliable.
+
+The important part was not building the most advanced agent setup possible. It was building one that stayed understandable under real engineering pressure.
+
+## Split work explicitly
+
+For larger work, I do not like giving one giant task to one agent. I prefer a parent-worker setup.
+
+One session owns the global context:
+
+- current state
+- constraints
+- risks
+- architecture
+- rollout concerns
+- what success looks like
+
+That session does not necessarily write code. Its job is coordination. The actual implementation work gets split into smaller scoped tasks:
+
+- one agent investigates a failing test
+- one updates a small module
+- one handles coverage
+- one follows CI failures
+- one prepares cleanup commits
+- one verifies documentation
+
+Each task stays bounded and reviewable.
+
+This worked especially well for me during my internship at *Rippling*, where there were usually too many moving pieces to keep everything strictly serial. I could establish direction, create branches, define boundaries, and let agents handle isolated mechanical work in parallel.
+
+At one point I was coordinating more than 30 small scoped PRs across parallel workstreams without losing track of them. That only worked because the work stayed explicit.
+
+I *still* reviewed diffs.  
+I *still* decided what was correct.  
+I *still* integrated the final result.
+
+The agents reduced coordination overhead and repetitive execution work. I avoid workflows where delegation is hidden behind a single parent agent.
+
+Some systems can spawn subagents internally without showing what was delegated, what context was provided, or what intermediate reasoning happened. I rarely trust those workflows for important work. Once delegation becomes invisible, review quality drops quickly. Visible delegation makes failures diagnosable.
+
+## Give agents narrow ownership
+
+Agents perform much better when the task boundary is sharp.
+
+Broad prompts like:
+
+```text
+Fix this feature.
+```
+
+usually produce messy results. Tasks become much more reliable when they contain:
+
+- a clear goal
+- a clear boundary
+- a clear verification step
+
+For example:
+
+```text
+Update the blog dynamic route so draft posts are not generated.
+Only touch src/pages/blog/[...slug].astro.
+Run npm run check and report whether /blog/<draft-slug> is still generated.
+```
+
+That is small enough to execute and small enough to review.
+
+I learned this mostly from failure. Early on, I would give agents overly broad tasks and let them modify large parts of the codebase. The result was often technically functional but operationally terrible:
+
+- unrelated files changed
+- diffs became noisy
+- tests passed while behavior subtly regressed
+- review took longer than doing the work manually
+
+The agent was not necessarily wrong, the boundary was. This became especially important during a research-heavy project at *PayPal*.
+
+Near the end of my internship, I was building a proof of concept around tooling I barely understood when I started: retrieval pipelines, agent orchestration, tool calling, and workflow graphs. The project only became manageable once I stopped thinking about it as "build an AI system" and started reducing it into narrow stages:
+
+- understand the data
+- structure retrieval
+- expose tools
+- wire execution flow
+- verify outputs
+- tighten constraints
+
+The useful part was not that AI magically built the system. The useful part was that it accelerated iteration while the problem itself was still becoming clear.
+
+## Automate the operational loops
+
+The most valuable AI workflows I use are often not code generation. They are the repetitive operational loops around engineering work.
+
+During my internship at *Rippling*, I regularly used agents to keep status reporting synchronized across systems like:
+
+- JIRA
+- Confluence
+- Google Sheets
+- Slack notes
+
+For example, weekly summaries could automatically collect:
+
+- completed work
+- blocked tasks
+- pending follow-ups
+- PR state
+- rollout status
+
+None of this work is individually difficult. The problem is context switching. Engineering work constantly generates administrative exhaust:
+
+- tickets
+- CI failures
+- review comments
+- release notes
+- status updates
+- dashboards
+- progress tracking
+
+Individually small, collectively distracting. AI works well here because the inputs are structured and the expected output format is usually clear. The goal is not avoiding responsibility, the goal is preserving attention for decisions that actually require engineering judgment.
+
+## Connect the systems where work already exists
+
+One of the more useful workflows I built near the end of my internship at *Rippling* was around collecting and reconstructing work history. Normally this is tedious. You end up manually searching:
+
+- Slack threads
+- JIRA tickets
+- PRs
+- Confluence pages
+- Google Docs
+- dashboards
+
+Then reconstructing timelines afterward. Instead, I connected the tools directly into the session. Slack, GitHub, JIRA, Confluence, Google Docs, Sheets, Slides, Datadog.
+
+The first thing I asked the agent to do was dump everything into a markdown timeline. That intermediate file mattered a lot. Even if the session lost context later, the reconstructed timeline stayed durable. From there, the agent could generate:
+
+- project summaries
+- timelines
+- impact notes
+- grouped references
+- rollout evidence
+- operational graphs
+
+This felt fundamentally different from asking AI to write code. It was closer to building a temporary memory layer across the systems where the work had already happened.
+
+## Keep review as the bottleneck
+
+AI systems make it extremely easy to produce more output than you can properly review. That is where most bad workflows start. If agents can generate:
+
+- code
+- tests
+- PRs
+- summaries
+- branches
+- reports
+
+faster than I can validate them, then judgment becomes the bottleneck.
+
+That is exactly where the bottleneck should stay.
+
+I do not trust:
+
+- unreviewed diffs
+- vague prompts
+- hidden delegation
+- green tests without understanding the change
+- large autonomous edits touching unrelated systems
+
+The workflow only works when review stays explicit. For me, that usually means:
+
+- small scoped tasks
+- visible delegation
+- durable notes
+- verification steps for every change
+- reviewing diffs before merging
+
+Agents are useful because they reduce mechanical effort. They become dangerous when they reduce attention.
+
+## What actually changed
+
+At *PayPal*, AI helped me move through unfamiliar systems and iterate on a constrained proof of concept much faster than I could have manually.
+
+At *Rippling*, it helped me coordinate many parallel streams of engineering work without drowning in operational overhead.
+
+The common pattern was never:
+
+> "AI wrote the software for me."
+
+It was:
+
+- keep context durable
+- split work into reviewable pieces
+- give agents narrow ownership
+- automate repetitive operational loops
+- connect the systems where work already exists
+- keep judgment human
+
+That is the version of AI-assisted engineering I currently trust.
