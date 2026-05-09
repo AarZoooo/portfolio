@@ -15,7 +15,7 @@ import { withBuildDate } from '@utils/buildInfo'
 const d = data as PortfolioData
 
 const posts = (await getCollection('blog'))
-    .filter((post) => !post.data.draft)
+    .filter((post) => !post.data.draft && !post.id.includes('BLOG_TEMPLATE'))
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 
 const formatDate = (date: Date): string =>
