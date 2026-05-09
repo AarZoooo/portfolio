@@ -1,8 +1,8 @@
 ---
-title: "Hello, blog playground"
-description: "A visible MDX starter post for checking the blog layout before real writing begins."
+title: "Blog post template"
+description: "A hidden MDX starter post for drafting new blog entries."
 pubDate: 2026-05-09
-draft: false
+draft: true
 tags:
   - meta
   - template
@@ -11,9 +11,9 @@ tags:
 import { Image } from 'astro:assets'
 import sampleBlogImage from '@assets/blog/chris-kursikowski-rQ3yO2GnO_M-unsplash.jpg'
 
-This is a temporary visible post. It exists to exercise the blog page, the
-post layout, the table of contents, and the MDX typography without using the
-reserved template filename.
+This is a hidden template post. Copy it when starting a new blog entry, rename
+the file to the final slug, and keep `draft: true` until the post should be
+public.
 
 Replace this opening with the actual thesis of the post. Keep it direct: what
 changed, why it matters, and what the reader should carry forward.
@@ -55,12 +55,8 @@ Code blocks get highlighted at build time and receive a copy button on the
 client.
 
 ```ts
-const visiblePostFilename = 'hello-blog-playground.mdx'
-const reservedTemplateMarker = 'BLOG_TEMPLATE'
-
-export const shouldRenderInBlogIndex = !visiblePostFilename.includes(
-    reservedTemplateMarker,
-)
+const draft = true
+const publicWhenReady = !draft
 ```
 
 ## Closing
