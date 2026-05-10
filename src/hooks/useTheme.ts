@@ -1,48 +1,83 @@
 import { useCallback, useSyncExternalStore } from 'react'
 
 export type Theme = 'light' | 'dark'
+export type Paper = 'on' | 'off'
+export type Width = 'wide' | 'narrow'
 
-const STORAGE_KEY = 'theme'
-
-function getInitial(): Theme {
-    if (typeof window === 'undefined') return 'light'
-    const stored = window.localStorage.getItem(STORAGE_KEY) as Theme | null
-    if (stored === 'light' || stored === 'dark') return stored
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+interface ThemeState {
+    theme: Theme
+    paper: Paper
+    width: Width
 }
+
+const STORAGE_KEYS = {
+    theme: 'theme',
+    paper: 'paper',
+    width: 'width',
+} as const
+
+const ATTRS = {
+    theme: 'theme',
+    paper: 'data-paper',
+    width: 'data-width',
+} as const
 
 /* ---- Module-level store ---------------------------------------------
    Multiple components call useTheme() and must stay in sync (navbar
-   button + keyboard shortcut `t`). React's own `useSyncExternalStore`
-   is the correct primitive for this: one source of truth, React reads
-   and subscribes to it. */
+   theme button, keyboard shortcuts, Logo long-press for paper, etc.).
+   useSyncExternalStore is the correct primitive: one source of truth,
+   React reads and subscribes to it.
+
+   Initial state is read from the DOM, which InitialAttrs.astro has
+   already hydrated from localStorage before first paint. */
 
 type Listener = () => void
 const listeners = new Set<Listener>()
-let current: Theme = typeof window === 'undefined' ? 'light' : getInitial()
 
-function setGlobalTheme(next: Theme) {
-    if (next === current) return
-    current = next
-    if (typeof document !== 'undefined') {
-        document.documentElement.setAttribute('theme', next)
+function readDOM(): ThemeState {
+    if (typeof document === 'undefined') {
+        return { theme: 'light', paper: 'off', width: 'wide' }
     }
-    if (typeof window !== 'undefined') {
-        window.localStorage.setItem(STORAGE_KEY, next)
+    const root = document.documentElement
+    return {
+        theme: (root.getAttribute(ATTRS.theme) as Theme) ?? 'dark',
+        paper: (root.getAttribute(ATTRS.paper) as Paper) ?? 'off',
+        width: (root.getAttribute(ATTRS.width) as Width) ?? 'wide',
     }
-    listeners.forEach((l) => l())
 }
 
-// Apply the initial theme to the DOM once at module load, and follow OS
-// changes while no explicit preference is stored.
-if (typeof document !== 'undefined') {
-    document.documentElement.setAttribute('theme', current)
+let current: ThemeState = readDOM()
+
+function apply(next: Partial<ThemeState>) {
+    let changed = false
+    const root = typeof document !== 'undefined' ? document.documentElement : null
+
+    for (const key of Object.keys(next) as (keyof ThemeState)[]) {
+        const value = next[key]
+        if (value === undefined || value === current[key]) continue
+        changed = true
+        current = { ...current, [key]: value }
+        root?.setAttribute(ATTRS[key], value)
+        try {
+            localStorage.setItem(STORAGE_KEYS[key], value)
+        } catch {
+            /* localStorage blocked — DOM-only is still fine for this session */
+        }
+    }
+
+    if (changed) listeners.forEach((l) => l())
 }
+
+// Follow OS theme changes when no explicit preference is stored.
 if (typeof window !== 'undefined') {
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
     mq.addEventListener('change', (e) => {
-        if (!window.localStorage.getItem(STORAGE_KEY)) {
-            setGlobalTheme(e.matches ? 'dark' : 'light')
+        try {
+            if (!localStorage.getItem(STORAGE_KEYS.theme)) {
+                apply({ theme: e.matches ? 'dark' : 'light' })
+            }
+        } catch {
+            apply({ theme: e.matches ? 'dark' : 'light' })
         }
     })
 }
@@ -53,15 +88,22 @@ const subscribe = (cb: Listener) => {
         listeners.delete(cb)
     }
 }
-const getSnapshot = (): Theme => current
-const getServerSnapshot = (): Theme => 'light'
+const getSnapshot = (): ThemeState => current
+const getServerSnapshot = (): ThemeState => ({ theme: 'light', paper: 'off', width: 'wide' })
 
-export function useTheme(): { theme: Theme; toggle: () => void } {
-    const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
+export function useTheme() {
+    const state = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 
-    const toggle = useCallback(() => {
-        setGlobalTheme(current === 'dark' ? 'light' : 'dark')
-    }, [])
-
-    return { theme, toggle }
+    return {
+        ...state,
+        toggleTheme: useCallback(() => {
+            apply({ theme: current.theme === 'dark' ? 'light' : 'dark' })
+        }, []),
+        togglePaper: useCallback(() => {
+            apply({ paper: current.paper === 'on' ? 'off' : 'on' })
+        }, []),
+        toggleWidth: useCallback(() => {
+            apply({ width: current.width === 'narrow' ? 'wide' : 'narrow' })
+        }, []),
+    }
 }

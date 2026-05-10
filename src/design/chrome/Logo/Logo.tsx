@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { useTheme } from '@hooks/useTheme'
 import styles from './Logo.module.css'
 
 interface LogoProps {
@@ -19,6 +20,7 @@ const HOLD_MOVE_THRESHOLD_PX = 10
  */
 export default function Logo({ currentPath }: LogoProps) {
     const segments = currentPath === '/' ? [] : currentPath.split('/').filter(Boolean)
+    const { togglePaper } = useTheme()
 
     const [pressing, setPressing] = useState(false)
     const pressTimer = useRef<number | null>(null)
@@ -39,9 +41,7 @@ export default function Logo({ currentPath }: LogoProps) {
         pressStart.current = { x: e.clientX, y: e.clientY }
         setPressing(true)
         pressTimer.current = window.setTimeout(() => {
-            const root = document.documentElement
-            const next = root.getAttribute('data-paper') === 'on' ? 'off' : 'on'
-            root.setAttribute('data-paper', next)
+            togglePaper()
             firedRef.current = true
             cancelPress()
         }, HOLD_MS)

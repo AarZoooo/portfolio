@@ -29,7 +29,7 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
     const [scrolled, setScrolled] = useState(false)
     const [active, setActive] = useState<string | null>(null)
     const [menuOpen, setMenuOpen] = useState(false)
-    const { theme, toggle } = useTheme()
+    const { theme, toggleTheme } = useTheme()
 
     const hasSections = !!sectionLinks && sectionLinks.length > 0
 
@@ -151,7 +151,7 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
 
                     <button
                         type="button"
-                        onClick={toggle}
+                        onClick={toggleTheme}
                         aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
                         className={styles.toggle}
                     >

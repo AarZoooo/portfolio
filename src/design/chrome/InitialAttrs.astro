@@ -1,28 +1,35 @@
 ---
-// Pre-paint script that sets `theme` from localStorage so dark-mode
-// visitors don't flash light. Mirror any change in @hooks/useTheme.getInitial().
+// Pre-paint script that sets theme, paper, and width from localStorage
+// so returning visitors don't flash wrong modes. Mirror any change in
+// @hooks/useTheme's STORAGE_KEYS / ATTRS.
 ---
 
 <script is:inline>
     ;(function () {
+        var d = document.documentElement
         try {
-            const stored = localStorage.getItem('theme')
-            const theme =
-                stored === 'light' || stored === 'dark'
-                    ? stored
+            var t = localStorage.getItem('theme')
+            var p = localStorage.getItem('paper')
+            var w = localStorage.getItem('width')
+
+            d.setAttribute(
+                'theme',
+                t === 'light' || t === 'dark'
+                    ? t
                     : matchMedia('(prefers-color-scheme: dark)').matches
                       ? 'dark'
-                      : 'light'
-            document.documentElement.setAttribute('theme', theme)
+                      : 'light',
+            )
+            if (p === 'on' || p === 'off') d.setAttribute('data-paper', p)
+            if (w === 'wide' || w === 'narrow') d.setAttribute('data-width', w)
         } catch (_) {
-            // localStorage blocked (private mode, etc.) — fall back to system pref.
             try {
-                const theme = matchMedia('(prefers-color-scheme: dark)').matches
-                    ? 'dark'
-                    : 'light'
-                document.documentElement.setAttribute('theme', theme)
+                d.setAttribute(
+                    'theme',
+                    matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+                )
             } catch (__) {
-                // matchMedia unavailable — leave the attribute unset; CSS default applies.
+                /* matchMedia unavailable — CSS default applies */
             }
         }
     })()
