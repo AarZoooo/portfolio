@@ -129,3 +129,17 @@ img {
     font-weight: var(--weight-medium);
     color: var(--text);
 }
+
+/* Globally disable CSS transitions and animations for users who prefer
+   reduced motion. Covers every element site-wide in one rule so
+   individual components don't need per-file @media blocks. JS-driven
+   animations (smoothScrollToY, details toggle, cursor RAF) already
+   check matchMedia separately. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0s !important;
+        animation-duration: 0s !important;
+    }
+}
