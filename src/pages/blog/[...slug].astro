@@ -120,43 +120,59 @@ const formatDate = (date: Date): string =>
         })
 
         // Smooth-scroll on TOC click, matching the portfolio nav motion.
+        // Immediately highlight the clicked link for instant feedback;
+        // the scroll listener confirms once the animation settles.
         linksBySlug.forEach((link, slug) => {
             link.addEventListener('click', (e) => {
                 e.preventDefault()
                 smoothScrollToId(slug)
-                // Reflect the anchor in the URL without triggering a jump.
                 history.replaceState(null, '', `#${slug}`)
+                linksBySlug.forEach((l, s) => {
+                    l.toggleAttribute('data-active', s === slug)
+                })
             })
         })
 
-        const visible = new Set<string>()
+        // Scroll-spy: cache heading Y positions (cheap number comparison
+        // per frame instead of forcing layout with getBoundingClientRect).
+        const PROBE_RATIO = 0.2
+        let headingTops: { slug: string; top: number }[] = []
+        let ticking = false
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                for (const entry of entries) {
-                    const id = entry.target.id
-                    if (entry.isIntersecting) visible.add(id)
-                    else visible.delete(id)
-                }
-                // Pick the topmost visible heading. Fall back to last seen.
-                let active: string | null = null
-                for (const slug of linksBySlug.keys()) {
-                    if (visible.has(slug)) {
-                        active = slug
-                        break
-                    }
-                }
-                linksBySlug.forEach((link, slug) => {
-                    link.toggleAttribute('data-active', slug === active)
-                })
-            },
-            { rootMargin: '-15% 0px -70% 0px' },
-        )
-
-        linksBySlug.forEach((_, slug) => {
-            const target = document.getElementById(slug)
-            if (target) observer.observe(target)
+        const cachePositions = () => {
+            headingTops = []
+            for (const slug of linksBySlug.keys()) {
+                const el = document.getElementById(slug)
+                if (!el) continue
+                headingTops.push({ slug, top: el.offsetTop })
+            }
+        }
+        cachePositions()
+        window.addEventListener('resize', cachePositions, { passive: true })
+        document.documentElement.addEventListener('transitionend', (e) => {
+            if ((e as TransitionEvent).propertyName === '--content-max') cachePositions()
         })
+
+        const updateActive = () => {
+            const threshold = window.scrollY + window.innerHeight * PROBE_RATIO
+            let active: string | null = null
+            for (const h of headingTops) {
+                if (h.top <= threshold) active = h.slug
+                else break
+            }
+            linksBySlug.forEach((link, slug) => {
+                link.toggleAttribute('data-active', slug === active)
+            })
+            ticking = false
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                ticking = true
+                requestAnimationFrame(updateActive)
+            }
+        }, { passive: true })
+        updateActive()
     }
 
     // Animate the Contents <details> open/close. Native toggle is abrupt;
