@@ -37,6 +37,7 @@ export default function useShortcuts() {
         }
 
         const isTyping = (target: EventTarget | null): boolean => {
+            // EventTarget is too broad; keydown always fires on an Element
             const el = target as HTMLElement | null
             if (!el) return false
             const tag = el.tagName

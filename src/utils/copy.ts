@@ -74,7 +74,8 @@ export function attachClickCopyDelegation(): void {
     document.documentElement.setAttribute(DELEGATION_FLAG, '')
 
     document.addEventListener('click', async (e) => {
-        const target = e.target as HTMLElement | null
+        // EventTarget is too broad; click always fires on an Element
+    const target = e.target as HTMLElement | null
         const btn = target?.closest<HTMLButtonElement>('button[data-copy]')
         if (!btn) return
         const text = btn.dataset.copy

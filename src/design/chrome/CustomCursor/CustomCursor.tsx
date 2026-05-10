@@ -56,6 +56,7 @@ function CustomCursor() {
             !!t && !!t.closest('a, button, [role="button"]')
 
         const onOver = (e: MouseEvent) => {
+            // MouseEvent.target is EventTarget | null; we need Element APIs
             if (isInteractive(e.target as HTMLElement | null)) {
                 hovering = true
                 document.documentElement.setAttribute('data-cursor-hover', '')
@@ -63,7 +64,7 @@ function CustomCursor() {
         }
 
         const onOut = (e: MouseEvent) => {
-            if (isInteractive(e.target as HTMLElement | null)) {
+            if (isInteractive(e.target as HTMLElement | null)) { // same narrowing as onOver
                 hovering = false
                 document.documentElement.removeAttribute('data-cursor-hover')
             }

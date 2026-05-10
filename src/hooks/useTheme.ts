@@ -39,6 +39,7 @@ function readDOM(): ThemeState {
         return { theme: 'light', paper: 'off', width: 'wide' }
     }
     const root = document.documentElement
+    // getAttribute returns string | null; InitialAttrs guarantees valid values
     return {
         theme: (root.getAttribute(ATTRS.theme) as Theme) ?? 'dark',
         paper: (root.getAttribute(ATTRS.paper) as Paper) ?? 'off',
@@ -52,6 +53,7 @@ function apply(next: Partial<ThemeState>) {
     let changed = false
     const root = typeof document !== 'undefined' ? document.documentElement : null
 
+    // Object.keys returns string[]; we know next is Partial<ThemeState>
     for (const key of Object.keys(next) as (keyof ThemeState)[]) {
         const value = next[key]
         if (value === undefined || value === current[key]) continue

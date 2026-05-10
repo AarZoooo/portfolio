@@ -38,6 +38,7 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : SITE_URL + ogImage
 // a real person" so it can show a knowledge-panel-style result for name
 // searches. Fields pulled from data.json so the schema stays in sync with
 // the on-page bio.
+// JSON import is untyped; schema validated by data.json structure
 const d = data as PortfolioData
 const personSchema = {
     '@context': 'https://schema.org',
