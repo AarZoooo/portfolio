@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { smoothScrollToId, NAVBAR_OFFSET_PX } from '@utils/smoothScroll'
+import { smoothScrollToId, smoothScrollToY, NAVBAR_OFFSET_PX } from '@utils/smoothScroll'
 import { useTheme } from './useTheme'
 
 const SHORTCUT_SCROLL_DURATION_MS = 600
@@ -10,12 +10,14 @@ const PROBE_VIEWPORT_RATIO = 0.3
  * hint under the hero is the discovery surface for anyone landing fresh.
  * Typing inputs / modifier keys (Cmd/Ctrl/Alt) are always ignored.
  * Two-key sequences (gg) expire after a short window.
+ *
+ * Section jump (j/k) discovers <section[id]> elements inside <main> at
+ * runtime, so it works on any page that has them — not just the portfolio.
  */
-export default function useShortcuts(sectionIds: string[]) {
-    const { toggle: toggleTheme } = useTheme()
+export default function useShortcuts() {
+    const { toggleTheme, togglePaper, toggleWidth } = useTheme()
 
     useEffect(() => {
-        const root = document.documentElement
         const SEQUENCE_TIMEOUT = 600
         let pendingLeader: string | null = null
         let pendingTimer: number | null = null
@@ -58,12 +60,22 @@ export default function useShortcuts(sectionIds: string[]) {
             scrollToY(Math.max(0, maxY * frac))
         }
 
-        // Find the index of the section currently most-visible; fall back to
-        // the last-passed section based on scroll position.
-        const currentSectionIndex = (): number => {
-            const ids = sectionIds
+        // Discover jumpable landmarks at call time. Prefers <section[id]>
+        // (portfolio), falls back to prose headings (blog posts).
+        const getSectionIds = (): string[] => {
+            const main = document.querySelector('main')
+            if (!main) return []
+            const sections = main.querySelectorAll<HTMLElement>('section[id]')
+            if (sections.length > 0) return Array.from(sections, (el) => el.id)
+            const headings = main.querySelectorAll<HTMLElement>(':is(h2, h3)[id]')
+            return Array.from(headings, (el) => el.id)
+        }
+
+        // Returns -1 when no landmark has been scrolled past yet (i.e.
+        // the user is above the first heading/section).
+        const currentSectionIndex = (ids: string[]): number => {
             const probe = window.scrollY + window.innerHeight * PROBE_VIEWPORT_RATIO
-            let lastPassed = 0
+            let lastPassed = -1
             for (let i = 0; i < ids.length; i++) {
                 const el = document.getElementById(ids[i])
                 if (!el) continue
@@ -75,24 +87,29 @@ export default function useShortcuts(sectionIds: string[]) {
         }
 
         const jumpSection = (delta: 1 | -1) => {
-            const ids = sectionIds
+            const ids = getSectionIds()
             if (ids.length === 0) return
-            const next = Math.max(0, Math.min(ids.length - 1, currentSectionIndex() + delta))
-            smoothScrollToId(ids[next], SHORTCUT_SCROLL_DURATION_MS, NAVBAR_OFFSET_PX)
+            const target = currentSectionIndex(ids) + delta
+            if (target < 0) {
+                smoothScrollToY(0, SHORTCUT_SCROLL_DURATION_MS)
+            } else if (target >= ids.length) {
+                const maxY = document.documentElement.scrollHeight - window.innerHeight
+                smoothScrollToY(maxY, SHORTCUT_SCROLL_DURATION_MS)
+            } else {
+                smoothScrollToId(ids[target], SHORTCUT_SCROLL_DURATION_MS, NAVBAR_OFFSET_PX)
+            }
         }
 
         const onKey = (e: KeyboardEvent) => {
             if (isTyping(e.target)) return
             if (e.metaKey || e.ctrlKey || e.altKey) return
 
-            // Two-key sequence: g-prefix
             if (pendingLeader === 'g') {
                 clearPending()
                 if (e.key === 'g') {
                     e.preventDefault()
                     scrollToTop()
                 }
-                // Unknown continuation: drop silently; the leader is gone.
                 return
             }
 
@@ -139,18 +156,14 @@ export default function useShortcuts(sectionIds: string[]) {
                     e.preventDefault()
                     toggleTheme()
                     return
-                case 'p': {
+                case 'p':
                     e.preventDefault()
-                    const next = root.getAttribute('data-paper') === 'on' ? 'off' : 'on'
-                    root.setAttribute('data-paper', next)
+                    togglePaper()
                     return
-                }
-                case 'w': {
+                case 'w':
                     e.preventDefault()
-                    const next = root.getAttribute('data-width') === 'narrow' ? 'wide' : 'narrow'
-                    root.setAttribute('data-width', next)
+                    toggleWidth()
                     return
-                }
             }
         }
 
@@ -159,5 +172,5 @@ export default function useShortcuts(sectionIds: string[]) {
             window.removeEventListener('keydown', onKey)
             clearPending()
         }
-    }, [sectionIds, toggleTheme])
+    }, [toggleTheme, togglePaper, toggleWidth])
 }
