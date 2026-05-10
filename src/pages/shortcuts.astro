@@ -11,6 +11,7 @@ import type { PortfolioData } from '@type/portfolio'
 import { SUB_APPS } from '@utils/navigation'
 import { withBuildDate } from '@utils/buildInfo'
 
+// JSON import is untyped; schema validated by data.json structure
 const d = data as PortfolioData
 
 interface Shortcut {
@@ -56,7 +57,7 @@ const groups: Group[] = [
     description="Vim-flavored keybinds for navigating aarju.dev."
     defaultWidth="narrow"
 >
-    <CustomCursor client:idle />
+    <CustomCursor client:load />
 
     <Navbar currentPath={Astro.url.pathname} subApps={SUB_APPS} client:load />
 
@@ -105,6 +106,8 @@ const groups: Group[] = [
 </BaseLayout>
 
 <style>
+    @import '@design/tokens/breakpoints.css';
+
     .page {
         padding: var(--space-24) 0;
     }
@@ -235,7 +238,7 @@ const groups: Group[] = [
         line-height: var(--leading-snug);
     }
 
-    @media (max-width: 700px) {
+    @media (--bp-narrow) {
         .row {
             grid-template-columns: minmax(0, 140px) 1fr;
             gap: var(--space-4);

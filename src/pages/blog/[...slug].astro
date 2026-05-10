@@ -14,6 +14,7 @@ import { SUB_APPS } from '@utils/navigation'
 import { withBuildDate } from '@utils/buildInfo'
 import '@design/typography/prose.css'
 
+// JSON import is untyped; schema validated by data.json structure
 const d = data as PortfolioData
 
 export const getStaticPaths = (async () => {
@@ -46,7 +47,7 @@ const formatDate = (date: Date): string =>
     }}
     defaultWidth="narrow"
 >
-    <CustomCursor client:idle />
+    <CustomCursor client:load />
 
     <Navbar currentPath={Astro.url.pathname} subApps={SUB_APPS} client:load />
 
@@ -150,6 +151,7 @@ const formatDate = (date: Date): string =>
         cachePositions()
         window.addEventListener('resize', cachePositions, { passive: true })
         document.documentElement.addEventListener('transitionend', (e) => {
+            // transitionend fires TransitionEvent but TS types the listener as Event
             if ((e as TransitionEvent).propertyName === '--content-max') cachePositions()
         })
 
@@ -184,6 +186,7 @@ const formatDate = (date: Date): string =>
         // Wide layout shows the TOC list directly (no disclosure UI).
         // <details> content is browser-hidden unless [open], so force it
         // on at this breakpoint and follow viewport changes.
+        // Mirrors @custom-media --bp-wide in breakpoints.css
         const wideMql = window.matchMedia('(min-width: 1025px)')
         const syncWideOpen = () => {
             if (wideMql.matches) details.setAttribute('open', '')
@@ -288,7 +291,7 @@ const formatDate = (date: Date): string =>
 
     /* TOC layout: kicks in only above the medium breakpoint. Below that,
        the TOC renders as a collapsed <details> below header, above body. */
-    @media (min-width: 1025px) {
+    @media (--bp-wide) {
         .post-page--with-toc {
             display: grid;
             max-width: var(--content-max-wide);

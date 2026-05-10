@@ -12,6 +12,7 @@ import type { PortfolioData } from '@type/portfolio'
 import { SUB_APPS } from '@utils/navigation'
 import { withBuildDate } from '@utils/buildInfo'
 
+// JSON import is untyped; schema validated by data.json structure
 const d = data as PortfolioData
 
 const posts = (await getCollection('blog'))
@@ -27,7 +28,7 @@ const formatDate = (date: Date): string =>
     description="Writing about backend systems, AI tooling, and developer experience."
     defaultWidth="narrow"
 >
-    <CustomCursor client:idle />
+    <CustomCursor client:load />
 
     <Navbar currentPath={Astro.url.pathname} subApps={SUB_APPS} client:load />
 
