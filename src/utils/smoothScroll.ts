@@ -6,17 +6,13 @@ export const easeInOutCubic = (t: number): number =>
 const SCROLL_DURATION_MS = 900
 export const NAVBAR_OFFSET_PX = 80
 
-export function smoothScrollToId(
-    id: string,
+export function smoothScrollToY(
+    targetY: number,
     duration = SCROLL_DURATION_MS,
-    offset = NAVBAR_OFFSET_PX,
 ): void {
-    const el = document.getElementById(id)
-    if (!el) return
-
     const startY = window.scrollY
-    const targetY = el.getBoundingClientRect().top + startY - offset
     const distance = targetY - startY
+    if (distance === 0) return
     const startTime = performance.now()
 
     const reduced =
@@ -35,4 +31,15 @@ export function smoothScrollToId(
         if (progress < 1) requestAnimationFrame(step)
     }
     requestAnimationFrame(step)
+}
+
+export function smoothScrollToId(
+    id: string,
+    duration = SCROLL_DURATION_MS,
+    offset = NAVBAR_OFFSET_PX,
+): void {
+    const el = document.getElementById(id)
+    if (!el) return
+    const targetY = el.getBoundingClientRect().top + window.scrollY - offset
+    smoothScrollToY(targetY, duration)
 }
