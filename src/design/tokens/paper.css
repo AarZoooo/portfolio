@@ -1,3 +1,5 @@
+@import './breakpoints.css';
+
 /* Paper mode — editorial/print treatment, gated behind [data-paper="on"]
    on the <html> element. Toggle with the 'p' key (see useShortcuts).
    Keep everything that defines this branch's aesthetic in this file so it's
@@ -90,7 +92,7 @@
     z-index: 1;
 }
 
-@media (min-width: 1025px) {
+@media (--bp-wide) {
     :root[data-paper="on"] .post-toc-wrap {
         z-index: 0;
     }
