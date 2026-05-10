@@ -73,3 +73,41 @@
     border-top: 1px solid rgb(var(--ink) / 0.12);
 }
 
+/* ---- 4. Sticky TOC sidebar (blog) ----------------------------------- */
+/* The TOC is position:sticky, so body grain scrolls past it breaking the
+   paper illusion. We stamp a ::before on .post-toc-wrap itself — because
+   the parent is sticky, the pseudo stays fixed in the viewport while the
+   rest of the page scrolls. The pseudo breaks out left to the viewport
+   edge and carries its own grain + a hairline column rule.
+
+   The footer needs position:relative + z-index to paint above the pseudo
+   since <main> doesn't create a stacking context.
+
+   Stacking: z-index:0 on the wrapper creates a local context; the pseudo
+   at z-index:-1 sits behind the TOC links but above the body background. */
+:root[data-paper="on"] footer {
+    position: relative;
+    z-index: 1;
+}
+
+@media (min-width: 1025px) {
+    :root[data-paper="on"] .post-toc-wrap {
+        z-index: 0;
+    }
+
+    :root[data-paper="on"] .post-toc-wrap::before {
+        content: '';
+        position: absolute;
+        top: -100vh;
+        bottom: -100vh;
+        right: calc(-1 * var(--space-8) / 2);
+        left: calc(-1 * (var(--content-gutter) + max(0px, (100vw - var(--content-max-wide)) / 2)));
+        background-color: rgb(var(--paper));
+        background-image: var(--noise);
+        background-repeat: repeat;
+        border-right: 1px solid rgb(var(--ink) / 0.12);
+        z-index: -1;
+        pointer-events: none;
+    }
+}
+
