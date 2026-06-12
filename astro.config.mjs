@@ -39,6 +39,7 @@ export default defineConfig({
     },
     redirects: {
         '/portfolio': { status: 308, destination: '/' },
+        '/resume': { status: 302, destination: '/resume.pdf' },
     },
     server: {
         host: true,

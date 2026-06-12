@@ -90,7 +90,7 @@ function Hero({ personal, hero }: HeroProps) {
                     {assets.resume(personal.resume) && (
                         <li>
                             <a
-                                href={assets.resume(personal.resume)}
+                                href="/resume"
                                 target="_blank"
                                 rel="noreferrer"
                                 aria-label="Resume (PDF)"
