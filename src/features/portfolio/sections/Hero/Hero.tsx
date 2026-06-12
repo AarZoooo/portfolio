@@ -32,23 +32,43 @@ function isTouchOnlyDevice(): boolean {
 
 function Hero({ personal, hero }: HeroProps) {
     // SSR uses deterministic first items so crawlers / screen readers see
-    // real content; useEffect swaps in a fresh random pick on each client
-    // load. `mounted` gates a fade-in so the swap never flickers visibly —
-    // the SSR'd value is rendered at opacity 0, then transitions to 1 once
-    // we've replaced it with the random pick.
-    const [tagline, setTagline] = useState<string>(hero.taglines[0] ?? '')
+    // real content; useEffect sets up tagline rotation and hint selections
+    // once on client load. `mounted` gates a fade-in to prevent layout / font
+    // flashes. Taglines are rotated in order, starting from the first item,
+    // with a fade-in/fade-out transition.
+    const [currentIndex, setCurrentIndex] = useState(0)
+    const [isFading, setIsFading] = useState(false)
     const [hint, setHint] = useState<string>('scroll')
     const [mounted, setMounted] = useState(false)
 
     useEffect(() => {
-        /* eslint-disable react-hooks/set-state-in-effect -- random per page load */
-        setTagline(pickRandom(hero.taglines, hero.taglines[0] ?? ''))
         // Touch-only devices have no keyboard shortcuts — keyboard-teasing
         // hints would be misleading there.
         setHint(isTouchOnlyDevice() ? 'scroll' : pickRandom(hero.scrollHints, 'scroll'))
         setMounted(true)
-        /* eslint-enable react-hooks/set-state-in-effect */
-    }, [hero.taglines, hero.scrollHints])
+
+        let timeoutId: NodeJS.Timeout
+        let fadeTimeoutId: NodeJS.Timeout
+
+        const rotateTagline = () => {
+            timeoutId = setTimeout(() => {
+                setIsFading(true)
+
+                fadeTimeoutId = setTimeout(() => {
+                    setCurrentIndex((prev) => (prev + 1) % hero.taglines.length)
+                    setIsFading(false)
+                    rotateTagline()
+                }, 300) // 300ms fade-out (aligns with CSS --duration-medium)
+            }, 3000)
+        }
+
+        rotateTagline()
+
+        return () => {
+            clearTimeout(timeoutId)
+            clearTimeout(fadeTimeoutId)
+        }
+    }, [hero.taglines.length, hero.scrollHints])
 
     const scrollToNext = () => smoothScrollToId('experience')
 
@@ -58,7 +78,13 @@ function Hero({ personal, hero }: HeroProps) {
                 <h1 className={styles.greeting}>
                     Hey, I'm <span className={styles.name}>{personal.name}</span>
                 </h1>
-                <p className={styles.tagline} data-mounted={mounted ? '' : undefined}>{tagline}</p>
+                <p
+                    className={styles.tagline}
+                    data-mounted={mounted ? '' : undefined}
+                    data-fading={isFading ? '' : undefined}
+                >
+                    {hero.taglines[currentIndex]}
+                </p>
 
                 <ul className={styles.socials}>
                     <li>

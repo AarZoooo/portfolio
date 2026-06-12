@@ -47,6 +47,7 @@
     font-size: var(--text-xl);
     font-weight: var(--weight-light);
     color: var(--text-secondary);
+    line-height: 1.5;
     min-height: 1.5em;
     /* SSR'd value is invisible until React swaps in the random pick on
        mount; the [data-mounted] attribute fades the final value in. */
@@ -56,6 +57,10 @@
 
 .tagline[data-mounted] {
     opacity: 1;
+}
+
+.tagline[data-fading] {
+    opacity: 0;
 }
 
 .socials {
@@ -123,5 +128,8 @@
     .greeting,
     .tagline {
         font-size: var(--text-md);
+    }
+    .tagline {
+        min-height: 3em;
     }
 }
