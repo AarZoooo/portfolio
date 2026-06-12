@@ -2,6 +2,9 @@
 
 Personal site at [aarju.dev](https://aarju.dev). Portfolio, blog, and a few
 other corners. Hand-built monochrome aesthetic, vim-flavored, zero clutter.
+Vibe-coded with AI.
+
+![aarju.dev homepage screenshot](public/screenshot.png)
 
 ## Stack
 
@@ -32,6 +35,8 @@ A pre-commit hook runs `npm run lint` automatically; see `.githooks/`.
 /                  portfolio (hero → experience → skills → projects → education → contact)
 /blog              post listing
 /blog/<slug>       individual post (MDX)
+/resume            redirects to /resume.pdf
+/resume.pdf        serves the latest resume PDF
 /shortcuts         keyboard shortcut reference
 /rss.xml           RSS feed
 /sitemap-index.xml sitemap
