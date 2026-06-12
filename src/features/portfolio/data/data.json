@@ -1,15 +1,15 @@
 {
     "personal": {
         "name": "Aarju Pal",
-        "tagline": "Software Engineer | Backend & AI Systems",
-        "email": "aarju.pal1234@gmail.com",
-        "phone": "+91 790 863 6536",
+        "tagline": "Software Engineer | AI & Backend Engineer",
+        "email": "me@aarju.dev",
+        "phone": "+91 79086 36536",
         "location": "Bangalore, India",
         "github": "https://github.com/AarZoooo",
         "linkedin": "https://linkedin.com/in/aarjupal",
         "resume": "resume",
         "avatar": "avatar",
-        "summary": "Backend Software Engineer. Built AI agents and platform frameworks at PayPal and Rippling. Java, Python, Spring Boot, Django, LangGraph."
+        "summary": "Backend Software Engineer specialising in AI-driven systems and backend infrastructure, with production internship experience at PayPal and Rippling."
     },
     "sections": {
         "experience": "Experience",
@@ -79,20 +79,18 @@
             "duration": "Nov 2025 – May 2026",
             "logo": "rippling",
             "summary": [
-                "Migrated 183 employee data fields across 20+ countries from a class-per-field legacy system to a unified, JSON-defined field framework.",
-                "Owned two complexity-5 migrations in the project, including a US regulatory compensation field rolled out over 8 staged PRs."
+                "Migrated 150+ employee data fields across 20+ countries from a legacy multi-class system to an internal define-once, use-everywhere framework; fields now serve 560,000+ page saves/month on systems powering $114.25M in ARR across 78 countries.",
+                "Owned two complexity-5 migrations in the entire project, redesigning the standard approach into an 8-PR incremental plan when the original PR grew to 10,000+ lines - zero margin for error on a US regulatory compliance field."
             ],
             "detail": [
-                "Rippling's legacy field system was deep in object-oriented sprawl. Every input field was its own class, with separate parallel classes for workflows, profile pages, and bulk flows. No standardization; the same concept lived in five places at once, and drift between them was constant. The new framework defines a field once as JSON and dynamically generates the object on any page; custom logic routes through a single lambda override registry. I migrated 183 fields into it, many of them country-agnostic, so my work sits on systems serving 560,000+ page saves per month and $114.25M in EOR ARR across 78 countries. Changes that used to mean threading through multiple classes now happen in one definition. Engineers and PMs both pick up the time.",
-                "The harder of the two migrations targets one of Rippling's oldest compensation fields, with five separate class implementations: US domestic, global EOR, global DH, profile, and bulk. Each had subtly different behavior for the same concept. Unifying them into one definition was hard because the stakes are high. It's a monetary, country-agnostic field, so any logical error could block hiring and job-transition flows, or silently drop compensation data if the field failed to render. Typical migrations in this project run 100 to 1000 lines in a single PR. Mine have landed closer to 4,000 lines each, and 5 of the planned 8 are done so far: tests first, then unifying constants and strings to enums, then migrating each variant group, then small alignment fixes, then moving eligible data to DB, then merging the unified variants. Each step could be reviewed, tested, and reverted on its own.",
+                "Rippling's legacy field system was deep in object-oriented sprawl. Every input field was its own class, with separate parallel classes for workflows, profile pages, and bulk flows. No standardization; the same concept lived in five places at once, and drift between them was constant. The new framework defines a field once as JSON and dynamically generates the object on any page; custom logic routes through a single lambda override registry. I migrated 150+ fields into it, many of them country-agnostic, so my work sits on systems serving 560,000+ page saves per month and $114.25M in ARR across 78 countries. Changes that used to mean threading through multiple classes now happen in one definition. Engineers and PMs both pick up the time.",
+                "The harder of the two migrations targets two of Rippling's oldest fields (FLSA Exempt, Company Employment Type), with five separate class implementations: US domestic, global EOR, global DH, profile, and bulk. Each had subtly different behavior for the same concept. Unifying them into one definition was hard because the stakes are high. They are country-agnostic fields, so any logical error could block hiring and job-transition flows, or silently drop data if the field failed to render. Typical migrations in this project run 100 to 1000 lines in a single PR. Mine have landed closer to 4,000 lines each, and 5 of the planned 8 are done so far: tests first, then unifying constants and strings to enums, then migrating each variant group, then small alignment fixes, then moving eligible data to DB, then merging the unified variants. Each step could be reviewed, tested, and reverted on its own.",
                 "Rippling runs a week-long Quality Week, and I submitted the Conditionality Engine as an idea; four teammates joined and we built it together. It's a declarative rules system that replaces the growing pile of lambda overrides. Today there are 2,300+ of them in our registry, most shaped like 'if this then that'. The engine lets you compose and reuse those conditions as Rules, written through a UI instead of code. Each rule gets a plain-English explanation, a tree view of its structure, and a simulator that takes custom input values and shows live evaluation. It won the Foundational Fixes category at the company-wide event."
             ],
             "tech": [
                 "Python",
                 "Django",
-                "MCP",
-                "Buildkite",
-                "Jira"
+                "Buildkite"
             ]
         },
         {
@@ -101,7 +99,7 @@
             "duration": "May 2025 – Aug 2025",
             "logo": "paypal",
             "summary": [
-                "Designed an AI-driven Change Management PoC using Python, LangGraph, and Milvus, reducing ticket creation time by 90%.",
+                "Designed an AI-driven Change Management PoC using Python, LangGraph, and Milvus, reducing ticket creation time by 92%.",
                 "Built backend automation tools and MCP integrations, reducing developer friction by 8,000 hours/month.",
                 "Developed and shipped Java Spring Boot REST APIs for backend services across QA and production environments as part of the full SDLC."
             ],
