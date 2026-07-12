@@ -1,7 +1,6 @@
 import { Fragment, useEffect, useState } from 'react'
 import type { Personal, Hero as HeroContent } from '@type/portfolio'
 import { smoothScrollToId } from '@utils/smoothScroll'
-import { assets } from '@assets'
 import styles from './Hero.module.css'
 
 interface HeroProps {
@@ -44,8 +43,10 @@ function Hero({ personal, hero }: HeroProps) {
     useEffect(() => {
         // Touch-only devices have no keyboard shortcuts — keyboard-teasing
         // hints would be misleading there.
-        setHint(isTouchOnlyDevice() ? 'scroll' : pickRandom(hero.scrollHints, 'scroll'))
-        setMounted(true)
+        const mountFrameId = requestAnimationFrame(() => {
+            setHint(isTouchOnlyDevice() ? 'scroll' : pickRandom(hero.scrollHints, 'scroll'))
+            setMounted(true)
+        })
 
         let timeoutId: NodeJS.Timeout
         let fadeTimeoutId: NodeJS.Timeout
@@ -65,6 +66,7 @@ function Hero({ personal, hero }: HeroProps) {
         rotateTagline()
 
         return () => {
+            cancelAnimationFrame(mountFrameId)
             clearTimeout(timeoutId)
             clearTimeout(fadeTimeoutId)
         }
@@ -113,23 +115,19 @@ function Hero({ personal, hero }: HeroProps) {
                             </svg>
                         </a>
                     </li>
-                    {assets.resume(personal.resume) && (
-                        <li>
-                            <a
-                                href="/resume"
-                                target="_blank"
-                                rel="noreferrer"
-                                aria-label="Resume (PDF)"
-                                className={styles.socialBtn}
-                            >
+                    <li>
+                        <a
+                            href="/resume"
+                            aria-label="Resume"
+                            className={styles.socialBtn}
+                        >
                                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                                     <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
                                     <path d="M14 3v6h6" />
                                     <path d="M9 13h6M9 17h6" />
                                 </svg>
-                            </a>
-                        </li>
-                    )}
+                        </a>
+                    </li>
                 </ul>
             </div>
 

@@ -46,7 +46,7 @@ const SECTION_LINKS = [
         <Experience heading={d.sections.experience} items={d.experience} client:visible />
         <Skills heading={d.sections.skills} skills={d.skills} />
         <Projects heading={d.sections.projects} items={d.projects} client:visible />
-        <Education heading={d.sections.education} items={d.education} />
+        <Education heading={d.sections.education} items={d.education.filter((item) => item.visible)} />
         <Contact heading={d.sections.contact} personal={d.personal} />
     </main>
 

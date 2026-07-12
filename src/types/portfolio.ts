@@ -6,15 +6,16 @@ export interface Personal {
     location: string
     github: string
     linkedin: string
-    resume: string
     avatar: string
     summary: string
+    resumeSummary: string
 }
 
 export interface Experience {
     company: string
     role: string
     duration: string
+    location?: string
     logo: string
     /** Short one-liners shown in the collapsed card. */
     summary: string[]
@@ -28,9 +29,11 @@ export interface Education {
     institution: string
     degree: string
     duration: string
+    location?: string
     logo: string
     score?: string
     highlights?: string[]
+    visible: boolean
 }
 
 export interface Project {
@@ -92,4 +95,7 @@ export interface PortfolioData {
     education: Education[]
     projects: Project[]
     skills: Skills
+    resume: {
+        skillCategories: { label: string; items: string[] }[]
+    }
 }

@@ -1,0 +1,569 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro'
+import Navbar from '@design/chrome/Navbar/Navbar'
+import Footer from '@design/chrome/Footer/Footer'
+import CustomCursor from '@design/chrome/CustomCursor/CustomCursor'
+import Shortcuts from '@design/chrome/Shortcuts'
+import data from '@features/portfolio/data/data.json'
+import type { Experience, PortfolioData } from '@type/portfolio'
+import { SUB_APPS } from '@utils/navigation'
+import { withBuildDate } from '@utils/buildInfo'
+
+const d = data as PortfolioData
+const stripProtocol = (url: string) => url.replace(/^https?:\/\//, '')
+const mapsUrl = (place: string) =>
+    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place)}`
+
+const experienceGroups: { company: string; roles: Experience[] }[] = []
+for (const experience of d.experience) {
+    const currentGroup = experienceGroups.at(-1)
+    if (currentGroup?.company === experience.company) {
+        currentGroup.roles.push(experience)
+    } else {
+        experienceGroups.push({ company: experience.company, roles: [experience] })
+    }
+}
+---
+
+<BaseLayout
+    title={`${d.personal.name} · Resume`}
+    description={d.personal.resumeSummary}
+    defaultWidth="narrow"
+>
+    <div class="screen-only">
+        <CustomCursor client:load />
+        <Navbar currentPath={Astro.url.pathname} subApps={SUB_APPS} client:load />
+    </div>
+
+    <main id="main" class="resume-shell">
+        <div class="toolbar">
+            <button id="print-resume" type="button">Print / save PDF</button>
+        </div>
+
+        <article class="resume">
+            <header class="resume-header">
+                <div class="header-primary">
+                    <div class="identity">
+                        <h1>{d.personal.name}</h1>
+                        <p class="headline">{d.personal.tagline}</p>
+                    </div>
+                    <address>
+                        <span class="contact-row">
+                            <a href={mapsUrl(d.personal.location)}>{d.personal.location}</a>
+                            <a href="https://aarju.dev">aarju.dev</a>
+                        </span>
+                        <span class="contact-row">
+                            <a href={`mailto:${d.personal.email}`}>{d.personal.email}</a>
+                            <a href={`tel:${d.personal.phone.replace(/\s/g, '')}`}>{d.personal.phone}</a>
+                        </span>
+                        <span class="contact-row">
+                            <a href={d.personal.linkedin}>{stripProtocol(d.personal.linkedin)}</a>
+                            <a href={d.personal.github}>{stripProtocol(d.personal.github)}</a>
+                        </span>
+                    </address>
+                </div>
+            </header>
+
+            <section aria-labelledby="skills-heading">
+                <h2 id="skills-heading">Skills</h2>
+                <dl class="skills">
+                    {d.resume.skillCategories.map((category) => (
+                        <div>
+                            <dt>{category.label}</dt>
+                            <dd>{category.items.join(', ')}</dd>
+                        </div>
+                    ))}
+                </dl>
+            </section>
+
+            <section aria-labelledby="experience-heading">
+                <h2 id="experience-heading">Experience</h2>
+                {experienceGroups.map((group) => (
+                    <div class="company-group">
+                        <h3>{group.company}</h3>
+                        <div class="role-chain">
+                            {group.roles.map((role) => (
+                                <div class="role">
+                                    <div class="role-heading">
+                                        <h4>{role.role}</h4>
+                                        <p>
+                                            {[role.location, role.duration].filter(Boolean).join(' · ')}
+                                        </p>
+                                    </div>
+                                    {role.summary.length > 0 && (
+                                        <ul>
+                                            {role.summary.map((point) => <li>{point}</li>)}
+                                        </ul>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </section>
+
+            <section aria-labelledby="projects-heading">
+                <h2 id="projects-heading">Selected projects</h2>
+                {d.projects.map((project) => (
+                    <div class="entry">
+                        <div class="entry-heading">
+                            <div>
+                                <h3>{project.name}</h3>
+                                <p>{project.context}</p>
+                            </div>
+                            <p class="date">{project.date}</p>
+                        </div>
+                        <ul>
+                            {project.summary.map((point) => <li>{point}</li>)}
+                        </ul>
+                    </div>
+                ))}
+            </section>
+
+            <section aria-labelledby="education-heading">
+                <h2 id="education-heading">Education</h2>
+                {d.education.filter((item) => item.visible).map((item) => (
+                    <div class="entry compact">
+                        <div class="entry-heading">
+                            <div>
+                                <h3>{item.degree}</h3>
+                                <p>{item.institution}{item.location && ` · ${item.location}`}</p>
+                            </div>
+                            <p class="date">{item.duration}</p>
+                        </div>
+                    </div>
+                ))}
+            </section>
+        </article>
+    </main>
+
+    <div class="screen-only">
+        <Footer footer={withBuildDate(d.footer)} client:idle />
+        <Shortcuts client:idle />
+    </div>
+
+    <script>
+        document.querySelector('#print-resume')?.addEventListener('click', () => window.print())
+    </script>
+</BaseLayout>
+
+<style>
+    @import '@design/tokens/breakpoints.css';
+
+    :global(:root) {
+        --resume-page-width: 210mm;
+        --resume-page-padding: 14mm;
+        --resume-print-text-xs: 6.75pt;
+        --resume-print-text-sm: 7.5pt;
+        --resume-print-text-base: 8.25pt;
+        --resume-print-text-md: 9pt;
+        --resume-print-text-xl: 22pt;
+        --resume-print-ink: 0 0 0;
+        --resume-print-paper: 255 255 255;
+    }
+
+    .resume-shell {
+        width: 100%;
+        max-width: calc(
+            var(--resume-page-width) + var(--content-gutter) + var(--content-gutter)
+        );
+        margin: 0 auto;
+        padding: var(--space-24) var(--content-gutter);
+    }
+
+    .toolbar {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: var(--space-6);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--text-muted);
+    }
+
+    .toolbar button {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        color: inherit;
+        font: inherit;
+        text-decoration: underline;
+        text-decoration-color: transparent;
+        text-underline-offset: 0.2em;
+        transition:
+            color var(--duration-base) ease,
+            text-decoration-color var(--duration-base) ease;
+    }
+
+    .toolbar button:hover {
+        color: var(--text);
+        text-decoration-color: rgb(var(--ink) / 0.3);
+    }
+
+    .toolbar button {
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .resume {
+        color: var(--text-secondary);
+        font-family: var(--font-sans);
+        font-size: var(--text-base);
+        font-weight: var(--weight-light);
+        line-height: var(--leading-relaxed);
+    }
+
+    .resume-header {
+        margin-bottom: var(--space-12);
+    }
+
+    .header-primary {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: start;
+        gap: var(--space-8);
+    }
+
+    h1 {
+        margin: 0 0 var(--space-5);
+        color: var(--text);
+        font-size: var(--text-3xl);
+        font-weight: var(--weight-medium);
+        line-height: var(--leading-tight);
+    }
+
+    .headline {
+        margin: 0;
+        font-size: var(--text-md);
+        line-height: var(--leading-snug);
+        color: var(--text-secondary);
+    }
+
+    address {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: var(--space-1);
+        color: var(--text-muted);
+        font-style: normal;
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+    }
+
+    address a {
+        color: inherit;
+        text-decoration-color: rgb(var(--ink) / 0.3);
+        text-underline-offset: 0.2em;
+    }
+
+    .contact-row {
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--space-4);
+    }
+
+    section {
+        margin-top: var(--space-12);
+    }
+
+    h2 {
+        margin: 0 0 var(--space-5);
+        color: var(--text);
+        font-size: var(--text-xl);
+        font-weight: var(--weight-medium);
+        line-height: var(--leading-snug);
+        letter-spacing: var(--tracking-tight);
+    }
+
+    h3,
+    h4,
+    p,
+    ul,
+    dl {
+        margin-top: 0;
+    }
+
+    h3 {
+        margin-bottom: var(--space-1);
+        color: var(--text);
+        font-size: var(--text-md);
+        font-weight: var(--weight-medium);
+        line-height: var(--leading-snug);
+    }
+
+    h4 {
+        margin-bottom: var(--space-1);
+        color: var(--text);
+        font-size: var(--text-base);
+        font-weight: var(--weight-medium);
+        line-height: var(--leading-snug);
+    }
+
+    p,
+    li,
+    dt,
+    dd {
+        font-size: var(--text-base);
+        line-height: var(--leading-relaxed);
+    }
+
+    .entry {
+        margin-bottom: var(--space-8);
+        padding-bottom: var(--space-8);
+        border-bottom: var(--border-hairline) solid rgb(var(--ink) / 0.08);
+        break-inside: avoid;
+    }
+
+    .entry:last-child,
+    .compact {
+        margin-bottom: 0;
+    }
+
+    .entry:last-child {
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+
+    .company-group {
+        margin-bottom: var(--space-8);
+        padding-bottom: var(--space-8);
+        border-bottom: var(--border-hairline) solid rgb(var(--ink) / 0.08);
+        break-inside: avoid;
+    }
+
+    .company-group:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+
+    .role-chain {
+        margin-left: var(--space-1);
+        padding-left: var(--space-5);
+        border-left: var(--border-hairline) solid rgb(var(--ink) / 0.18);
+    }
+
+    .role {
+        position: relative;
+    }
+
+    .role::before {
+        position: absolute;
+        top: var(--space-1-5);
+        left: calc(-1 * var(--space-5) - var(--space-1));
+        width: var(--space-2);
+        height: var(--space-2);
+        border-radius: var(--radius-circle);
+        background: var(--bg);
+        border: var(--border-hairline) solid var(--text-muted);
+        content: '';
+    }
+
+    .role + .role {
+        margin-top: var(--space-6);
+    }
+
+    .role-heading p {
+        flex: none;
+        margin-bottom: var(--space-2);
+        color: var(--text-muted);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        text-align: right;
+    }
+
+    .role-heading {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: var(--space-4);
+    }
+
+    .entry-heading {
+        display: flex;
+        justify-content: space-between;
+        gap: var(--space-4);
+    }
+
+    .entry-heading p {
+        margin-bottom: var(--space-2);
+        color: var(--text-muted);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+    }
+
+    .date {
+        flex: none;
+        text-align: right;
+        letter-spacing: var(--tracking-wide);
+    }
+
+    ul {
+        margin-bottom: 0;
+        padding-left: 0;
+        list-style: none;
+    }
+
+    li + li {
+        margin-top: var(--space-2);
+    }
+
+    .skills > div {
+        display: grid;
+        grid-template-columns: var(--space-24) 1fr;
+        gap: var(--space-3);
+    }
+
+    dt {
+        color: var(--text);
+        font-weight: var(--weight-medium);
+    }
+
+    dd {
+        margin: 0;
+    }
+
+    /* The on-screen document is the print preview. Site chrome remains
+       theme-aware around it; the resume itself has one stable A4 contract. */
+    .resume {
+        --ink: var(--resume-print-ink);
+        --paper: var(--resume-print-paper);
+        --text: rgb(var(--resume-print-ink));
+        --text-secondary: rgb(var(--resume-print-ink) / 0.72);
+        --text-muted: rgb(var(--resume-print-ink) / 0.6);
+        --text-subtle: rgb(var(--resume-print-ink) / 0.36);
+
+        padding: var(--resume-page-padding);
+        color: var(--text-secondary);
+        background: rgb(var(--resume-print-paper));
+        font-size: var(--resume-print-text-base);
+    }
+
+    .resume,
+    .resume p,
+    .resume li,
+    .resume dt,
+    .resume dd {
+        font-size: var(--resume-print-text-base);
+    }
+
+    .resume-header {
+        margin-bottom: var(--space-4);
+    }
+
+    .resume h1 {
+        margin-bottom: var(--space-1);
+        color: var(--text);
+        font-size: var(--resume-print-text-xl);
+    }
+
+    .resume .headline {
+        margin-bottom: 0;
+        font-size: var(--resume-print-text-base);
+    }
+
+    .resume address {
+        font-size: var(--resume-print-text-xs);
+    }
+
+    .resume section {
+        margin-top: var(--space-5);
+    }
+
+    .resume h2 {
+        margin-bottom: var(--space-3);
+        padding-bottom: var(--space-1);
+        border-bottom: var(--border-hairline) solid rgb(var(--resume-print-ink) / 0.25);
+        color: var(--text);
+        font-size: var(--resume-print-text-md);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-wide);
+    }
+
+    .resume h3,
+    .resume h4 {
+        color: var(--text);
+        font-size: var(--resume-print-text-base);
+    }
+
+    .resume .company-group,
+    .resume .entry {
+        margin-bottom: var(--space-4);
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+
+    .resume .role::before {
+        background: rgb(var(--resume-print-paper));
+    }
+
+    .resume .role-heading p,
+    .resume .entry-heading p {
+        font-size: var(--resume-print-text-xs);
+    }
+
+    .resume .entry-heading p {
+        margin-bottom: var(--space-1);
+    }
+
+    .resume ul {
+        padding-left: 0;
+    }
+
+    @media (--bp-narrow) {
+        .header-primary {
+            grid-template-columns: 1fr;
+        }
+
+        address {
+            align-items: flex-start;
+        }
+
+        .contact-row {
+            justify-content: flex-start;
+        }
+
+    }
+
+    @media screen {
+        .resume {
+            border: var(--border-hairline) solid rgb(var(--resume-print-ink) / 0.14);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+    }
+
+    @media print {
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        :global(html),
+        :global(body) {
+            background: rgb(var(--resume-print-paper));
+        }
+
+        .resume-shell {
+            width: auto;
+            max-width: none;
+            padding: 0;
+        }
+
+        .toolbar,
+        .screen-only,
+        :global(.skip-link) {
+            display: none;
+        }
+
+        .resume .header-primary {
+            grid-template-columns: minmax(0, 1fr) auto;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    }
+</style>

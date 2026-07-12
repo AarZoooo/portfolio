@@ -1,15 +1,15 @@
 {
     "personal": {
         "name": "Aarju Pal",
-        "tagline": "Software Engineer | AI & Backend Engineer",
+        "tagline": "Software Engineer I at Rippling",
         "email": "me@aarju.dev",
         "phone": "+91 79086 36536",
         "location": "Bangalore, India",
         "github": "https://github.com/AarZoooo",
         "linkedin": "https://linkedin.com/in/aarjupal",
-        "resume": "resume",
         "avatar": "avatar",
-        "summary": "Backend Software Engineer specialising in AI-driven systems and backend infrastructure, with production internship experience at PayPal and Rippling."
+        "summary": "Software Engineer at Rippling, working primarily on backend systems and developer tooling.",
+        "resumeSummary": "Software Engineer at Rippling working on backend systems and internal frameworks. Previously built AI-assisted change-management tooling and backend automation at PayPal, including a LangGraph and Milvus proof of concept that reduced ticket creation time from one hour to five minutes."
     },
     "sections": {
         "experience": "Experience",
@@ -75,12 +75,29 @@
     "experience": [
         {
             "company": "Rippling People Center Inc.",
+            "role": "Software Engineer I",
+            "duration": "June 2026 - Present",
+            "location": "Bangalore",
+            "logo": "rippling",
+            "summary": [
+                "Building backend systems and internal frameworks for Rippling's employee-data platform."
+            ],
+            "tech": [
+                "Python",
+                "Django",
+                "Buildkite"
+            ]
+        },
+        {
+            "company": "Rippling People Center Inc.",
             "role": "Software Engineer Intern",
-            "duration": "Nov 2025 – May 2026",
+            "duration": "Nov 2025 - May 2026",
+            "location": "Bangalore",
             "logo": "rippling",
             "summary": [
                 "Migrated 150+ employee data fields across 20+ countries from a legacy multi-class system to an internal define-once, use-everywhere framework; fields now serve 560,000+ page saves/month on systems powering $114.25M in ARR across 78 countries.",
-                "Owned two complexity-5 migrations in the entire project, redesigning the standard approach into an 8-PR incremental plan when the original PR grew to 10,000+ lines - zero margin for error on a US regulatory compliance field."
+                "Owned two complexity-5 migrations in the project, redesigning the standard approach into an 8-PR incremental plan when the original PR grew beyond 10,000 lines.",
+                "Co-built the Conditionality Engine during Quality Week; it won the Foundational Fixes category at the company-wide event."
             ],
             "detail": [
                 "Rippling's legacy field system was deep in object-oriented sprawl. Every input field was its own class, with separate parallel classes for workflows, profile pages, and bulk flows. No standardization; the same concept lived in five places at once, and drift between them was constant. The new framework defines a field once as JSON and dynamically generates the object on any page; custom logic routes through a single lambda override registry. I migrated 150+ fields into it, many of them country-agnostic, so my work sits on systems serving 560,000+ page saves per month and $114.25M in ARR across 78 countries. Changes that used to mean threading through multiple classes now happen in one definition. Engineers and PMs both pick up the time.",
@@ -96,7 +113,8 @@
         {
             "company": "PayPal India Pvt. Ltd.",
             "role": "Software Engineer Intern",
-            "duration": "May 2025 – Aug 2025",
+            "duration": "May 2025 - Aug 2025",
+            "location": "Chennai",
             "logo": "paypal",
             "summary": [
                 "Designed an AI-driven Change Management PoC using Python, LangGraph, and Milvus, reducing ticket creation time by 92%.",
@@ -122,7 +140,19 @@
             "institution": "Chandigarh University",
             "degree": "Bachelor of Engineering (B.E.), Computer Science",
             "duration": "July 2022 – June 2026",
-            "logo": ""
+            "location": "Punjab, India",
+            "logo": "",
+            "score": "CGPA: 7.9 / 10",
+            "visible": true
+        },
+        {
+            "institution": "Arambagh Vivekananda Academy (CBSE)",
+            "degree": "Higher Secondary — Science (PCM, Computer Science)",
+            "duration": "March 2022",
+            "location": "West Bengal, India",
+            "logo": "",
+            "score": "Percentage: 90.8%",
+            "visible": false
         }
     ],
     "projects": [
@@ -157,7 +187,6 @@
             "live": "",
             "summary": [
                 "Designed and built an internal AI-driven backend system using Python to automate creation, validation, and enrichment of change management tickets.",
-                "Built a LangGraph-driven agent plugged into PayPal's internal multi-agent orchestration platform, with a Milvus vector store for semantic retrieval over past tickets.",
                 "Reduced average ticket creation time from 1 hour to 5 minutes (92% reduction), significantly improving engineering productivity and operational efficiency."
             ],
             "detail": [
@@ -256,6 +285,30 @@
             "CI/CD",
             "Developer Tooling",
             "Agile/Scrum"
+        ]
+    },
+    "resume": {
+        "skillCategories": [
+            {
+                "label": "Languages",
+                "items": ["Java", "Python", "SQL"]
+            },
+            {
+                "label": "Frameworks",
+                "items": ["Spring Boot", "Django", "LangGraph", "MCP"]
+            },
+            {
+                "label": "Databases",
+                "items": ["MySQL", "Milvus"]
+            },
+            {
+                "label": "Tools",
+                "items": ["Git", "GitHub", "Postman", "Buildkite", "Linux", "Jira", "Confluence"]
+            },
+            {
+                "label": "Concepts",
+                "items": ["Agentic AI", "RAG", "Vector Databases", "Backend Systems", "REST APIs", "Microservices", "CI/CD", "Developer Tooling", "Agile/Scrum"]
+            }
         ]
     }
 }
