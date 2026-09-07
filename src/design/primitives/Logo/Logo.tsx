@@ -1,7 +1,7 @@
 import styles from './Logo.module.css'
 
 interface LogoProps {
-    src: string
+    src?: string
     alt: string
     /** Size of the logo square. Defaults to 1.1em (matches the
      * inline logo next to a company name). Pass a fixed px/rem for
@@ -18,6 +18,7 @@ interface LogoProps {
  * changes. Replaces the previous <img> + --mono-logo filter
  * approach, which could only force black/white. */
 export default function Logo({ src, alt, size = '1.1em', className }: LogoProps) {
+    if (!src) return null
     return (
         <div
             className={`${styles.logo}${className ? ` ${className}` : ''}`}

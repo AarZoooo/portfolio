@@ -30,8 +30,10 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
     const [scrolled, setScrolled] = useState(false)
     const [active, setActive] = useState<string | null>(null)
     const [menuOpen, setMenuOpen] = useState(false)
-    const { paletteIndex, palette, toggleMonochrome } = useTheme()
+    const { paletteIndex, palette, toggleMonochrome, cyclePalette } = useTheme()
     const hamburgerRef = useRef<HTMLButtonElement>(null)
+    const toggleHoldTimer = useRef<number | null>(null)
+    const toggleHeld = useRef(false)
     useFocusTrap({ open: menuOpen, containerId: 'subapp-menu', triggerRef: hamburgerRef })
 
     const hasSections = !!sectionLinks && sectionLinks.length > 0
@@ -165,7 +167,26 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
 
                     <button
                         type="button"
-                        onClick={toggleMonochrome}
+                        onPointerDown={() => {
+                            toggleHeld.current = false
+                            toggleHoldTimer.current = window.setTimeout(() => {
+                                toggleHeld.current = true
+                                cyclePalette(1)
+                            }, 450)
+                        }}
+                        onPointerUp={() => {
+                            if (toggleHoldTimer.current !== null) {
+                                window.clearTimeout(toggleHoldTimer.current)
+                                toggleHoldTimer.current = null
+                            }
+                            if (!toggleHeld.current) toggleMonochrome()
+                        }}
+                        onPointerCancel={() => {
+                            if (toggleHoldTimer.current !== null) {
+                                window.clearTimeout(toggleHoldTimer.current)
+                                toggleHoldTimer.current = null
+                            }
+                        }}
                         aria-label={toggleLabel}
                         className={styles.toggle}
                     >
