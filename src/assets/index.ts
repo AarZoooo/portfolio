@@ -17,11 +17,6 @@ const techLogoModules = import.meta.glob('./logos/tech/*.{svg,png}', {
     import: 'default',
 }) as Record<string, AssetValue>
 
-const avatarModules = import.meta.glob('./avatar/*.{svg,png,jpg,jpeg}', {
-    eager: true,
-    import: 'default',
-}) as Record<string, AssetValue>
-
 const heroModules = import.meta.glob('./hero/*.{svg,png,jpg,jpeg,gif,webp}', {
     eager: true,
     import: 'default',
@@ -43,10 +38,8 @@ const byBasename = (mods: Record<string, AssetValue>): Record<string, string> =>
 const companyLogos = byBasename(companyLogoModules)
 const schoolLogos = byBasename(schoolLogoModules)
 const techLogos = byBasename(techLogoModules)
-const avatars = byBasename(avatarModules)
 const heroImages = byBasename(heroModules)
 export const assets = {
-    avatar: (key: string): string | undefined => avatars[key],
     companyLogo: (key: string): string | undefined => companyLogos[key],
     schoolLogo: (key: string): string | undefined => schoolLogos[key],
     techLogo: (key: string): string | undefined => techLogos[key],

@@ -7,7 +7,6 @@
         "location": "Bangalore, India",
         "github": "https://github.com/AarZoooo",
         "linkedin": "https://linkedin.com/in/aarjupal",
-        "avatar": "avatar",
         "summary": "Software Engineer at Rippling, working primarily on backend systems and developer tooling.",
         "resumeSummary": "Software Engineer at Rippling working on backend systems and internal frameworks. Previously built AI-assisted change-management tooling and backend automation at PayPal, including a LangGraph and Milvus proof of concept that reduced ticket creation time from one hour to five minutes."
     },

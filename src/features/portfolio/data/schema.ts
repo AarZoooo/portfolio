@@ -8,7 +8,6 @@ const personalSchema = z.object({
     location: z.string(),
     github: z.string(),
     linkedin: z.string(),
-    avatar: z.string(),
     summary: z.string(),
     resumeSummary: z.string(),
 })
