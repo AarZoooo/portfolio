@@ -68,8 +68,8 @@
     display: none;
     align-items: center;
     justify-content: center;
-    width: var(--space-12);
-    height: var(--space-12);
+    width: var(--space-7);
+    height: var(--space-7);
     color: rgb(var(--text));
     transition: color var(--duration-base) ease;
 }
@@ -312,8 +312,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: var(--space-12);
-    height: var(--space-12);
+    width: var(--space-7);
+    height: var(--space-7);
     margin-left: var(--space-5);
     border-radius: var(--radius-pill);
     background: rgb(var(--accent));
