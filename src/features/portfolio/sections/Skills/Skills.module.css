@@ -11,7 +11,7 @@
     font-weight: var(--weight-light);
     letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: rgb(var(--text-muted));
 }
 
 .list {
@@ -40,7 +40,7 @@
     font-family: var(--font-mono);
     font-size: var(--text-sm);
     font-weight: var(--weight-light);
-    color: var(--text-muted);
+    color: rgb(var(--text-muted));
     text-transform: uppercase;
     letter-spacing: var(--tracking-wide);
 }
@@ -49,13 +49,13 @@
     margin: 0;
     font-size: var(--text-base);
     font-weight: var(--weight-light);
-    color: var(--text);
+    color: rgb(var(--text));
     line-height: var(--leading-relaxed);
 }
 
 .sep {
     margin: 0 var(--space-3);
-    color: var(--text-muted);
+    color: rgb(var(--text-muted));
 }
 
 .chips {

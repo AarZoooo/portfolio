@@ -30,7 +30,7 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
     const [scrolled, setScrolled] = useState(false)
     const [active, setActive] = useState<string | null>(null)
     const [menuOpen, setMenuOpen] = useState(false)
-    const { theme, toggleTheme } = useTheme()
+    const { paletteIndex, palette, toggleMonochrome } = useTheme()
     const hamburgerRef = useRef<HTMLButtonElement>(null)
     useFocusTrap({ open: menuOpen, containerId: 'subapp-menu', triggerRef: hamburgerRef })
 
@@ -47,6 +47,16 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
 
     const openMenu = () => setMenuOpen(true)
     const closeMenu = () => setMenuOpen(false)
+
+    // Tap behavior only; hold-to-cycle is keyboard-only. On a monochrome we
+    // name the opposite; on a colored palette we point back to the home mono.
+    const isMonochrome = paletteIndex <= 1
+    const toggleLabel = isMonochrome
+        ? `Switch to ${palette === 'monochrome-dark' ? 'monochrome-light' : 'monochrome-dark'} palette`
+        : 'Switch to monochrome palette'
+    // Sun suggests "go light", moon suggests "go dark". Colored palettes read
+    // as dark, so the sun hints at returning to the light/home monochrome.
+    const showSun = palette !== 'monochrome-light'
 
     // Escape closes the menu.
     useEffect(() => {
@@ -155,11 +165,11 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
 
                     <button
                         type="button"
-                        onClick={toggleTheme}
-                        aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+                        onClick={toggleMonochrome}
+                        aria-label={toggleLabel}
                         className={styles.toggle}
                     >
-                        {theme === 'dark' ? (
+                        {showSun ? (
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                                 <circle cx="12" cy="12" r="4" />
                                 <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />

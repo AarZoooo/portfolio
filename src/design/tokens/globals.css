@@ -27,7 +27,7 @@ body {
     flex-direction: column;
     min-height: 100vh;
     background: var(--bg);
-    color: var(--text);
+    color: rgb(var(--text));
     font-family: var(--font-sans);
     font-weight: var(--weight-light);
     font-size: var(--text-base);
@@ -76,7 +76,7 @@ img {
 /* Keyboard focus - visible ring (doesn't disturb layout). */
 :focus { outline: none; }
 :focus-visible {
-    outline: 2px solid var(--text);
+    outline: 2px solid rgb(var(--text));
     outline-offset: 3px;
     border-radius: var(--radius-sm);
 }
@@ -87,8 +87,8 @@ img {
     top: var(--space-3);
     left: var(--space-3);
     padding: var(--space-2) var(--space-3-5);
-    background: var(--accent);
-    color: var(--accent-contrast);
+    background: rgb(var(--accent));
+    color: rgb(var(--accent-contrast));
     font-family: var(--font-mono);
     font-size: var(--text-sm);
     border-radius: var(--radius-md);
@@ -127,7 +127,7 @@ img {
 /* Metric - bolder + full ink inside otherwise muted prose. */
 .metric {
     font-weight: var(--weight-medium);
-    color: var(--text);
+    color: rgb(var(--text));
 }
 
 /* Globally disable CSS transitions and animations for users who prefer

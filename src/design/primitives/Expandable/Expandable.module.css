@@ -80,13 +80,13 @@
     margin-top: var(--space-3-5);
     padding: 0;
     display: block;
-    color: var(--text-muted);
+    color: rgb(var(--text-muted));
     text-align: left;
     transition: color var(--duration-base) ease;
 }
 
 .toggle:hover {
-    color: var(--text);
+    color: rgb(var(--text));
 }
 
 .toggleLabel {

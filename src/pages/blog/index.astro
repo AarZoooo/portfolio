@@ -73,13 +73,13 @@ const formatDate = (date: Date): string =>
         margin: 0;
         font-family: var(--font-mono);
         font-size: var(--text-sm);
-        color: var(--text-secondary);
+        color: rgb(var(--text-secondary));
     }
 
     .empty {
         font-family: var(--font-mono);
         font-size: var(--text-sm);
-        color: var(--text-muted);
+        color: rgb(var(--text-muted));
     }
 
     .post-list {
@@ -111,7 +111,7 @@ const formatDate = (date: Date): string =>
         font-size: var(--text-xs);
         font-weight: var(--weight-light);
         letter-spacing: var(--tracking-wide);
-        color: var(--text-muted);
+        color: rgb(var(--text-muted));
         text-transform: uppercase;
     }
 
@@ -120,12 +120,12 @@ const formatDate = (date: Date): string =>
         font-family: var(--font-sans);
         font-size: var(--text-lg);
         font-weight: var(--weight-medium);
-        color: var(--text);
+        color: rgb(var(--text));
         transition: color var(--duration-base) ease;
     }
 
     .post-card:hover .post-title {
-        color: var(--text-secondary);
+        color: rgb(var(--text-secondary));
     }
 
     .post-description {
@@ -133,7 +133,7 @@ const formatDate = (date: Date): string =>
         font-family: var(--font-sans);
         font-size: var(--text-sm);
         font-weight: var(--weight-light);
-        color: var(--text-secondary);
+        color: rgb(var(--text-secondary));
         line-height: var(--leading-relaxed);
     }
 </style>

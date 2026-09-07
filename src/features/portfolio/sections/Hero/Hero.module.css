@@ -35,7 +35,7 @@
     font-weight: var(--weight-light);
     letter-spacing: var(--tracking-tight);
     line-height: var(--leading-snug);
-    color: var(--text);
+    color: rgb(var(--text));
 }
 
 .name {
@@ -46,7 +46,7 @@
     margin: var(--space-3) 0 0;
     font-size: var(--text-xl);
     font-weight: var(--weight-light);
-    color: var(--text-secondary);
+    color: rgb(var(--text-secondary));
     line-height: 1.5;
     min-height: 1.5em;
     /* SSR'd value is invisible until React swaps in the random pick on
@@ -75,7 +75,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-secondary);
+    color: rgb(var(--text-secondary));
     transition:
         color var(--duration-base) ease,
         transform var(--duration-base) ease,
@@ -83,7 +83,7 @@
 }
 
 .socialBtn:hover {
-    color: var(--text);
+    color: rgb(var(--text));
     transform: translateY(-1px);
     filter: drop-shadow(var(--glow-sm));
 }
@@ -98,7 +98,7 @@
     font-weight: var(--weight-light);
     letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: rgb(var(--text-muted));
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
@@ -116,12 +116,12 @@
 }
 
 .scrollHint:hover {
-    color: var(--text);
+    color: rgb(var(--text));
 }
 
 .scrollHint strong {
     font-weight: var(--weight-medium);
-    color: var(--text);
+    color: rgb(var(--text));
 }
 
 @media (--bp-medium) {

@@ -11,7 +11,7 @@
     font-weight: var(--weight-light);
     letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: rgb(var(--text-muted));
 }
 
 .list {
@@ -37,7 +37,7 @@
     margin: 0;
     font-size: var(--text-lg);
     font-weight: var(--weight-medium);
-    color: var(--text);
+    color: rgb(var(--text));
 }
 
 .context {
@@ -47,7 +47,7 @@
     gap: var(--space-2);
     font-size: var(--text-md);
     font-weight: var(--weight-light);
-    color: var(--text-secondary);
+    color: rgb(var(--text-secondary));
 }
 
 .logo {
@@ -63,7 +63,7 @@
     font-family: var(--font-mono);
     font-size: var(--text-sm);
     font-weight: var(--weight-light);
-    color: var(--text-muted);
+    color: rgb(var(--text-muted));
     white-space: nowrap;
 }
 

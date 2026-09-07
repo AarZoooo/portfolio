@@ -341,14 +341,14 @@ const formatDate = (date: Date): string =>
             font-size: var(--text-xs);
             font-weight: var(--weight-medium);
             letter-spacing: var(--tracking-wide);
-            color: var(--text-muted);
+            color: rgb(var(--text-muted));
             text-transform: uppercase;
             list-style: none;
             padding: var(--space-2) 0;
             transition: color var(--duration-base) ease;
         }
         .post-toc-details > summary:hover {
-            color: var(--text);
+            color: rgb(var(--text));
         }
         .post-toc-details > summary::-webkit-details-marker {
             display: none;
@@ -396,14 +396,14 @@ const formatDate = (date: Date): string =>
         display: flex;
         align-items: center;
         gap: var(--space-2);
-        color: var(--text-muted);
+        color: rgb(var(--text-muted));
         text-decoration: none;
         transition: color var(--duration-base) ease;
     }
 
     .post-toc a:hover,
     .post-toc a[data-active] {
-        color: var(--text);
+        color: rgb(var(--text));
     }
 
     /* Solid hairline. Hyphen-sized by default; shrinks on hover/active so
@@ -447,7 +447,7 @@ const formatDate = (date: Date): string =>
         font-size: var(--text-xs);
         font-weight: var(--weight-light);
         letter-spacing: var(--tracking-wide);
-        color: var(--text-muted);
+        color: rgb(var(--text-muted));
         text-transform: uppercase;
     }
 
@@ -457,7 +457,7 @@ const formatDate = (date: Date): string =>
         font-size: var(--text-3xl);
         font-weight: var(--weight-medium);
         line-height: var(--leading-tight);
-        color: var(--text);
+        color: rgb(var(--text));
     }
 
     .post-lede {
@@ -465,7 +465,7 @@ const formatDate = (date: Date): string =>
         font-family: var(--font-sans);
         font-size: var(--text-md);
         font-weight: var(--weight-light);
-        color: var(--text-secondary);
+        color: rgb(var(--text-secondary));
         line-height: var(--leading-snug);
     }
 </style>

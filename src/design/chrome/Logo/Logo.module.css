@@ -9,7 +9,7 @@
     font-size: var(--text-base);
     font-weight: var(--font-display-weight);
     line-height: 1;
-    color: var(--text);
+    color: rgb(var(--text));
     text-decoration: none;
     transition: filter var(--duration-base) ease;
 }
@@ -40,11 +40,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: var(--text-muted);
+    color: rgb(var(--text-muted));
     text-decoration: none;
     transition: color var(--duration-base) ease;
 }
 
 .slug:hover {
-    color: var(--text);
+    color: rgb(var(--text));
 }

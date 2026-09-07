@@ -70,12 +70,12 @@
     justify-content: center;
     width: var(--space-12);
     height: var(--space-12);
-    color: var(--text);
+    color: rgb(var(--text));
     transition: color var(--duration-base) ease;
 }
 
 .hamburger:hover {
-    color: var(--text-secondary);
+    color: rgb(var(--text-secondary));
 }
 
 .hamburger svg {
@@ -95,7 +95,7 @@
     font-family: var(--font-mono);
     font-size: var(--text-sm);
     font-weight: var(--weight-light);
-    color: var(--text-secondary);
+    color: rgb(var(--text-secondary));
     transition:
         width var(--duration-slower) var(--ease-spring),
         color var(--duration-base) ease,
@@ -103,11 +103,11 @@
 }
 
 .navLink:hover {
-    color: var(--text);
+    color: rgb(var(--text));
 }
 
 .navActive {
-    color: var(--text);
+    color: rgb(var(--text));
     font-weight: var(--weight-medium);
 }
 
@@ -168,7 +168,7 @@
     font-family: var(--font-sans);
     font-size: var(--text-sm);
     font-weight: var(--weight-medium);
-    color: var(--text-secondary);
+    color: rgb(var(--text-secondary));
     text-decoration: none;
     transition: color var(--duration-base) ease;
 }
@@ -187,7 +187,7 @@
 }
 
 .subAppLink:hover {
-    color: var(--text);
+    color: rgb(var(--text));
 }
 
 .subAppLink:hover::after {
@@ -195,7 +195,7 @@
 }
 
 .subAppActive {
-    color: var(--text);
+    color: rgb(var(--text));
     font-weight: var(--weight-medium);
 }
 
@@ -316,8 +316,8 @@
     height: var(--space-12);
     margin-left: var(--space-5);
     border-radius: var(--radius-pill);
-    background: var(--accent);
-    color: var(--accent-contrast);
+    background: rgb(var(--accent));
+    color: rgb(var(--accent-contrast));
     box-shadow: var(--shadow-xl);
     transition: background var(--duration-base) ease, color var(--duration-base) ease;
 }

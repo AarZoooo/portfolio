@@ -25,7 +25,7 @@ const groups: Group[] = [
     {
         title: 'Modes',
         shortcuts: [
-            { keys: ['t'], description: 'Toggle theme (light / dark)' },
+            { keys: ['t'], description: 'Cycle palette (tap: light/dark, hold: next)' },
             { keys: ['w'], description: 'Toggle narrow reading column' },
         ],
     },
@@ -66,7 +66,7 @@ const groups: Group[] = [
                     always ignored, so they won't fire while typing.
                 </p>
                 <p class="touch-note">
-                    On touch devices, use the navbar to switch theme.
+                    On touch devices, use the navbar button to switch palette.
                 </p>
             </header>
 
@@ -116,7 +116,7 @@ const groups: Group[] = [
         font-size: var(--text-xs);
         font-weight: var(--weight-light);
         letter-spacing: var(--tracking-wide);
-        color: var(--text-muted);
+        color: rgb(var(--text-muted));
         text-transform: uppercase;
     }
 
@@ -126,7 +126,7 @@ const groups: Group[] = [
         font-size: var(--text-3xl);
         font-weight: var(--weight-medium);
         line-height: var(--leading-tight);
-        color: var(--text);
+        color: rgb(var(--text));
     }
 
     .lede {
@@ -134,7 +134,7 @@ const groups: Group[] = [
         font-family: var(--font-sans);
         font-size: var(--text-md);
         font-weight: var(--weight-light);
-        color: var(--text-secondary);
+        color: rgb(var(--text-secondary));
         line-height: var(--leading-snug);
     }
 
@@ -146,7 +146,7 @@ const groups: Group[] = [
         font-family: var(--font-mono);
         font-size: var(--text-xs);
         line-height: var(--leading-relaxed);
-        color: var(--text-muted);
+        color: rgb(var(--text-muted));
         background: rgb(var(--ink) / 0.04);
         border-left: 2px solid rgb(var(--ink) / 0.15);
         border-radius: var(--radius-sm);
@@ -161,14 +161,14 @@ const groups: Group[] = [
         font-family: var(--font-sans);
         font-size: var(--text-lg);
         font-weight: var(--weight-medium);
-        color: var(--text);
+        color: rgb(var(--text));
     }
 
     .group-note {
         margin: 0 0 var(--space-6);
         font-family: var(--font-mono);
         font-size: var(--text-xs);
-        color: var(--text-muted);
+        color: rgb(var(--text-muted));
     }
 
     .list {
@@ -210,7 +210,7 @@ const groups: Group[] = [
         font-family: var(--font-mono);
         font-size: var(--text-sm);
         font-weight: var(--weight-medium);
-        color: var(--text);
+        color: rgb(var(--text));
         background: rgb(var(--ink) / 0.04);
         border: var(--border-hairline) solid rgb(var(--ink) / 0.18);
         border-bottom-width: 2px;
@@ -220,7 +220,7 @@ const groups: Group[] = [
     .join {
         font-family: var(--font-mono);
         font-size: var(--text-xs);
-        color: var(--text-muted);
+        color: rgb(var(--text-muted));
     }
 
     .action {
@@ -228,7 +228,7 @@ const groups: Group[] = [
         font-family: var(--font-sans);
         font-size: var(--text-sm);
         font-weight: var(--weight-light);
-        color: var(--text-secondary);
+        color: rgb(var(--text-secondary));
         line-height: var(--leading-snug);
     }
 

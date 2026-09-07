@@ -11,7 +11,7 @@
     font-weight: var(--weight-light);
     letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: rgb(var(--text-muted));
 }
 
 .list {
@@ -40,7 +40,7 @@
     font-family: var(--font-mono);
     font-size: var(--text-sm);
     font-weight: var(--weight-light);
-    color: var(--text-muted);
+    color: rgb(var(--text-muted));
     text-transform: uppercase;
     letter-spacing: var(--tracking-wide);
 }
@@ -49,7 +49,7 @@
     margin: 0;
     font-size: var(--text-base);
     font-weight: var(--weight-light);
-    color: var(--text);
+    color: rgb(var(--text));
     line-height: var(--leading-relaxed);
     display: inline-flex;
     align-items: center;
@@ -66,7 +66,7 @@
     padding: 0;
     border: 0;
     background: none;
-    color: var(--text-muted);
+    color: rgb(var(--text-muted));
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -94,7 +94,7 @@
 }
 
 .copyBtn:hover {
-    color: var(--text);
+    color: rgb(var(--text));
 }
 
 .copyBtn:focus-visible {
@@ -119,12 +119,12 @@
 
 .checkIcon {
     opacity: 0;
-    color: var(--text);
+    color: rgb(var(--text));
 }
 
 .copyBtn[data-copied] {
     opacity: 1;
-    color: var(--text);
+    color: rgb(var(--text));
 }
 
 .copyBtn[data-copied] .copyIcon {
@@ -151,7 +151,7 @@
 }
 
 .labelLink:hover {
-    color: var(--text);
+    color: rgb(var(--text));
 }
 
 .arrow {

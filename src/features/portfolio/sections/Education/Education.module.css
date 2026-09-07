@@ -11,7 +11,7 @@
     font-weight: var(--weight-light);
     letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: rgb(var(--text-muted));
 }
 
 .list {
@@ -46,7 +46,7 @@
     gap: var(--space-2-5);
     font-size: var(--text-lg);
     font-weight: var(--weight-medium);
-    color: var(--text);
+    color: rgb(var(--text));
 }
 
 .logo {
@@ -60,7 +60,7 @@
     margin: 0;
     font-size: var(--text-md);
     font-weight: var(--weight-light);
-    color: var(--text-secondary);
+    color: rgb(var(--text-secondary));
 }
 
 .duration {
@@ -68,7 +68,7 @@
     font-family: var(--font-mono);
     font-size: var(--text-sm);
     font-weight: var(--weight-light);
-    color: var(--text-muted);
+    color: rgb(var(--text-muted));
     white-space: nowrap;
 }
 
@@ -84,12 +84,12 @@
 .bullet {
     font-size: var(--text-base);
     font-weight: var(--weight-light);
-    color: var(--text-secondary);
+    color: rgb(var(--text-secondary));
     line-height: var(--leading-relaxed);
 }
 
 .bullet::marker {
-    color: var(--text-subtle);
+    color: rgb(var(--text-subtle));
 }
 
 @media (--bp-medium) {
@@ -122,5 +122,5 @@
     font-family: var(--font-mono);
     font-size: var(--text-sm);
     font-weight: var(--weight-light);
-    color: var(--text-muted);
+    color: rgb(var(--text-muted));
 }

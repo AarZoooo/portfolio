@@ -4,7 +4,7 @@ import type { RefObject } from 'react'
 interface UseFocusTrapArgs {
     open: boolean
     containerId: string
-    triggerRef: RefObject<HTMLElement>
+    triggerRef: RefObject<HTMLElement | null>
 }
 
 // Matches links and non-disabled buttons. Kept narrow on purpose: the

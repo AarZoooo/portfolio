@@ -1,6 +1,10 @@
-/* Monochrome design tokens.
-   Single hue (ink on paper), expressed through alpha for every surface,
-   text, border, and overlay use case. Dark mode flips ink <-> paper. */
+/* Design tokens.
+   Palettes define solid colors per tier. The two monochromes
+   (monochrome-light, monochrome-dark) are the defaults; their solid
+   tier values are the alpha-blend equivalents of the previous
+   ink-on-paper expressions, so the look is preserved exactly.
+   Colored palettes can be added by extending PALETTES and defining
+   their solids in a :root[data-palette="<name>"] block below. */
 
 /* Declare --content-max as a typed custom property so it can transition.
    Any element using max-width: var(--content-max) interpolates smoothly
@@ -15,25 +19,28 @@
     /* Transition the width token itself so all consumers animate together. */
     transition: --content-max 520ms cubic-bezier(0.32, 0.72, 0, 1);
 
-    /* Base monochrome - used via rgb(var(--ink) / <alpha>) */
+    /* Base monochrome channels - still used by borders, glass, glow, and
+       any alpha-of-ink/paper expression that is not a text tier. */
     --ink: 0 0 0;
     --paper: 255 255 255;
 
     /* Surface */
     --bg: rgb(var(--paper));
 
-    /* Text. Alphas tuned to clear WCAG AA (4.5:1) on the light page bg —
-       0.52 was visually right but landed at ~4.3:1 and failed Lighthouse. */
-    --text: rgb(var(--ink) / 1);
-    --text-secondary: rgb(var(--ink) / 0.72);
-    --text-muted: rgb(var(--ink) / 0.6);
-    --text-subtle: rgb(var(--ink) / 0.36);
+    /* Text tiers as solid triplets (monochrome-light defaults).
+       Solids = alpha-blend of ink on paper: solid = ink*a + paper*(1-a).
+       Keeping them as triplets lets each palette override them as solids
+       without recomputing alpha against a flipped ink/paper. */
+    --text: 0 0 0;
+    --text-secondary: 71 71 71;    /* ink@0.72 on white: 0*.72+255*.28 */
+    --text-muted: 102 102 102;     /* ink@0.6 on white: 0*.6+255*.4 */
+    --text-subtle: 163 163 163;    /* ink@0.36 on white: 0*.36+255*.64 */
 
     /* Accent = pure ink (monochrome accent) */
-    --accent: rgb(var(--ink));
-    --accent-contrast: rgb(var(--paper));
+    --accent: 0 0 0;
+    --accent-contrast: 255 255 255;
 
-    /* Theme-invariant dark surface (footer). Stays dark regardless of theme.
+    /* Theme-invariant dark surface (footer). Stays dark regardless of palette.
        Space-separated channels so it composes with rgb(... / alpha). */
     --surface-dark: 0 0 0;
     --on-surface-dark: 255 255 255;
@@ -110,9 +117,16 @@
     --border-hairline: 1px;
 }
 
-:root[theme="dark"] {
-    /* Pure monochrome: white ink on black paper. */
+:root[data-palette="monochrome-dark"] {
+    /* White ink on black paper. Text tiers are solids = alpha-blend of
+       white ink on black paper: solid = 255*a + 0*(1-a) = 255*a. */
     --ink: 255 255 255;
     --paper: 0 0 0;
+    --text: 255 255 255;
+    --text-secondary: 184 184 184;  /* 255*.72 */
+    --text-muted: 153 153 153;      /* 255*.6 */
+    --text-subtle: 92 92 92;        /* 255*.36 */
+    --accent: 255 255 255;
+    --accent-contrast: 0 0 0;
     --mono-logo: grayscale(1) brightness(0) invert(1);
 }

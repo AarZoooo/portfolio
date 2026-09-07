@@ -1,30 +1,32 @@
 ---
-// Pre-paint script that sets theme and width from localStorage
+// Pre-paint script that sets palette and width from localStorage
 // so returning visitors don't flash wrong modes. Mirror any change in
 // @hooks/useTheme's STORAGE_KEYS / ATTRS.
 ---
 
 <script is:inline>
     ;(function () {
+        // Keep in sync with @utils/palettes PALETTES.
+        var PALETTES = ['monochrome-light', 'monochrome-dark']
         var d = document.documentElement
         try {
-            var t = localStorage.getItem('theme')
-            var w = localStorage.getItem('width')
+            var p = parseInt(localStorage.getItem('palette'), 10)
+            if (isNaN(p)) {
+                p = matchMedia('(prefers-color-scheme: dark)').matches ? 1 : 0
+            } else {
+                p = Math.max(0, Math.min(p, PALETTES.length - 1))
+            }
+            d.setAttribute('data-palette', PALETTES[p])
 
-            d.setAttribute(
-                'theme',
-                t === 'light' || t === 'dark'
-                    ? t
-                    : matchMedia('(prefers-color-scheme: dark)').matches
-                      ? 'dark'
-                      : 'light',
-            )
+            var w = localStorage.getItem('width')
             if (w === 'wide' || w === 'narrow') d.setAttribute('data-width', w)
         } catch (_) {
             try {
                 d.setAttribute(
-                    'theme',
-                    matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+                    'data-palette',
+                    matchMedia('(prefers-color-scheme: dark)').matches
+                        ? 'monochrome-dark'
+                        : 'monochrome-light',
                 )
             } catch (__) {
                 /* matchMedia unavailable — CSS default applies */

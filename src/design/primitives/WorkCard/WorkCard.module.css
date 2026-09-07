@@ -20,7 +20,7 @@
     margin: 0;
     font-size: var(--text-base);
     font-weight: var(--weight-light);
-    color: var(--text-secondary);
+    color: rgb(var(--text-secondary));
     line-height: var(--leading-relaxed);
 }
 
@@ -29,5 +29,5 @@
     font-family: var(--font-mono);
     font-size: var(--text-sm);
     font-weight: var(--weight-light);
-    color: var(--text-muted);
+    color: rgb(var(--text-muted));
 }

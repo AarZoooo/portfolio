@@ -14,13 +14,28 @@ const PROBE_VIEWPORT_RATIO = 0.3
  * Section jump (j/k) discovers <section[id]> elements inside <main> at
  * runtime, so it works on any page that has them — not just the portfolio.
  */
+const HOLD_THRESHOLD_MS = 450
+
 export default function useShortcuts() {
-    const { toggleTheme, toggleWidth } = useTheme()
+    const { toggleMonochrome, cyclePalette, toggleWidth } = useTheme()
 
     useEffect(() => {
         const SEQUENCE_TIMEOUT = 600
         let pendingLeader: string | null = null
         let pendingTimer: number | null = null
+
+        // Tap-vs-hold state for the 't' key. Reset each keydown cycle so a
+        // fresh press starts clean even after a prior hold.
+        let tHeld = false
+        let tCycled = false
+        let tHoldTimer: number | null = null
+
+        const clearTHold = () => {
+            if (tHoldTimer !== null) {
+                window.clearTimeout(tHoldTimer)
+                tHoldTimer = null
+            }
+        }
 
         const clearPending = () => {
             pendingLeader = null
@@ -157,8 +172,15 @@ export default function useShortcuts() {
 
                 // --- Modes ---
                 case 't':
-                    e.preventDefault()
-                    toggleTheme()
+                    // Auto-repeat fires keydown while held; ignore repeats so
+                    // cyclePalette fires exactly once per deliberate hold.
+                    if (tHeld) return
+                    tHeld = true
+                    tCycled = false
+                    tHoldTimer = window.setTimeout(() => {
+                        tCycled = true
+                        cyclePalette(1)
+                    }, HOLD_THRESHOLD_MS)
                     return
                 case 'w':
                     e.preventDefault()
@@ -167,10 +189,22 @@ export default function useShortcuts() {
             }
         }
 
+        const onKeyUp = (e: KeyboardEvent) => {
+            if (e.key !== 't') return
+            if (!tHeld) return
+            clearTHold()
+            if (!tCycled) toggleMonochrome()
+            tHeld = false
+            tCycled = false
+        }
+
         window.addEventListener('keydown', onKey)
+        window.addEventListener('keyup', onKeyUp)
         return () => {
             window.removeEventListener('keydown', onKey)
+            window.removeEventListener('keyup', onKeyUp)
             clearPending()
+            clearTHold()
         }
-    }, [toggleTheme, toggleWidth])
+    }, [toggleMonochrome, cyclePalette, toggleWidth])
 }
