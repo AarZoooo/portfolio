@@ -1,0 +1,42 @@
+/* Utopia — a dark-mode palette. Warm muted pink (#A5918D) as the
+ * single accent, white text on it. Text tiers blend from white toward the
+ * accent in increasing steps (10% / 20% / 30%). */
+:root[data-palette="utopia"] {
+    /* Foreground: white. The bright accent and the ambient image
+       sit behind everything, so white text reads on both. */
+    --ink: 255 255 255;
+    /* Background: very dark warm. The fallback where the PaletteBackground
+       image doesn't cover; the bright accent/image shows through. */
+    --paper: 15 12 12;
+    --bg: rgb(var(--paper));
+
+    /* The accent: #A5918D, a warm muted pink. */
+    --accent: 165 145 141;
+    --accent-contrast: 255 255 255;
+
+    /* Text tiers: white-based, accent-tinted.
+       text = fff (pure white).
+       text-secondary = eee + 10% accent.
+       text-muted = ddd + 20% accent.
+       text-subtle = ccc + 30% accent. */
+    --text: 255 255 255;
+    --text-secondary: 244 244 244;
+    --text-muted: 237 233 232;
+    --text-subtle: 228 222 221;
+
+    /* Footer: always dark, regardless of palette. */
+    --surface-dark: 13 30 30;
+    --on-surface-dark: 255 255 255;
+}
+
+/* The fixed PaletteBackground backdrop fills the viewport, so the body's
+   own paper background would paint over it. Transparent
+   lets the ambient show through as the page background. */
+:root[data-palette="utopia"] body {
+    background: transparent;
+}
+
+/* Show this palette's hero backdrop layer. */
+:root[data-palette="utopia"] [data-palette="utopia"].palette-bg-layer {
+    display: block;
+}

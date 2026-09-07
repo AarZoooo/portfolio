@@ -7,6 +7,9 @@ interface LogoProps {
      * inline logo next to a company name). Pass a fixed px/rem for
      * larger contexts like the Skills chips. */
     size?: string
+    /** Extra className for the logo container (e.g. a scoped CSS module class).
+     * Lets consumers style the wrapper without :global. */
+    className?: string
 }
 
 /** Recolors a logo image to the current --accent color via a CSS
@@ -14,10 +17,10 @@ interface LogoProps {
  * any logo recolors to primary automatically when the palette
  * changes. Replaces the previous <img> + --mono-logo filter
  * approach, which could only force black/white. */
-export default function Logo({ src, alt, size = '1.1em' }: LogoProps) {
+export default function Logo({ src, alt, size = '1.1em', className }: LogoProps) {
     return (
         <div
-            className={styles.logo}
+            className={`${styles.logo}${className ? ` ${className}` : ''}`}
             style={{
                 maskImage: `url(${src})`,
                 backgroundColor: 'rgb(var(--accent))',
