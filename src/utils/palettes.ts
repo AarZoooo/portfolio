@@ -33,17 +33,6 @@ export const PALETTES = [
 ] as const
 
 export type PaletteName = (typeof PALETTES)[number]['name']
-export type ImageMode = 'fit' | 'fill' | 'fit-width' | 'fit-height'
-export type ImagePosition =
-    | 'top-left'
-    | 'top-center'
-    | 'top-right'
-    | 'center-left'
-    | 'center'
-    | 'center-right'
-    | 'bottom-left'
-    | 'bottom-center'
-    | 'bottom-right'
 
 /** Default palette when no stored preference. */
 export const DEFAULT_PALETTE: PaletteName = 'monochrome-light'

@@ -1,7 +1,7 @@
 import { useCallback, useSyncExternalStore } from 'react'
 import { PALETTES, DEFAULT_PALETTE } from '@utils/palettes'
 
-export type Width = 'wide' | 'narrow'
+type Width = 'wide' | 'narrow'
 
 interface ThemeState {
     paletteIndex: number
@@ -81,11 +81,6 @@ function apply(next: Partial<ThemeState>) {
     if (changed) listeners.forEach((l) => l())
 }
 
-function setPaletteIndex(index: number) {
-    const clamped = Math.max(0, Math.min(index, PALETTES.length - 1))
-    if (clamped !== current.paletteIndex) apply({ paletteIndex: clamped })
-}
-
 function cyclePalette(direction = 1) {
     const len = PALETTES.length
     const next = (current.paletteIndex + direction + len) % len
@@ -141,8 +136,6 @@ export function useTheme() {
     return {
         paletteIndex: state.paletteIndex,
         palette: PALETTES[state.paletteIndex].name,
-        width: state.width,
-        setPaletteIndex: useCallback((i: number) => setPaletteIndex(i), []),
         cyclePalette: useCallback((direction = 1) => cyclePalette(direction), []),
         toggleMonochrome: useCallback(() => toggleMonochrome(), []),
         toggleWidth: useCallback(() => toggleWidth(), []),
