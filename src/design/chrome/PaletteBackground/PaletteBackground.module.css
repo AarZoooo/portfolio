@@ -1,3 +1,5 @@
+@import '@design/tokens/breakpoints.css';
+
 /* Fixed backdrop behind all page content. Two layers, both the
    same image:
    - .ambient: cover + heavy blur, scaled up. Reads as a gradient of
@@ -26,6 +28,12 @@
        fills the viewport as a gradient). The fit image floats on top. */
     opacity: 1;
     animation: ambient-in var(--duration-slower) ease-out both;
+}
+
+@media (--bp-narrow) {
+    .ambient {
+        filter: blur(var(--hero-blur-ambient-mobile));
+    }
 }
 
 .image {
