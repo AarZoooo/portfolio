@@ -19,7 +19,7 @@ Every detail is intentional. Match that voice when adding to it.
 - **CSS Modules** + custom design tokens
 - **MDX** for blog content, **Shiki** for build-time syntax highlighting
 - **IBM Plex Sans / Mono** typography
-- **Vercel** hosting via `@astrojs/vercel/static`
+- **Vercel** hosting via `@astrojs/vercel` (static output)
 
 > The pre-Astro Vite + React SPA is preserved at the `v1-vite` tag for
 > reference / rollback. Anything in this file describes the current Astro
@@ -32,24 +32,27 @@ src/
 ├── design/                   # SHARED — importable from anywhere
 │   ├── tokens/               # CSS variables (colors, spacing, typography, glass, modes)
 │   ├── typography/           # prose.css for rendered MDX
-│   ├── primitives/           # reusable atoms (Expandable, QuirkyText, icons/)
-│   └── chrome/               # site shell (Navbar, Logo, Footer, CustomCursor, Shortcuts, InitialAttrs)
+│   ├── primitives/           # reusable atoms (Expandable, WorkCard, Logo, icons/)
+│   └── chrome/               # site shell (Navbar, Logo, Footer, CustomCursor,
+│                             #   PaletteBackground, Shortcuts, InitialAttrs)
 │
 ├── features/                 # SUB-APP-SPECIFIC — private to each feature
-│   └── portfolio/            # sections (Hero, Experience, Skills, Projects, Education, Contact),
-│                             # PortfolioLayout, data.json
+│   └── portfolio/            # sections (Hero, Experience, Skills, Projects, Education,
+│                             #   Contact) + data/ (data.json, portfolioData.ts)
 │
 ├── content/                  # typed content collections
-│   ├── blog/                 # MDX posts
-│   └── content.config.ts     # Zod schema for frontmatter
+│   └── blog/                 # MDX posts
 │
-├── hooks/                    # shared hooks (useTheme, useShortcuts)
+├── content.config.ts         # Zod schema for blog frontmatter
+│
+├── hooks/                    # shared hooks (useTheme, useShortcuts, useFocusTrap)
 ├── utils/                    # shared utilities (smoothScroll, copy, navigation, highlightMetrics, …)
-├── types/                    # shared TS types
-├── assets/                   # logos, avatar, resume + asset resolver
+├── types/                    # shared TS types + the portfolio data schema (Zod)
+├── assets/                   # logos, hero images + asset resolver
 ├── layouts/                  # BaseLayout.astro
 └── pages/                    # routes (file-based)
     ├── index.astro           # portfolio at /
+    ├── resume.astro          # print-friendly resume at /resume
     ├── shortcuts.astro       # keyboard reference at /shortcuts
     ├── 404.astro             # fallback
     ├── blog/
@@ -238,6 +241,10 @@ and overrides the `:root[data-palette="<name>"]` block. The `--ink` and
 `--paper` tokens are the dark foreground and background fallback; the accent
 and the ambient image sit behind everything, so a dark ink reads on both.
 
+Exception: `monochrome-light` is the default palette. Its values are the
+`:root` defaults in `tokens.css`, so it has no palette file; switching back
+to it simply un-applies the other palettes' overrides.
+
 To add a palette: append an entry to `PALETTES` in `@utils/palettes`,
 create `src/design/tokens/palettes/<name>.css`, import it from
 `src/design/tokens/index.css`, and (if it has a hero image) set `hero` on the entry and
@@ -335,8 +342,9 @@ Common edits and the files they touch.
 | Task | Where |
 |---|---|
 | Update text content (bio, taglines, experience, projects, skills, footer) | `src/features/portfolio/data/data.json` |
-| Replace the résumé PDF | `src/assets/resume/resume.pdf` (filename must stay; resolved by `@assets`) |
-| Swap an avatar / logo | `src/assets/avatar/` or `public/favicon.png` (then re-run the favicon generator if needed) |
+| Change the portfolio data shape | `src/types/portfolio.ts` (Zod schema) + `data.json` (content) |
+| Edit the résumé page | `src/pages/resume.astro` (print-friendly HTML, no PDF) |
+| Swap a logo / favicon | `src/assets/logos/...` or `public/favicon.png` (then re-run the favicon generator if needed) |
 | Add a tech / company / school logo | `src/assets/logos/{tech,companies,schools}/<name>.svg`, then reference by `name` in `data.json` |
 | Add or edit a section (Hero / Experience / etc.) | `src/features/portfolio/sections/<Name>/` |
 | Add a new sub-app (e.g. `/notes`) | `src/features/<name>/` + `src/pages/<name>/` (see "Sub-app expansion" above) |
