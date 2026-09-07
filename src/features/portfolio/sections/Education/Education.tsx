@@ -1,6 +1,7 @@
 import type { Education as EducationType } from '@type/portfolio'
 import { assets } from '@assets'
 import { highlightMetrics } from '@utils/highlightMetrics'
+import Logo from '@design/primitives/Logo/Logo'
 import styles from './Education.module.css'
 
 interface EducationProps {
@@ -20,9 +21,10 @@ function Education({ heading, items }: EducationProps) {
                             <div className={styles.primary}>
                                 <p className={styles.institution}>
                                     {item.logo && assets.schoolLogo(item.logo) && (
-                                        <img
+                                        <Logo
                                             src={assets.schoolLogo(item.logo)}
-                                            alt=""
+                                            alt={`${item.institution} logo`}
+                                            size="1.1em"
                                             className={styles.logo}
                                         />
                                     )}

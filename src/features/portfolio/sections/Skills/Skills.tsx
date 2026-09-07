@@ -1,5 +1,6 @@
 import type { Skills as SkillsType, SkillItem } from '@type/portfolio'
 import { assets } from '@assets'
+import Logo from '@design/primitives/Logo/Logo'
 import styles from './Skills.module.css'
 
 interface SkillsProps {
@@ -35,7 +36,7 @@ function Skills({ heading, skills }: SkillsProps) {
                                         const logo = assets.techLogo(s.logo)
                                         return (
                                             <li key={s.name} className={styles.chip}>
-                                                {logo && <img src={logo} alt="" className={styles.icon} />}
+                                                {logo && <Logo src={logo} alt={`${s.name} logo`} size="1em" className={styles.icon} />}
                                                 <span>{s.name}</span>
                                             </li>
                                         )

@@ -2,6 +2,7 @@ import type { Experience as ExperienceType } from '@type/portfolio'
 import { assets } from '@assets'
 import { groupByEmployer } from '@utils/groupByEmployer'
 import WorkCard from '@design/primitives/WorkCard/WorkCard'
+import Logo from '@design/primitives/Logo/Logo'
 import styles from './Experience.module.css'
 
 interface ExperienceProps {
@@ -19,9 +20,10 @@ function Experience({ heading, items }: ExperienceProps) {
                     <div className={styles.group} key={group.company}>
                         <h3 className={styles.groupTitle}>
                             {group.roles[0].logo && assets.companyLogo(group.roles[0].logo) && (
-                                <img
+                                <Logo
                                     src={assets.companyLogo(group.roles[0].logo)}
-                                    alt=""
+                                    alt={`${group.company} logo`}
+                                    size="1.1em"
                                     className={styles.groupLogo}
                                 />
                             )}
