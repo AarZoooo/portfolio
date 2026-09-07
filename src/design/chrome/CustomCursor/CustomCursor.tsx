@@ -14,7 +14,10 @@ function CustomCursor() {
 
     useEffect(() => {
         const canHover = window.matchMedia('(hover: hover)').matches
-        if (!canHover) return
+        // The custom cursor is decorative lerp motion; under reduced
+        // motion we keep the native cursor instead of trailing a ring.
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        if (!canHover || reducedMotion) return
 
         document.documentElement.classList.add(styles.hideNative)
 
