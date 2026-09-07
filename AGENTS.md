@@ -224,6 +224,26 @@ must `@import '@design/tokens/breakpoints.css';` at the top. Lightning
 CSS resolves `@custom-media` per compilation unit, so each consumer
 needs the declarations in scope.
 
+### Palettes
+
+A palette defines one accent color (the `--accent` token) drawn from
+the album cover it's themed around, and the text tiers blend from white toward that
+accent in increasing steps. The first text tier is pure white; each
+subsequent tier mixes in a larger share of the accent, so the last tier sits
+very close to the accent. No primary/secondary/tertiary — one accent.
+
+Each palette lives in its own file under
+`src/design/tokens/palettes/<name>.css`, imported from `index.css`,
+and overrides the `:root[data-palette="<name>"]` block. The `--ink` and
+`--paper` tokens are the dark foreground and background fallback; the accent
+and the ambient image sit behind everything, so a dark ink reads on both.
+
+To add a palette: append an entry to `PALETTES` in `@utils/palettes`,
+create `src/design/tokens/palettes/<name>.css`, import it from
+`src/design/tokens/index.css`, and (if it has a hero image) set `hero` on the entry and
+add a `:root[data-palette="<name>"] [data-palette="<name>"].palette-bg-layer`
+rule in the palette's CSS.
+
 ### TS/JS — named module constants
 
 Single-file magic numbers → file-local `const` at module top. Cross-file

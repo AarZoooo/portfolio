@@ -1,21 +1,41 @@
-/* Meddle (Pink Floyd, 1971). A dark-mode palette: white
- * text on the album's teal, with #135770 as the accent (bold,
- * toggle). Text tiers are white stepped down in small steps so they
- * stay readable over the image. #533035 and #856869 are
- * kept as --secondary / --tertiary for use elsewhere (TBD where). */
+/* Meddle (Pink Floyd, 1971). A dark-mode palette: the album
+ * cover's teal-green (#69A3B0) is the single accent. Text tiers
+ * are white-based (fff, eee, ddd) with 10% and 20% of the accent
+ * blended into the second and third steps.
+ *
+ * Palette principle: one accent color from the cover. No
+ * primary/secondary/tertiary. Text is white-derived, accent-tinted.
+ *
+ * --ink is the dark foreground (text, borders, glow, logo filter base).
+ * --paper is the dark background fallback (where the
+ * PaletteBackground image doesn't cover). */
 :root[data-palette="meddle"] {
-    --ink: 255 255 255;
+    /* Foreground: dark teal. Used for text, borders, the logo
+       filter base, and the glow. The bright accent and
+       the ambient image sit behind everything, so a dark
+       ink reads on both. */
+    --ink: 30 100 110;
+    /* Background: dark teal. The fallback where the PaletteBackground
+       image doesn't cover; the bright accent/image shows through. */
     --paper: 12 42 42;
     --bg: rgb(var(--paper));
-    --text: 255 255 255;
-    --text-secondary: 210 195 197;  /* ~60% toward primary, just above midpoint */
-    --text-muted: 185 170 172;      /* ~70% toward primary, just below midpoint */
-    --text-subtle: 154 130 132;    /* ~95% toward primary, very close */
-    --accent: 148 124 126;    /* #947C7E, primary (~10% brighter than #856A6C) */
+
+    /* The accent: #69A3B0, a bright teal from the cover's water. */
+    --accent: 105 163 176;
     --accent-contrast: 255 255 255;
-    --secondary: 19 87 112;      /* #135770, for use elsewhere */
-    --tertiary: 133 104 105;    /* #856869, for use elsewhere */
-    --surface-dark: 13 30 30;    /* dark teal footer */
+
+    /* Text tiers: white-based, accent-tinted.
+       text = fff (pure white).
+       text-secondary = eee + 10% accent.
+       text-muted = ddd + 20% accent.
+       text-subtle = ccc + 30% accent. */
+    --text: 255 255 255;
+    --text-secondary: 227 232 233;
+    --text-muted: 208 220 224;
+    --text-subtle: 189 208 213;
+
+    /* Footer: always dark, regardless of palette. */
+    --surface-dark: 13 30 30;
     --on-surface-dark: 255 255 255;
 }
 
