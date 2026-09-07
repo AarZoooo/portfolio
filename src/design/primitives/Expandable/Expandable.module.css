@@ -79,7 +79,9 @@
 .toggle {
     margin-top: var(--space-3-5);
     padding: 0;
-    display: block;
+    display: flex;
+    align-items: center;
+    min-height: var(--touch-target-min);
     color: rgb(var(--text-muted));
     text-align: left;
     transition: color var(--duration-base) var(--ease-out);

@@ -52,6 +52,7 @@
 }
 
 .link {
+    position: relative;
     color: inherit;
     text-decoration: none;
     background-image: linear-gradient(currentColor, currentColor);
@@ -59,6 +60,13 @@
     background-position: 50% 100%;
     background-repeat: no-repeat;
     transition: background-size var(--duration-medium) var(--ease-out), color var(--duration-base) var(--ease-out);
+}
+
+/* Expand the hit area to the minimum touch target without changing layout. */
+.link::before {
+    content: '';
+    position: absolute;
+    inset: calc((100% - var(--touch-target-min)) / 2) 0;
 }
 
 .link:hover {

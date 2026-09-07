@@ -5,6 +5,7 @@
 }
 
 .brand {
+    position: relative;
     font-family: var(--font-display);
     font-size: var(--text-base);
     font-weight: var(--font-display-weight);
@@ -12,6 +13,13 @@
     color: rgb(var(--text));
     text-decoration: none;
     transition: filter var(--duration-base) var(--ease-out);
+}
+
+/* Expand the hit area to the minimum touch target without changing layout. */
+.brand::before {
+    content: '';
+    position: absolute;
+    inset: calc((100% - var(--touch-target-min)) / 2) 0;
 }
 
 .brand:hover {

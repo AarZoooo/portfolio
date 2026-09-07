@@ -129,4 +129,7 @@
 
     /* Focus ring (the site-wide :focus-visible style) */
     --focus-ring-width: 2px;
+
+    /* Interaction */
+    --touch-target-min: 44px; /* WCAG minimum tappable size */
 }

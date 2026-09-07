@@ -65,6 +65,7 @@
 /* === Hamburger (narrow only) ===================================== */
 
 .hamburger {
+    position: relative;
     display: none;
     align-items: center;
     justify-content: center;
@@ -72,6 +73,13 @@
     height: var(--space-7);
     color: rgb(var(--text));
     transition: color var(--duration-base) var(--ease-out);
+}
+
+/* Expand the hit area to the minimum touch target without changing layout. */
+.hamburger::after {
+    content: '';
+    position: absolute;
+    inset: calc((100% - var(--touch-target-min)) / 2);
 }
 
 .hamburger:hover {
@@ -90,6 +98,7 @@
     align-items: center;
     justify-content: center;
     width: 11ch;
+    min-height: var(--touch-target-min);
     overflow: hidden;
     padding: var(--space-1-5) var(--space-1-5);
     font-family: var(--font-mono);
@@ -172,6 +181,14 @@
     color: rgb(var(--text-secondary));
     text-decoration: none;
     transition: color var(--duration-base) var(--ease-out);
+}
+
+/* Expand the hit area to the minimum touch target without changing
+   layout. Uses ::before because ::after is the hover underline. */
+.subAppLink::before {
+    content: '';
+    position: absolute;
+    inset: calc((100% - var(--touch-target-min)) / 2) 0;
 }
 
 .subAppLink::after {
@@ -274,7 +291,13 @@
         visibility 0s linear 0s;
 }
 
+.menuBackdrop {
+    position: absolute;
+    inset: 0;
+}
+
 .menuList {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -310,6 +333,7 @@
 /* === Theme toggle ================================================ */
 
 .toggle {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -321,6 +345,13 @@
     color: rgb(var(--accent-contrast));
     box-shadow: var(--shadow-xl);
     transition: background var(--duration-base) var(--ease-out), color var(--duration-base) var(--ease-out);
+}
+
+/* Expand the hit area to the minimum touch target without changing layout. */
+.toggle::after {
+    content: '';
+    position: absolute;
+    inset: calc((100% - var(--touch-target-min)) / 2);
 }
 
 .toggle svg {

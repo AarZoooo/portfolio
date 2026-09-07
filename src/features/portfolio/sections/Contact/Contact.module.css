@@ -85,6 +85,13 @@
     opacity: 1;
 }
 
+/* Expand the hit area to the minimum touch target without changing layout. */
+.copyBtn::after {
+    content: '';
+    position: absolute;
+    inset: calc((100% - var(--touch-target-min)) / 2);
+}
+
 /* Touch / coarse-pointer devices have no hover state. Keep the icon
    persistently visible (slightly dimmed) so it stays discoverable. */
 @media (hover: none), (pointer: coarse) {

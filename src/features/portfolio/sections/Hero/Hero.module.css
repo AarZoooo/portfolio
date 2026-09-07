@@ -76,6 +76,7 @@
 }
 
 .socialBtn {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -84,6 +85,13 @@
         color var(--duration-base) var(--ease-out),
         transform var(--duration-base) var(--ease-out),
         filter var(--duration-base) var(--ease-out);
+}
+
+/* Expand the hit area to the minimum touch target without changing layout. */
+.socialBtn::after {
+    content: '';
+    position: absolute;
+    inset: calc((100% - var(--touch-target-min)) / 2);
 }
 
 .socialBtn:hover {
