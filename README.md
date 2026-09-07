@@ -35,8 +35,7 @@ A pre-commit hook runs `npm run lint` automatically; see `.githooks/`.
 /                  portfolio (hero → experience → skills → projects → education → contact)
 /blog              post listing
 /blog/<slug>       individual post (MDX)
-/resume            redirects to /resume.pdf
-/resume.pdf        serves the latest resume PDF
+/resume            print-friendly resume page
 /shortcuts         keyboard shortcut reference
 /rss.xml           RSS feed
 /sitemap-index.xml sitemap
@@ -49,17 +48,18 @@ src/
 ├── design/                   # SHARED, importable from anywhere
 │   ├── tokens/               # CSS variables (colors, spacing, typography, glass, modes)
 │   ├── typography/           # prose.css for rendered MDX
-│   ├── primitives/           # reusable atoms (Expandable, icons)
-│   └── chrome/               # site shell (Navbar, Footer, CustomCursor, Logo, Shortcuts)
+│   ├── primitives/           # reusable atoms (Expandable, WorkCard, Logo, icons)
+│   └── chrome/               # site shell (Navbar, Footer, CustomCursor, Logo,
+│                             #   PaletteBackground, Shortcuts, InitialAttrs)
 │
 ├── features/                 # SUB-APP-SPECIFIC, private to each feature
-│   └── portfolio/            # sections, data.json, layout
+│   └── portfolio/            # sections + data/ (data.json, portfolioData.ts)
 │
 ├── content/blog/             # MDX posts (typed via content.config.ts)
-├── hooks/                    # useTheme, useShortcuts
+├── hooks/                    # useTheme, useShortcuts, useFocusTrap
 ├── utils/                    # smoothScroll, copy, highlightMetrics, navigation, …
-├── types/                    # shared TS types
-├── assets/                   # logos, avatar, resume + asset resolver
+├── types/                    # shared TS types + the portfolio data schema (Zod)
+├── assets/                   # logos, hero images + asset resolver
 ├── layouts/                  # BaseLayout.astro
 └── pages/                    # routes (file-based)
 ```
@@ -86,7 +86,7 @@ Two orthogonal display modes layered onto the same content:
 
 | Toggle | Key | Default | Effect |
 |---|---|---|---|
-| Theme | `t` | system | light / dark flip via `[theme]` attribute |
+| Palette | `t` | system | tap flips the monochromes, hold cycles all palettes via `[data-palette]` |
 | Width | `w` | per-page | narrow reading column (720px) vs wide (1280px) |
 
 The full keyboard
@@ -104,7 +104,7 @@ extended.
 Code in this repo is MIT-licensed. Feel free to learn from it, copy
 patterns, or run your own version. See [`LICENSE`](LICENSE).
 
-The **content** is not. Blog posts, the résumé PDF, the bio and project
+The **content** is not. Blog posts, the résumé page, the bio and project
 copy in `data.json`, and any other text/image authored by me are
 copyrighted and reserved. Don't republish them as your own.
 
