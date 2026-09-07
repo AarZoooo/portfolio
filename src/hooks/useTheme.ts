@@ -29,11 +29,11 @@ const ATTRS = {
 type Listener = () => void
 const listeners = new Set<Listener>()
 
-const DEFAULT_PALETTE_INDEX = PALETTES.indexOf(DEFAULT_PALETTE)
+const DEFAULT_PALETTE_INDEX = PALETTES.findIndex((p) => p.name === DEFAULT_PALETTE)
 
 function paletteIndexFromName(name: string | null): number {
     if (name == null) return DEFAULT_PALETTE_INDEX
-    const idx = PALETTES.findIndex((p) => p === name)
+    const idx = PALETTES.findIndex((p) => p.name === name)
     return idx === -1 ? DEFAULT_PALETTE_INDEX : idx
 }
 
@@ -59,7 +59,7 @@ function apply(next: Partial<ThemeState>) {
     if (next.paletteIndex !== undefined && next.paletteIndex !== current.paletteIndex) {
         changed = true
         current = { ...current, paletteIndex: next.paletteIndex }
-        root?.setAttribute(ATTRS.palette, PALETTES[next.paletteIndex])
+        root?.setAttribute(ATTRS.palette, PALETTES[next.paletteIndex].name)
         try {
             localStorage.setItem(STORAGE_KEYS.palette, String(next.paletteIndex))
         } catch {
@@ -140,7 +140,7 @@ export function useTheme() {
 
     return {
         paletteIndex: state.paletteIndex,
-        palette: PALETTES[state.paletteIndex],
+        palette: PALETTES[state.paletteIndex].name,
         width: state.width,
         setPaletteIndex: useCallback((i: number) => setPaletteIndex(i), []),
         cyclePalette: useCallback((direction = 1) => cyclePalette(direction), []),

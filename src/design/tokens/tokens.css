@@ -61,6 +61,10 @@
     --glass-scrim: rgb(var(--surface-dark) / 0.4);
     --glass-blur: 12px;
 
+    /* Hero background image. Heavily blurred wash behind the hero text.
+       Opacity keeps text readable over the image; blur reuses --glass-blur. */
+    --hero-image-opacity: 0.5;
+
     /* Monochrome filter - forces any colored logo to current ink */
     --mono-logo: grayscale(1) brightness(0) contrast(1);
 

@@ -6,8 +6,11 @@
 
 <script is:inline>
     ;(function () {
-        // Keep in sync with @utils/palettes PALETTES.
-        var PALETTES = ['monochrome-light', 'monochrome-dark']
+        // Keep in sync with @utils/palettes PALETTES (names + hero keys).
+        var PALETTES = [
+            { name: 'monochrome-light', hero: null },
+            { name: 'monochrome-dark', hero: null },
+        ]
         var d = document.documentElement
         try {
             var p = parseInt(localStorage.getItem('palette'), 10)
@@ -16,7 +19,7 @@
             } else {
                 p = Math.max(0, Math.min(p, PALETTES.length - 1))
             }
-            d.setAttribute('data-palette', PALETTES[p])
+            d.setAttribute('data-palette', PALETTES[p].name)
 
             var w = localStorage.getItem('width')
             if (w === 'wide' || w === 'narrow') d.setAttribute('data-width', w)
