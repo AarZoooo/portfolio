@@ -27,12 +27,11 @@
 .ambient {
     position: absolute;
     inset: 0;
-    background-size: cover;
-    background-position: center;
+    /* The ambient is a conic-gradient sampled from the image's edge
+       colors (see PaletteBackground.tsx). The blur softens the
+       hard-edged gradient into a smooth ambient wash. */
     filter: blur(var(--hero-blur-ambient));
     transform: scale(1.3);
-    /* Full opacity: this layer IS the background (the blurred image
-       fills the viewport as a gradient). The fit image floats on top. */
     opacity: 1;
     animation: ambient-in var(--duration-slower) ease-out both;
 }

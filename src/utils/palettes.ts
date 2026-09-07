@@ -26,8 +26,8 @@
  * The browser only fetches the file when the palette is active, so
  * unused palette fonts cost nothing. */
 export const PALETTES = [
-    { name: 'monochrome-light', mode: 'light', hero: null, font: null, imageMode: 'fit', imagePosition: 'center' },
-    { name: 'monochrome-dark', mode: 'dark', hero: null, font: null, imageMode: 'fit', imagePosition: 'center' },
+    { name: 'monochrome-light', mode: 'light', hero: null, font: null, imageMode: 'fit', imagePosition: 'center', blur: true },
+    { name: 'monochrome-dark', mode: 'dark', hero: null, font: null, imageMode: 'fit', imagePosition: 'center', blur: true },
     { name: 'meddle', mode: 'dark', hero: 'meddle', font: null, imageMode: 'fit', imagePosition: 'center', blur: false },
     { name: 'utopia', mode: 'dark', hero: 'utopia', font: null, imageMode: 'fit-width', imagePosition: 'bottom-center', blur: false },
 ] as const
