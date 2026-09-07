@@ -27,10 +27,11 @@
 .ambient {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    /* The ambient is the whatamesh animated mesh gradient (colors
-       from the album art via colorthief). It fills the layer. */
+    /* The ambient is a conic-gradient sampled from the image's edge
+       colors (see ambient/conicGradient.ts). The blur softens the
+       hard-edged gradient into a smooth ambient wash. */
+    filter: blur(var(--hero-blur-ambient));
+    transform: scale(1.3);
     opacity: 1;
     animation: ambient-in var(--duration-slower) ease-out both;
 }
