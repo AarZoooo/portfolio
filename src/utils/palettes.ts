@@ -4,6 +4,9 @@
  * src/design/tokens/palettes/<name>.css (imported from
  * src/design/tokens/index.css).
  *
+ * monochrome-light is the default palette: its values are the :root
+ * defaults in tokens.css, so it has no palette file.
+ *
  * `mode` classifies the palette as light or dark; set site-wide via
  * the `data-mode` attribute on <html> (see InitialAttrs.astro).
  * Drives Shiki code-theme and any light/dark-aware styling.
