@@ -16,3 +16,15 @@
     --surface-dark: 13 30 30;      /* dark teal footer */
     --on-surface-dark: 255 255 255;
 }
+
+/* The fixed PaletteBackground backdrop fills the viewport, so the body's
+   own paper background would paint over it. Transparent
+   lets the ambient show through as the page background. */
+:root[data-palette="meddle"] body {
+    background: transparent;
+}
+
+/* Show this palette's hero backdrop layer. */
+:root[data-palette="meddle"] [data-palette="meddle"].palette-bg-layer {
+    display: block;
+}

@@ -1,0 +1,6 @@
+/* Global (non-scoped) visibility for palette background layers.
+   Each layer is hidden by default; a palette shows its own
+   layer via a rule in its palette CSS file. */
+.palette-bg-layer {
+    display: none;
+}

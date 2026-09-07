@@ -1,25 +1,29 @@
-import { useTheme } from '@hooks/useTheme'
+import { PALETTES } from '@utils/palettes'
 import styles from './PaletteBackground.module.css'
 
 interface PaletteBackgroundProps {
-    /** Build-time map of palette name -> hero image URL. The active
-     *  palette is picked at runtime so cycling palettes swaps the image. */
+    /** Build-time map of palette name -> hero image URL. */
     heroImages?: Record<string, string>
 }
 
-/** Fixed full-viewport backdrop that renders the active palette's hero
- *  image (ambient gradient + fit image) behind all page content.
- * Stays put on scroll. No image when the active palette has no hero. */
+/** Fixed full-viewport backdrop. Renders one layer per palette that
+ * has a hero image; CSS shows the active palette's layer (the
+ * visibility rule lives in each palette CSS file). No runtime
+ * palette lookup, so SSR and client render the same DOM
+ * (no hydration mismatch). */
 export default function PaletteBackground({ heroImages }: PaletteBackgroundProps) {
-    const { palette } = useTheme()
-    const image = heroImages?.[palette]
-
-    if (!image) return null
-
     return (
         <div className={styles.bg} aria-hidden>
-            <div className={styles.ambient} style={{ backgroundImage: `url(${image})` }} />
-            <div className={styles.image} style={{ backgroundImage: `url(${image})` }} />
+            {PALETTES.map((p) => {
+                const url = heroImages?.[p.name]
+                if (!url) return null
+                return (
+                    <div key={p.name} className="palette-bg-layer" data-palette={p.name}>
+                        <div className={styles.ambient} style={{ backgroundImage: `url(${url})` }} />
+                        <div className={styles.image} style={{ backgroundImage: `url(${url})` }} />
+                    </div>
+                )
+            })}
         </div>
     )
 }
