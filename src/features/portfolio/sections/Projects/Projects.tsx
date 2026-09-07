@@ -1,6 +1,7 @@
 import type { Project } from '@type/portfolio'
 import { assets } from '@assets'
 import WorkCard from '@design/primitives/WorkCard/WorkCard'
+import Logo from '@design/primitives/Logo/Logo'
 import styles from './Projects.module.css'
 
 interface ProjectsProps {
@@ -21,9 +22,10 @@ function Projects({ heading, items }: ProjectsProps) {
                                 {item.context && (
                                     <p className={styles.context}>
                                         {item.logo && assets.companyLogo(item.logo) && (
-                                            <img
+                                            <Logo
                                                 src={assets.companyLogo(item.logo)}
-                                                alt=""
+                                                alt={`${item.context} logo`}
+                                                size="1.1em"
                                                 className={styles.logo}
                                             />
                                         )}

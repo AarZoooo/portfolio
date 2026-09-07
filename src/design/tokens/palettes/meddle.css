@@ -8,9 +8,9 @@
     --paper: 12 42 42;
     --bg: rgb(var(--paper));
     --text: 255 255 255;
-    --text-secondary: 230 230 230;
-    --text-muted: 200 200 200;
-    --text-subtle: 170 170 170;
+    --text-secondary: 210 195 197;  /* ~60% toward primary, just above midpoint */
+    --text-muted: 185 170 172;      /* ~70% toward primary, just below midpoint */
+    --text-subtle: 154 130 132;    /* ~95% toward primary, very close */
     --accent: 148 124 126;    /* #947C7E, primary (~10% brighter than #856A6C) */
     --accent-contrast: 255 255 255;
     --secondary: 19 87 112;      /* #135770, for use elsewhere */
