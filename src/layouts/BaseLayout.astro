@@ -4,6 +4,7 @@ import PaletteBackground from '@design/chrome/PaletteBackground/PaletteBackgroun
 import '@design/tokens/index.css'
 import { portfolioData as d } from '@features/portfolio/data/portfolioData'
 import { PALETTES } from '@utils/palettes'
+import { ATTRS } from '@hooks/useTheme'
 import { assets } from '@assets'
 
 // Resolve each palette's hero image (by basename) to a build-time URL.
@@ -33,6 +34,12 @@ interface Props {
 }
 
 const SITE_URL = 'https://aarju.dev'
+
+/* Browser chrome (tab bar) colors, keyed by OS scheme. Deliberately not
+   the palette tokens: those flip with the user's palette at runtime,
+   while theme-color is static per page load. */
+const THEME_COLOR_DARK = '#0a0a0a'
+const THEME_COLOR_LIGHT = '#fafafa'
 
 const {
     title,
@@ -66,7 +73,7 @@ const personSchema = {
 ---
 
 <!doctype html>
-<html lang="en" data-width={defaultWidth} data-mode="light">
+<html lang="en" {...{ [ATTRS.width]: defaultWidth, [ATTRS.mode]: 'light' }}>
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -74,8 +81,8 @@ const personSchema = {
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
-        <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content={THEME_COLOR_DARK} media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content={THEME_COLOR_LIGHT} media="(prefers-color-scheme: light)" />
 
         <title>{title}</title>
         <meta name="description" content={description} />

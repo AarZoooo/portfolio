@@ -34,5 +34,12 @@ export const PALETTES = [
 
 export type PaletteName = (typeof PALETTES)[number]['name']
 
+/** Indexes of the two monochromes in PALETTES (tap-`t` toggles between
+ * them). Derived, not hardcoded, so reordering PALETTES stays safe.
+ * InitialAttrs.astro re-implements this inline (pre-paint script can't
+ * import); keep the monochrome pair first in PALETTES. */
+export const MONOCHROME_LIGHT_INDEX = PALETTES.findIndex((p) => p.name === 'monochrome-light')
+export const MONOCHROME_DARK_INDEX = PALETTES.findIndex((p) => p.name === 'monochrome-dark')
+
 /** Default palette when no stored preference. */
 export const DEFAULT_PALETTE: PaletteName = 'monochrome-light'

@@ -1,13 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 import { useTheme } from '@hooks/useTheme'
+import { HOLD_THRESHOLD_MS } from '@hooks/useShortcuts'
 import { useFocusTrap } from '@hooks/useFocusTrap'
 import { smoothScrollToId } from '@utils/smoothScroll'
+import { MONOCHROME_LIGHT_INDEX, MONOCHROME_DARK_INDEX } from '@utils/palettes'
 import type { SubAppLink } from '@utils/navigation'
 import Logo from '@design/chrome/Logo/Logo'
 import styles from './Navbar.module.css'
 
 const NEAR_TOP_VIEWPORT_RATIO = 0.4
 const SCROLLED_THRESHOLD_PX = 4
+/* Scroll-spy watches a horizontal band: from the near-top probe line down
+   to mid-viewport. Sections crossing the band count as "active". */
+const SPY_BAND_BOTTOM_RATIO = 0.5
 
 interface SectionLink {
     id: string
@@ -52,7 +57,8 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
 
     // Tap behavior only; hold-to-cycle is keyboard-only. On a monochrome we
     // name the opposite; on a colored palette we point back to the home mono.
-    const isMonochrome = paletteIndex <= 1
+    const isMonochrome =
+        paletteIndex === MONOCHROME_LIGHT_INDEX || paletteIndex === MONOCHROME_DARK_INDEX
     const toggleLabel = isMonochrome
         ? `Switch to ${palette === 'monochrome-dark' ? 'monochrome-light' : 'monochrome-dark'} palette`
         : 'Switch to monochrome palette'
@@ -100,7 +106,10 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
                     .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
                 if (visible) setActive(visible.target.id)
             },
-            { rootMargin: '-40% 0px -50% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] },
+            {
+                rootMargin: `-${NEAR_TOP_VIEWPORT_RATIO * 100}% 0px -${SPY_BAND_BOTTOM_RATIO * 100}% 0px`,
+                threshold: [0, 0.25, 0.5, 0.75, 1],
+            },
         )
         for (const link of sectionLinks!) {
             const el = document.getElementById(link.id)
@@ -172,7 +181,7 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
                             toggleHoldTimer.current = window.setTimeout(() => {
                                 toggleHeld.current = true
                                 cyclePalette(1)
-                            }, 450)
+                            }, HOLD_THRESHOLD_MS)
                         }}
                         onPointerUp={() => {
                             if (toggleHoldTimer.current !== null) {

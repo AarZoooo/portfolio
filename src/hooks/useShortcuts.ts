@@ -5,6 +5,10 @@ import { useTheme } from './useTheme'
 const SHORTCUT_SCROLL_DURATION_MS = 600
 const PROBE_VIEWPORT_RATIO = 0.3
 
+/** Tap-vs-hold threshold for the palette toggle. Shared with the Navbar's
+ *  pointer-hold handler so keyboard and pointer agree on what a "hold" is. */
+export const HOLD_THRESHOLD_MS = 450
+
 /**
  * Global keyboard shortcuts. The full list lives at /shortcuts; the rotating
  * hint under the hero is the discovery surface for anyone landing fresh.
@@ -14,8 +18,6 @@ const PROBE_VIEWPORT_RATIO = 0.3
  * Section jump (j/k) discovers <section[id]> elements inside <main> at
  * runtime, so it works on any page that has them — not just the portfolio.
  */
-const HOLD_THRESHOLD_MS = 450
-
 export default function useShortcuts() {
     const { toggleMonochrome, cyclePalette, toggleWidth } = useTheme()
 

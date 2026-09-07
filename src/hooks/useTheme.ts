@@ -1,5 +1,5 @@
 import { useCallback, useSyncExternalStore } from 'react'
-import { PALETTES, DEFAULT_PALETTE } from '@utils/palettes'
+import { PALETTES, DEFAULT_PALETTE, MONOCHROME_LIGHT_INDEX, MONOCHROME_DARK_INDEX } from '@utils/palettes'
 
 type Width = 'wide' | 'narrow'
 
@@ -8,14 +8,18 @@ interface ThemeState {
     width: Width
 }
 
-const STORAGE_KEYS = {
+/* Storage/attribute contract. Exported for BaseLayout (SSR attrs);
+   InitialAttrs.astro re-implements it inline (pre-paint script can't
+   import) and carries a sync comment. */
+export const STORAGE_KEYS = {
     palette: 'palette',
     width: 'width',
 } as const
 
-const ATTRS = {
+export const ATTRS = {
     palette: 'data-palette',
     width: 'data-width',
+    mode: 'data-mode',
 } as const
 
 /* ---- Module-level store ---------------------------------------------
@@ -39,7 +43,7 @@ function paletteIndexFromName(name: string | null): number {
 
 function readDOM(): ThemeState {
     if (typeof document === 'undefined') {
-        return { paletteIndex: 0, width: 'wide' }
+        return { paletteIndex: DEFAULT_PALETTE_INDEX, width: 'wide' }
     }
     const root = document.documentElement
     // getAttribute returns string | null; InitialAttrs guarantees valid values
@@ -90,16 +94,16 @@ function cyclePalette(direction = 1) {
 function toggleMonochrome() {
     // Tap-t: jump to a monochrome. From a monochrome, flip to the other;
     // from a colored palette, return to the OS-mapped home monochrome.
-    if (current.paletteIndex === 0) {
-        apply({ paletteIndex: 1 })
-    } else if (current.paletteIndex === 1) {
-        apply({ paletteIndex: 0 })
+    if (current.paletteIndex === MONOCHROME_LIGHT_INDEX) {
+        apply({ paletteIndex: MONOCHROME_DARK_INDEX })
+    } else if (current.paletteIndex === MONOCHROME_DARK_INDEX) {
+        apply({ paletteIndex: MONOCHROME_LIGHT_INDEX })
     } else {
         let dark = false
         if (typeof window !== 'undefined') {
             dark = window.matchMedia('(prefers-color-scheme: dark)').matches
         }
-        apply({ paletteIndex: dark ? 1 : 0 })
+        apply({ paletteIndex: dark ? MONOCHROME_DARK_INDEX : MONOCHROME_LIGHT_INDEX })
     }
 }
 
@@ -111,12 +115,13 @@ function toggleWidth() {
 if (typeof window !== 'undefined') {
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
     mq.addEventListener('change', (e) => {
+        const fallback = e.matches ? MONOCHROME_DARK_INDEX : MONOCHROME_LIGHT_INDEX
         try {
             if (!localStorage.getItem(STORAGE_KEYS.palette)) {
-                apply({ paletteIndex: e.matches ? 1 : 0 })
+                apply({ paletteIndex: fallback })
             }
         } catch {
-            apply({ paletteIndex: e.matches ? 1 : 0 })
+            apply({ paletteIndex: fallback })
         }
     })
 }
@@ -128,7 +133,7 @@ const subscribe = (cb: Listener) => {
     }
 }
 const getSnapshot = (): ThemeState => current
-const getServerSnapshot = (): ThemeState => ({ paletteIndex: 0, width: 'wide' })
+const getServerSnapshot = (): ThemeState => ({ paletteIndex: DEFAULT_PALETTE_INDEX, width: 'wide' })
 
 export function useTheme() {
     const state = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
