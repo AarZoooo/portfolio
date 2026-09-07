@@ -90,8 +90,16 @@ const formatDate = (date: Date): string =>
 
 <script>
     import { smoothScrollToId, easeInOutCubic } from '@utils/smoothScroll'
-    import { attachClickCopyDelegation } from '@utils/copy'
+    import { attachClickCopyDelegation, COPY_ATTRS } from '@utils/copy'
+    import { DURATION_MEDIUM_MS } from '@utils/motion'
     import { copyIconHTML, checkIconHTML } from '@design/primitives/icons/icons'
+
+    /* Attribute contract for the TOC scroll-spy (markup above sets
+       data-toc-link; the script toggles data-active). */
+    const TOC_LINK_ATTR = 'data-toc-link'
+    const TOC_ACTIVE_ATTR = 'data-active'
+    /* Mirrors @custom-media --bp-wide in breakpoints.css. */
+    const WIDE_MIN_WIDTH_PX = 1025
 
     // Smooth-scroll any in-prose heading anchor (rehype-autolink-headings
     // wraps each heading in an <a class="heading-anchor" href="#slug">).
@@ -111,7 +119,7 @@ const formatDate = (date: Date): string =>
     const tocNav = document.querySelector<HTMLElement>('.post-toc')
     if (tocNav) {
         const linksBySlug = new Map<string, HTMLAnchorElement>()
-        tocNav.querySelectorAll<HTMLAnchorElement>('a[data-toc-link]').forEach((a) => {
+        tocNav.querySelectorAll<HTMLAnchorElement>(`a[${TOC_LINK_ATTR}]`).forEach((a) => {
             const slug = a.dataset.tocLink
             if (slug) linksBySlug.set(slug, a)
         })
@@ -125,7 +133,7 @@ const formatDate = (date: Date): string =>
                 smoothScrollToId(slug)
                 history.replaceState(null, '', `#${slug}`)
                 linksBySlug.forEach((l, s) => {
-                    l.toggleAttribute('data-active', s === slug)
+                    l.toggleAttribute(TOC_ACTIVE_ATTR, s === slug)
                 })
             })
         })
@@ -159,7 +167,7 @@ const formatDate = (date: Date): string =>
                 else break
             }
             linksBySlug.forEach((link, slug) => {
-                link.toggleAttribute('data-active', slug === active)
+                link.toggleAttribute(TOC_ACTIVE_ATTR, slug === active)
             })
             ticking = false
         }
@@ -182,8 +190,7 @@ const formatDate = (date: Date): string =>
         // Wide layout shows the TOC list directly (no disclosure UI).
         // <details> content is browser-hidden unless [open], so force it
         // on at this breakpoint and follow viewport changes.
-        // Mirrors @custom-media --bp-wide in breakpoints.css
-        const wideMql = window.matchMedia('(min-width: 1025px)')
+        const wideMql = window.matchMedia(`(min-width: ${WIDE_MIN_WIDTH_PX}px)`)
         const syncWideOpen = () => {
             if (wideMql.matches) details.setAttribute('open', '')
             else details.removeAttribute('open')
@@ -191,7 +198,6 @@ const formatDate = (date: Date): string =>
         syncWideOpen()
         wideMql.addEventListener('change', syncWideOpen)
 
-        const ANIM_MS = 280
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
         let animating = false
@@ -204,7 +210,7 @@ const formatDate = (date: Date): string =>
             animating = true
             const start = performance.now()
             const step = (now: number) => {
-                const p = Math.min((now - start) / ANIM_MS, 1)
+                const p = Math.min((now - start) / DURATION_MEDIUM_MS, 1)
                 const h = from + (to - from) * easeInOutCubic(p)
                 details.style.height = `${h}px`
                 if (p < 1) requestAnimationFrame(step)
@@ -253,7 +259,7 @@ const formatDate = (date: Date): string =>
         button.type = 'button'
         button.className = 'code-copy'
         button.setAttribute('aria-label', 'Copy code to clipboard')
-        button.setAttribute('data-copy', code)
+        button.setAttribute(COPY_ATTRS.copy, code)
         button.innerHTML = copyIconHTML() + checkIconHTML()
         pre.appendChild(button)
     })
@@ -345,7 +351,7 @@ const formatDate = (date: Date): string =>
             text-transform: uppercase;
             list-style: none;
             padding: var(--space-2) 0;
-            transition: color var(--duration-base) ease;
+            transition: color var(--duration-base) var(--ease-out);
         }
         .post-toc-details > summary:hover {
             color: rgb(var(--text));
@@ -357,7 +363,7 @@ const formatDate = (date: Date): string =>
             content: '+';
             display: inline-block;
             margin-right: 0.4em;
-            transition: transform var(--duration-base) ease;
+            transition: transform var(--duration-base) var(--ease-out);
         }
         .post-toc-details > summary:hover::before {
             transform: scale(1.25);
@@ -398,7 +404,7 @@ const formatDate = (date: Date): string =>
         gap: var(--space-2);
         color: rgb(var(--text-muted));
         text-decoration: none;
-        transition: color var(--duration-base) ease;
+        transition: color var(--duration-base) var(--ease-out);
     }
 
     .post-toc a:hover,
@@ -410,13 +416,13 @@ const formatDate = (date: Date): string =>
        the section name visually steps forward. Color goes full on activate. */
     .toc-dash {
         flex-shrink: 0;
-        height: 1px;
+        height: var(--border-hairline);
         width: var(--space-2);
         background: currentColor;
         opacity: 0.5;
         transition:
-            width var(--duration-base) ease,
-            opacity var(--duration-base) ease;
+            width var(--duration-base) var(--ease-out),
+            opacity var(--duration-base) var(--ease-out);
     }
 
     .post-toc a:hover .toc-dash,

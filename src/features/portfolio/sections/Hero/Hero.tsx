@@ -1,7 +1,10 @@
 import { Fragment, useEffect, useState } from 'react'
 import type { Personal, Hero as HeroContent } from '@type/portfolio'
 import { smoothScrollToId } from '@utils/smoothScroll'
+import { DURATION_MEDIUM_MS } from '@utils/motion'
 import styles from './Hero.module.css'
+
+const TAGLINE_INTERVAL_MS = 3000
 
 interface HeroProps {
     personal: Personal
@@ -64,8 +67,8 @@ function Hero({ personal, hero }: HeroProps) {
                     setCurrentIndex((prev) => (prev + 1) % hero.taglines.length)
                     setIsFading(false)
                     rotateTagline()
-                }, 300) // 300ms fade-out (aligns with CSS --duration-medium)
-            }, 3000)
+                }, DURATION_MEDIUM_MS)
+            }, TAGLINE_INTERVAL_MS)
         }
 
         rotateTagline()
@@ -89,7 +92,7 @@ function Hero({ personal, hero }: HeroProps) {
                 <p
                     className={styles.tagline}
                     data-mounted={mounted ? '' : undefined}
-                    data-fading={isFading ? '' : undefined}
+                    data-tagline-fading={isFading ? '' : undefined}
                 >
                     {hero.taglines[currentIndex]}
                 </p>

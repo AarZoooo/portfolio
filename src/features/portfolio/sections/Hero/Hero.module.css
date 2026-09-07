@@ -63,7 +63,7 @@
     opacity: 1;
 }
 
-.tagline[data-fading] {
+.tagline[data-tagline-fading] {
     opacity: 0;
 }
 

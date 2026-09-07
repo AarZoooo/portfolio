@@ -17,8 +17,18 @@
  * so the visual stays controllable per-surface.
  */
 
+import { DURATION_MEDIUM_MS } from './motion'
+
+/** Attribute contract shared with consumers (Contact rows, blog code
+ *  blocks). CSS for those states lives with each consumer. */
+export const COPY_ATTRS = {
+    copy: 'data-copy',
+    copied: 'data-copied',
+    fading: 'data-fading',
+} as const
+
 const COPY_FEEDBACK_MS = 1500
-const COPY_FADE_MS = 280
+const COPY_FADE_MS = DURATION_MEDIUM_MS
 const DELEGATION_FLAG = 'data-copy-delegation-attached'
 
 /** Write `text` to the clipboard. Tries the modern Async Clipboard API first;
@@ -53,12 +63,12 @@ export async function copyText(text: string): Promise<boolean> {
 
 /** Run the standard copied → fading → reset sequence on a button element. */
 export function flashCopiedFeedback(btn: HTMLElement): void {
-    btn.setAttribute('data-copied', '')
+    btn.setAttribute(COPY_ATTRS.copied, '')
     window.setTimeout(() => {
-        btn.setAttribute('data-fading', '')
+        btn.setAttribute(COPY_ATTRS.fading, '')
         window.setTimeout(() => {
-            btn.removeAttribute('data-copied')
-            btn.removeAttribute('data-fading')
+            btn.removeAttribute(COPY_ATTRS.copied)
+            btn.removeAttribute(COPY_ATTRS.fading)
         }, COPY_FADE_MS)
     }, COPY_FEEDBACK_MS)
 }
@@ -76,7 +86,7 @@ export function attachClickCopyDelegation(): void {
     document.addEventListener('click', async (e) => {
         // EventTarget is too broad; click always fires on an Element
     const target = e.target as HTMLElement | null
-        const btn = target?.closest<HTMLButtonElement>('button[data-copy]')
+        const btn = target?.closest<HTMLButtonElement>(`button[${COPY_ATTRS.copy}]`)
         if (!btn) return
         const text = btn.dataset.copy
         if (!text) return

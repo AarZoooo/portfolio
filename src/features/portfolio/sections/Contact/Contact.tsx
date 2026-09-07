@@ -1,6 +1,7 @@
 import type { Personal } from '@type/portfolio'
 import { CopyIcon, CheckIcon } from '@design/primitives/icons/icons'
 import { stripProtocol, mapsUrl } from '@utils/contact'
+import { COPY_ATTRS } from '@utils/copy'
 import styles from './Contact.module.css'
 
 interface ContactProps {
@@ -42,7 +43,7 @@ function Contact({ heading, personal }: ContactProps) {
                             <button
                                 type="button"
                                 className={styles.copyBtn}
-                                data-copy={row.value}
+                                {...{ [COPY_ATTRS.copy]: row.value }}
                                 aria-label={`Copy ${row.label.toLowerCase()}`}
                             >
                                 <CopyIcon className={styles.copyIcon} />
