@@ -9,6 +9,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "prepare": "git config core.hooksPath .githooks 2>/dev/null || true"
   },
   "dependencies": {
@@ -37,6 +39,7 @@
     "rehype-autolink-headings": "^7.1.0",
     "rehype-slug": "^6.0.0",
     "typescript": "~6.0.2",
-    "typescript-eslint": "^8.58.0"
+    "typescript-eslint": "^8.58.0",
+    "vitest": "^3.2.4"
   }
 }
