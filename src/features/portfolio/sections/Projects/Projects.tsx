@@ -24,7 +24,7 @@ function Projects({ heading, items }: ProjectsProps) {
                                         {item.logo && assets.companyLogo(item.logo) && (
                                             <Logo
                                                 src={assets.companyLogo(item.logo)}
-                                                alt={`${item.context} logo`}
+                                                alt=""
                                                 className={styles.logo}
                                             />
                                         )}

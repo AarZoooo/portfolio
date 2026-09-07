@@ -23,7 +23,7 @@ function Education({ heading, items }: EducationProps) {
                                     {item.logo && assets.schoolLogo(item.logo) && (
                                         <Logo
                                             src={assets.schoolLogo(item.logo)}
-                                            alt={`${item.institution} logo`}
+                                            alt=""
                                         />
                                     )}
                                     <span>{item.institution}</span>

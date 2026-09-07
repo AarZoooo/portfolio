@@ -22,7 +22,7 @@ function Experience({ heading, items }: ExperienceProps) {
                             {group.roles[0].logo && assets.companyLogo(group.roles[0].logo) && (
                                 <Logo
                                     src={assets.companyLogo(group.roles[0].logo)}
-                                    alt={`${group.company} logo`}
+                                    alt=""
                                 />
                             )}
                             <span>{group.company}</span>

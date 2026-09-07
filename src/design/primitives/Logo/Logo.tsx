@@ -6,6 +6,8 @@ const DEFAULT_LOGO_SIZE = '1.1em'
 
 interface LogoProps {
     src?: string
+    /** Alt text. Pass '' when the logo sits beside a visible text label;
+     *  the logo is decorative then and hidden from screen readers. */
     alt: string
     /** Size of the logo square. Defaults to DEFAULT_LOGO_SIZE (inline
      * next to a company name). Pass a fixed px/rem for larger contexts
@@ -23,6 +25,10 @@ interface LogoProps {
  * approach, which could only force black/white. */
 export default function Logo({ src, alt, size = DEFAULT_LOGO_SIZE, className }: LogoProps) {
     if (!src) return null
+    const a11yProps =
+        alt === ''
+            ? { 'aria-hidden': true as const }
+            : { role: 'img' as const, 'aria-label': alt }
     return (
         <div
             className={`${styles.logo}${className ? ` ${className}` : ''}`}
@@ -32,8 +38,7 @@ export default function Logo({ src, alt, size = DEFAULT_LOGO_SIZE, className }: 
                 width: size,
                 height: size,
             }}
-            role="img"
-            aria-label={alt}
+            {...a11yProps}
         />
     )
 }

@@ -36,7 +36,7 @@ function Skills({ heading, skills }: SkillsProps) {
                                         const logo = assets.techLogo(s.logo)
                                         return (
                                             <li key={s.name} className={styles.chip}>
-                                                {logo && <Logo src={logo} alt={`${s.name} logo`} size="1em" className={styles.icon} />}
+                                                {logo && <Logo src={logo} alt="" size="1em" className={styles.icon} />}
                                                 <span>{s.name}</span>
                                             </li>
                                         )
