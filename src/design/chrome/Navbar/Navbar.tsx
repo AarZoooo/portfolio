@@ -167,7 +167,7 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
                                 aria-label="Open menu"
                                 className={styles.hamburger}
                             >
-                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                                     <path d="M4 7h16M4 12h16M4 17h16" />
                                 </svg>
                             </button>
@@ -200,12 +200,12 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
                         className={styles.toggle}
                     >
                         {showSun ? (
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                                 <circle cx="12" cy="12" r="4" />
                                 <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
                             </svg>
                         ) : (
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                                 <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
                             </svg>
                         )}
@@ -218,14 +218,21 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
                 <div
                     id="subapp-menu"
                     className={`${styles.menuOverlay} ${menuOpen ? styles.menuOverlayOpen : ''}`}
-                    onClick={(e) => {
-                        if (e.target === e.currentTarget) closeMenu()
-                    }}
                     role="dialog"
                     aria-modal="true"
                     aria-label="Site navigation"
                     aria-hidden={!menuOpen}
                 >
+                    {/* Backdrop close is a mouse-only affordance (keyboard
+                        gets Escape + the focus trap), so keep it out of the
+                        tab order. */}
+                    <button
+                        type="button"
+                        className={styles.menuBackdrop}
+                        aria-label="Close menu"
+                        onClick={closeMenu}
+                        tabIndex={-1}
+                    />
                     <ul className={styles.menuList}>
                         {visibleSubApps.map((app) => (
                             <li key={app.href}>
