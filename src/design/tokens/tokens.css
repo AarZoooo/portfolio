@@ -33,8 +33,7 @@
     --accent: rgb(var(--ink));
     --accent-contrast: rgb(var(--paper));
 
-    /* Theme-invariant dark surface (footer). Stays dark regardless of theme;
-       paper mode retints it to warm ink so it reads as one printed block.
+    /* Theme-invariant dark surface (footer). Stays dark regardless of theme.
        Space-separated channels so it composes with rgb(... / alpha). */
     --surface-dark: 0 0 0;
     --on-surface-dark: 255 255 255;
@@ -49,7 +48,7 @@
 
     /* Glass — translucent surfaces with backdrop-blur. Pair the bg with
        --glass-blur on the same element. `--glass-bar` follows the page
-       paper (subtle tint on the chrome). `--glass-scrim` is always-dark
+       background (subtle tint on the chrome). `--glass-scrim` is always-dark
        for modal-style dimming, regardless of theme. */
     --glass-bar: rgb(var(--paper) / 0.25);
     --glass-scrim: rgb(var(--surface-dark) / 0.4);
@@ -109,18 +108,10 @@
 
     /* Border weights */
     --border-hairline: 1px;
-
-    /* Paper grain — single-layer fractalNoise at fine frequency.
-       Anisotropic baseFrequency (X != Y) gives a slight directional bias
-       like pressed pulp fibers. Multi-octave adds natural sub-frequency
-       variation without creating visible macro-patches. 400px tile to
-       reduce perceivable repeat. */
-    --noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.5 1.35' numOctaves='2' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.14 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
 
 :root[theme="dark"] {
-    /* Pure monochrome: white ink on black paper. Paper mode softens
-       both endpoints and adds grain (see paper.css). */
+    /* Pure monochrome: white ink on black paper. */
     --ink: 255 255 255;
     --paper: 0 0 0;
     --mono-logo: grayscale(1) brightness(0) invert(1);

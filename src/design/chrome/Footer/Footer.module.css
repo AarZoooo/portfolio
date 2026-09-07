@@ -1,7 +1,6 @@
 .footer {
     /* Forced dark surface - does NOT flip with theme.
-       Color comes from --surface-dark (tokens.css), which paper mode
-       retints to warm ink. */
+       Color comes from --surface-dark (tokens.css). */
     background: rgb(var(--surface-dark));
     color: rgb(var(--on-surface-dark) / 0.6);
     margin-top: var(--space-24);

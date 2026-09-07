@@ -23,20 +23,8 @@
     .bar { animation: none; }
 }
 
-/* Paper mode: drop the glass blur for a flat printed feel. */
-:global([data-paper="on"]) .bar {
-    background-color: var(--bg);
-    background-image: var(--noise);
-    background-repeat: repeat;
-    backdrop-filter: none;
-}
-
 .bar.scrolled {
     box-shadow: var(--shadow-sm);
-}
-
-:global([theme="dark"][data-paper="on"]) .bar.scrolled {
-    box-shadow: var(--shadow-md);
 }
 
 .inner {

@@ -1,5 +1,5 @@
 ---
-// Pre-paint script that sets theme, paper, and width from localStorage
+// Pre-paint script that sets theme and width from localStorage
 // so returning visitors don't flash wrong modes. Mirror any change in
 // @hooks/useTheme's STORAGE_KEYS / ATTRS.
 ---
@@ -9,7 +9,6 @@
         var d = document.documentElement
         try {
             var t = localStorage.getItem('theme')
-            var p = localStorage.getItem('paper')
             var w = localStorage.getItem('width')
 
             d.setAttribute(
@@ -20,7 +19,6 @@
                       ? 'dark'
                       : 'light',
             )
-            if (p === 'on' || p === 'off') d.setAttribute('data-paper', p)
             if (w === 'wide' || w === 'narrow') d.setAttribute('data-width', w)
         } catch (_) {
             try {

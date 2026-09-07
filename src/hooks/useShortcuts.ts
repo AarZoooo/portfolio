@@ -15,7 +15,7 @@ const PROBE_VIEWPORT_RATIO = 0.3
  * runtime, so it works on any page that has them — not just the portfolio.
  */
 export default function useShortcuts() {
-    const { toggleTheme, togglePaper, toggleWidth } = useTheme()
+    const { toggleTheme, toggleWidth } = useTheme()
 
     useEffect(() => {
         const SEQUENCE_TIMEOUT = 600
@@ -160,10 +160,6 @@ export default function useShortcuts() {
                     e.preventDefault()
                     toggleTheme()
                     return
-                case 'p':
-                    e.preventDefault()
-                    togglePaper()
-                    return
                 case 'w':
                     e.preventDefault()
                     toggleWidth()
@@ -176,5 +172,5 @@ export default function useShortcuts() {
             window.removeEventListener('keydown', onKey)
             clearPending()
         }
-    }, [toggleTheme, togglePaper, toggleWidth])
+    }, [toggleTheme, toggleWidth])
 }

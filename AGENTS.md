@@ -30,7 +30,7 @@ Every detail is intentional. Match that voice when adding to it.
 ```
 src/
 ├── design/                   # SHARED — importable from anywhere
-│   ├── tokens/               # CSS variables (colors, spacing, typography, glass, paper, modes)
+│   ├── tokens/               # CSS variables (colors, spacing, typography, glass, modes)
 │   ├── typography/           # prose.css for rendered MDX
 │   ├── primitives/           # reusable atoms (Expandable, QuirkyText, icons/)
 │   └── chrome/               # site shell (Navbar, Logo, Footer, CustomCursor, Shortcuts, InitialAttrs)
@@ -154,7 +154,7 @@ bundle weight, raise it explicitly with a justification.
 5. **Image discipline.** Astro `<Image>` for raster (WebP/AVIF +
    responsive sizes). SVGs ship as-is.
 6. **No render-blocking JS** in `<head>` except the inline FOUC-prevention
-   script that sets `theme` / `data-paper` / `data-width` before paint.
+   script that sets `theme` / `data-width` before paint.
 
 ## Imports
 
@@ -236,7 +236,6 @@ values → exported from `@utils/`. Existing examples:
   the blog code blocks and the Contact section.
 - `@utils/navigation.ts` exports the `SUB_APPS` list consumed by the
   Navbar.
-- `Logo.tsx` declares `HOLD_MS`, `HOLD_MOVE_THRESHOLD_PX` (file-local).
 - `CustomCursor.tsx` declares `BASE_SIZE`, `HOVER_SIZE`, `LERP_FACTOR`
   (file-local).
 

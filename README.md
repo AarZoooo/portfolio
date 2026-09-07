@@ -47,7 +47,7 @@ A pre-commit hook runs `npm run lint` automatically; see `.githooks/`.
 ```
 src/
 ├── design/                   # SHARED, importable from anywhere
-│   ├── tokens/               # CSS variables (colors, spacing, typography, paper, glass, modes)
+│   ├── tokens/               # CSS variables (colors, spacing, typography, glass, modes)
 │   ├── typography/           # prose.css for rendered MDX
 │   ├── primitives/           # reusable atoms (Expandable, icons)
 │   └── chrome/               # site shell (Navbar, Footer, CustomCursor, Logo, Shortcuts)
@@ -80,18 +80,16 @@ Tokens live in [`src/design/tokens/`](src/design/tokens):
 - `tokens.css`: colors, spacing, durations, easings, radii, shadows, glass, layout
 - `typography.css`: font families, type scale, weights, leading, tracking
 - `breakpoints.css`: `--bp-medium`, `--bp-narrow` custom-media
-- `paper.css`: paper-mode treatment (toggle with `p`)
 - `modes.css`: narrow-column toggle (`w`)
 
-Three orthogonal display modes layered onto the same content:
+Two orthogonal display modes layered onto the same content:
 
 | Toggle | Key | Default | Effect |
 |---|---|---|---|
 | Theme | `t` | system | light / dark flip via `[theme]` attribute |
-| Paper | `p` | off | editorial print treatment, swaps cursor for a pen nib |
 | Width | `w` | per-page | narrow reading column (720px) vs wide (1280px) |
 
-Long-press the logo on touch devices toggles paper. The full keyboard
+The full keyboard
 reference lives at [`/shortcuts`](https://aarju.dev/shortcuts).
 
 ## Architecture notes

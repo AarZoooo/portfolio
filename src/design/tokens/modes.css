@@ -1,4 +1,4 @@
-/* Mode toggles — independent of paper mode.
+/* Mode toggles.
    Gated behind data-* attributes on <html>; see hooks/useShortcuts.ts
    for the keyboard bindings. */
 
