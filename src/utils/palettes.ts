@@ -22,7 +22,7 @@ export const PALETTES = [
     { name: 'monochrome-light', mode: 'light', hero: null, font: null },
     { name: 'monochrome-dark', mode: 'dark', hero: null, font: null },
     { name: 'meddle', mode: 'dark', hero: 'meddle', font: null },
-    { name: 'utopia', mode: 'dark', hero: null, font: null },
+    { name: 'utopia', mode: 'dark', hero: 'utopia', font: null },
 ] as const
 
 export type PaletteName = (typeof PALETTES)[number]['name']
