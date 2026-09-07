@@ -80,8 +80,8 @@
     display: none;
     align-items: center;
     justify-content: center;
-    width: var(--space-7);
-    height: var(--space-7);
+    width: var(--space-12);
+    height: var(--space-12);
     color: var(--text);
     transition: color var(--duration-base) ease;
 }
@@ -324,8 +324,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: var(--space-7);
-    height: var(--space-7);
+    width: var(--space-12);
+    height: var(--space-12);
     margin-left: var(--space-5);
     border-radius: var(--radius-pill);
     background: var(--accent);

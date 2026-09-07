@@ -1,8 +1,7 @@
 ---
 import InitialAttrs from '@design/chrome/InitialAttrs.astro'
 import '@design/tokens/index.css'
-import data from '@features/portfolio/data/data.json'
-import type { PortfolioData } from '@type/portfolio'
+import { portfolioData as d } from '@features/portfolio/data/portfolioData'
 
 interface Props {
     title: string
@@ -38,8 +37,6 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : SITE_URL + ogImage
 // a real person" so it can show a knowledge-panel-style result for name
 // searches. Fields pulled from data.json so the schema stays in sync with
 // the on-page bio.
-// JSON import is untyped; schema validated by data.json structure
-const d = data as PortfolioData
 const personSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',

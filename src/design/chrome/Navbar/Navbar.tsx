@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTheme } from '@hooks/useTheme'
+import { useFocusTrap } from '@hooks/useFocusTrap'
 import { smoothScrollToId } from '@utils/smoothScroll'
 import type { SubAppLink } from '@utils/navigation'
 import Logo from '@design/chrome/Logo/Logo'
@@ -30,6 +31,8 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
     const [active, setActive] = useState<string | null>(null)
     const [menuOpen, setMenuOpen] = useState(false)
     const { theme, toggleTheme } = useTheme()
+    const hamburgerRef = useRef<HTMLButtonElement>(null)
+    useFocusTrap({ open: menuOpen, containerId: 'subapp-menu', triggerRef: hamburgerRef })
 
     const hasSections = !!sectionLinks && sectionLinks.length > 0
 
@@ -135,6 +138,7 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
                             </ul>
 
                             <button
+                                ref={hamburgerRef}
                                 type="button"
                                 onClick={openMenu}
                                 aria-expanded={menuOpen}

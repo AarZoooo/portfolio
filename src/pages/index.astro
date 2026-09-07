@@ -13,13 +13,9 @@ import Projects from '@features/portfolio/sections/Projects/Projects'
 import Education from '@features/portfolio/sections/Education/Education'
 import Contact from '@features/portfolio/sections/Contact/Contact'
 
-import data from '@features/portfolio/data/data.json'
-import type { PortfolioData } from '@type/portfolio'
+import { portfolioData as d } from '@features/portfolio/data/portfolioData'
 import { SUB_APPS } from '@utils/navigation'
 import { withBuildDate } from '@utils/buildInfo'
-
-// JSON import is untyped; schema validated by data.json structure
-const d = data as PortfolioData
 
 // Stable at module scope so Navbar effects do not re-bind per render.
 const SECTION_LINKS = [

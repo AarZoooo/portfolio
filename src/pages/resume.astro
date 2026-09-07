@@ -4,12 +4,11 @@ import Navbar from '@design/chrome/Navbar/Navbar'
 import Footer from '@design/chrome/Footer/Footer'
 import CustomCursor from '@design/chrome/CustomCursor/CustomCursor'
 import Shortcuts from '@design/chrome/Shortcuts'
-import data from '@features/portfolio/data/data.json'
-import type { Experience, PortfolioData } from '@type/portfolio'
+import { portfolioData as d } from '@features/portfolio/data/portfolioData'
+import type { Experience } from '@type/portfolio'
 import { SUB_APPS } from '@utils/navigation'
 import { withBuildDate } from '@utils/buildInfo'
 
-const d = data as PortfolioData
 const stripProtocol = (url: string) => url.replace(/^https?:\/\//, '')
 const mapsUrl = (place: string) =>
     `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place)}`

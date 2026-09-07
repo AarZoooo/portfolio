@@ -8,14 +8,10 @@ import Footer from '@design/chrome/Footer/Footer'
 import CustomCursor from '@design/chrome/CustomCursor/CustomCursor'
 import Shortcuts from '@design/chrome/Shortcuts'
 
-import data from '@features/portfolio/data/data.json'
-import type { PortfolioData } from '@type/portfolio'
+import { portfolioData as d } from '@features/portfolio/data/portfolioData'
 import { SUB_APPS } from '@utils/navigation'
 import { withBuildDate } from '@utils/buildInfo'
 import '@design/typography/prose.css'
-
-// JSON import is untyped; schema validated by data.json structure
-const d = data as PortfolioData
 
 export const getStaticPaths = (async () => {
     const posts = (await getCollection('blog')).filter((post) => !post.data.draft)
