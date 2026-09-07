@@ -44,6 +44,7 @@ export default function PaletteBackground({ heroImages }: PaletteBackgroundProps
                                 backgroundImage: `url(${url})`,
                                 backgroundSize: IMAGE_SIZE[p.imageMode],
                                 backgroundPosition: position,
+                                filter: p.blur === false ? 'none' : undefined,
                             }}
                         />
                     </div>

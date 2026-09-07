@@ -70,7 +70,7 @@
     --hero-blur-ambient: 48px;
     /* On narrow viewports the same blur radius covers proportionally
        more of the smaller image, so it reads more aggressive. Halve it. */
-    --hero-blur-ambient-mobile: 24px;
+    --hero-blur-ambient-mobile: 8px;
 
 
     /* Layout */

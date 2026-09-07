@@ -50,7 +50,9 @@
     background-position: center;
     background-repeat: no-repeat;
     filter: blur(var(--glass-blur));
-    opacity: var(--hero-image-opacity);
+    /* Full opacity: the image is the subject, fully visible on top of
+       the ambient gradient. The ambient fills the gaps around it. */
+    opacity: 1;
     animation: image-in var(--duration-slower) ease-out both;
 }
 
@@ -61,7 +63,7 @@
 
 @keyframes image-in {
     from { opacity: 0; }
-    to { opacity: var(--hero-image-opacity); }
+    to { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {

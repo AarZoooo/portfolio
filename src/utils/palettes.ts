@@ -15,6 +15,8 @@
  * `imagePosition` anchors the image: one of the 9 positions
  * (top-left, top-center, top-right, center-left, center,
  * center-right, bottom-left, bottom-center, bottom-right).
+ * `blur` is whether the image is blurred (the ambient gradient +
+ * the fit image). false renders the image sharp.
  *
  * `font` is an optional font family name. null inherits the default
  * (IBM Plex). To wire a custom font: drop the woff2 in
@@ -26,8 +28,8 @@
 export const PALETTES = [
     { name: 'monochrome-light', mode: 'light', hero: null, font: null, imageMode: 'fit', imagePosition: 'center' },
     { name: 'monochrome-dark', mode: 'dark', hero: null, font: null, imageMode: 'fit', imagePosition: 'center' },
-    { name: 'meddle', mode: 'dark', hero: 'meddle', font: null, imageMode: 'fit', imagePosition: 'center' },
-    { name: 'utopia', mode: 'dark', hero: 'utopia', font: null, imageMode: 'fit-width', imagePosition: 'bottom-center' },
+    { name: 'meddle', mode: 'dark', hero: 'meddle', font: null, imageMode: 'fit', imagePosition: 'center', blur: false },
+    { name: 'utopia', mode: 'dark', hero: 'utopia', font: null, imageMode: 'fit-width', imagePosition: 'bottom-center', blur: false },
 ] as const
 
 export type PaletteName = (typeof PALETTES)[number]['name']
