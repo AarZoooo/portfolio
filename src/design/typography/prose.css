@@ -260,7 +260,7 @@
 /* Emphasis */
 .prose strong {
     font-weight: var(--weight-medium);
-    color: rgb(var(--text));
+    color: rgb(var(--accent));
 }
 
 .prose em {

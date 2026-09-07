@@ -124,10 +124,12 @@ img {
     border: 0;
 }
 
-/* Metric - bolder + full ink inside otherwise muted prose. */
+/* Metric - bolder + accent inside otherwise muted prose. On monochrome
+   palettes accent == text so this is invisible; on colored palettes
+   the accent gives bold text its own hue. */
 .metric {
     font-weight: var(--weight-medium);
-    color: rgb(var(--text));
+    color: rgb(var(--accent));
 }
 
 /* Globally disable CSS transitions and animations for users who prefer

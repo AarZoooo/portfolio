@@ -1,0 +1,18 @@
+/* Meddle (Pink Floyd, 1971). White text on the album's
+   teal, with #135770 as the bold/accent and #533035 / #856869 as
+   the muted tiers. The image fills the background so the paper
+   fallback is rarely seen; it's a dark teal so white text
+   stays readable before the image loads. */
+:root[data-palette="meddle"] {
+    --ink: 255 255 255;
+    --paper: 12 42 42;
+    --bg: rgb(var(--paper));
+    --text: 255 255 255;
+    --text-secondary: 83 48 53;     /* #533035 */
+    --text-muted: 133 104 105;     /* #856869 */
+    --text-subtle: 168 184 165;     /* pale teal, lighter than tertiary */
+    --accent: 19 87 112;          /* #135770 */
+    --accent-contrast: 255 255 255;
+    --surface-dark: 13 30 30;      /* dark teal footer */
+    --on-surface-dark: 255 255 255;
+}
