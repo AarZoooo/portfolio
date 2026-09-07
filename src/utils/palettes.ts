@@ -1,7 +1,8 @@
 /** Ordered palettes. The first two are the monochromes (tap `t`
  * toggles between them; hold `t` advances by one). Add a colored
- * palette by appending an entry here and defining its colors in
- * tokens.css.
+ * palette by appending an entry here and creating its color block in
+ * src/design/tokens/palettes/<name>.css (imported from
+ * src/design/tokens/index.css).
  *
  * `hero` is an optional asset key (basename of a file in
  * src/assets/hero/); null means the typographic hero, no image.
@@ -16,6 +17,7 @@
 export const PALETTES = [
     { name: 'monochrome-light', hero: null, font: null },
     { name: 'monochrome-dark', hero: null, font: null },
+    { name: 'meddle', hero: 'meddle', font: null },
 ] as const
 
 export type PaletteName = (typeof PALETTES)[number]['name']

@@ -3,3 +3,5 @@
 @import './typography.css';
 @import './globals.css';
 @import './modes.css';
+@import './palettes/monochrome-dark.css';
+@import './palettes/meddle.css';

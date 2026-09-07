@@ -16,8 +16,6 @@ import Contact from '@features/portfolio/sections/Contact/Contact'
 import { portfolioData as d } from '@features/portfolio/data/portfolioData'
 import { SUB_APPS } from '@utils/navigation'
 import { withBuildDate } from '@utils/buildInfo'
-import { PALETTES } from '@utils/palettes'
-import { assets } from '@assets'
 
 // Stable at module scope so Navbar effects do not re-bind per render.
 const SECTION_LINKS = [
@@ -28,16 +26,6 @@ const SECTION_LINKS = [
     { id: 'contact', label: d.sections.contact, short: 'ctc' },
 ]
 
-// Resolve each palette's hero image (by basename) to a build-time URL.
-// Palettes with hero: null map to undefined, so the hero renders the
-// plain typographic version.
-const HERO_IMAGES: Record<string, string> = {}
-for (const p of PALETTES) {
-    if (p.hero) {
-        const url = assets.heroImage(p.hero)
-        if (url) HERO_IMAGES[p.name] = url
-    }
-}
 ---
 
 <BaseLayout title={`Portfolio: ${d.personal.name}`} description={d.personal.summary}>
@@ -51,7 +39,7 @@ for (const p of PALETTES) {
     />
 
     <main id="main" class="container">
-        <Hero personal={d.personal} hero={d.hero} heroImages={HERO_IMAGES} client:load />
+        <Hero personal={d.personal} hero={d.hero} client:load />
         <Experience heading={d.sections.experience} items={d.experience} client:visible />
         <Skills heading={d.sections.skills} skills={d.skills} />
         <Projects heading={d.sections.projects} items={d.projects} client:visible />

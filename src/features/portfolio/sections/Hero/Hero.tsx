@@ -1,15 +1,11 @@
 import { Fragment, useEffect, useState } from 'react'
 import type { Personal, Hero as HeroContent } from '@type/portfolio'
 import { smoothScrollToId } from '@utils/smoothScroll'
-import { useTheme } from '@hooks/useTheme'
 import styles from './Hero.module.css'
 
 interface HeroProps {
     personal: Personal
     hero: HeroContent
-    /** Build-time map of palette name -> hero image URL. The active
-     *  palette is picked at runtime so cycling palettes swaps the hero. */
-    heroImages?: Record<string, string>
 }
 
 /** Split on `**...**` pairs and wrap odd-index chunks in <strong>.
@@ -33,9 +29,7 @@ function isTouchOnlyDevice(): boolean {
     return !window.matchMedia('(hover: hover) and (pointer: fine)').matches
 }
 
-function Hero({ personal, hero, heroImages }: HeroProps) {
-    const { palette } = useTheme()
-    const heroImage = heroImages?.[palette]
+function Hero({ personal, hero }: HeroProps) {
     // SSR uses deterministic first items so crawlers / screen readers see
     // real content; useEffect sets up tagline rotation and hint selections
     // once on client load. `mounted` gates a fade-in to prevent layout / font
@@ -88,18 +82,6 @@ function Hero({ personal, hero, heroImages }: HeroProps) {
 
     return (
         <section id="hero" className={styles.hero}>
-            {heroImage && (
-                <div className={styles.bg} aria-hidden>
-                    <div
-                        className={styles.bgAmbient}
-                        style={{ backgroundImage: `url(${heroImage})` }}
-                    />
-                    <div
-                        className={styles.bgImage}
-                        style={{ backgroundImage: `url(${heroImage})` }}
-                    />
-                </div>
-            )}
             <div className={styles.center}>
                 <h1 className={styles.greeting}>
                     Hey, I'm <span className={styles.name}>{personal.name}</span>

@@ -1,10 +1,10 @@
 /* Design tokens.
-   Palettes define solid colors per tier. The two monochromes
+ Palettes define solid colors per tier. The two monochromes
    (monochrome-light, monochrome-dark) are the defaults; their solid
    tier values are the alpha-blend equivalents of the previous
    ink-on-paper expressions, so the look is preserved exactly.
-   Colored palettes can be added by extending PALETTES and defining
-   their solids in a :root[data-palette="<name>"] block below. */
+   Colored palettes live in src/design/tokens/palettes/<name>.css
+   and are imported from index.css. */
 
 /* Declare --content-max as a typed custom property so it can transition.
    Any element using max-width: var(--content-max) interpolates smoothly
@@ -123,18 +123,4 @@
 
     /* Border weights */
     --border-hairline: 1px;
-}
-
-:root[data-palette="monochrome-dark"] {
-    /* White ink on black paper. Text tiers are solids = alpha-blend of
-       white ink on black paper: solid = 255*a + 0*(1-a) = 255*a. */
-    --ink: 255 255 255;
-    --paper: 0 0 0;
-    --text: 255 255 255;
-    --text-secondary: 184 184 184;  /* 255*.72 */
-    --text-muted: 153 153 153;      /* 255*.6 */
-    --text-subtle: 92 92 92;        /* 255*.36 */
-    --accent: 255 255 255;
-    --accent-contrast: 0 0 0;
-    --mono-logo: grayscale(1) brightness(0) invert(1);
 }

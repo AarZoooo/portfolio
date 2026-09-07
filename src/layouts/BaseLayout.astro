@@ -1,7 +1,20 @@
 ---
 import InitialAttrs from '@design/chrome/InitialAttrs.astro'
+import PaletteBackground from '@design/chrome/PaletteBackground/PaletteBackground'
 import '@design/tokens/index.css'
 import { portfolioData as d } from '@features/portfolio/data/portfolioData'
+import { PALETTES } from '@utils/palettes'
+import { assets } from '@assets'
+
+// Resolve each palette's hero image (by basename) to a build-time URL.
+// Palettes with hero: null map to undefined, so the backdrop renders nothing.
+const HERO_IMAGES: Record<string, string> = {}
+for (const p of PALETTES) {
+    if (p.hero) {
+        const url = assets.heroImage(p.hero)
+        if (url) HERO_IMAGES[p.name] = url
+    }
+}
 
 interface Props {
     title: string
@@ -110,6 +123,7 @@ const personSchema = {
     </head>
     <body>
         <a href="#main" class="skip-link">Skip to content</a>
+        <PaletteBackground heroImages={HERO_IMAGES} client:load />
         <slot />
 
         <script>
