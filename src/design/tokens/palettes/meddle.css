@@ -11,7 +11,7 @@
     --text-secondary: 230 230 230;
     --text-muted: 200 200 200;
     --text-subtle: 170 170 170;
-    --accent: 133 106 108;    /* #856A6C, primary */
+    --accent: 148 124 126;    /* #947C7E, primary (~10% brighter than #856A6C) */
     --accent-contrast: 255 255 255;
     --secondary: 19 87 112;      /* #135770, for use elsewhere */
     --tertiary: 133 104 105;    /* #856869, for use elsewhere */
