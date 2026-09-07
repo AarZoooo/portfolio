@@ -11,11 +11,11 @@
     padding: 0 var(--space-6);
     font-family: var(--font-mono);
     overflow: hidden;
-    animation: hero-in var(--duration-slowest) ease-out both;
+    animation: hero-in var(--duration-slowest) var(--ease-out) both;
 }
 
 @keyframes hero-in {
-    from { opacity: 0; transform: translateY(6px); }
+    from { opacity: 0; transform: translateY(var(--space-1-5)); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -25,7 +25,7 @@
 
 .center {
     position: relative;
-    z-index: 1;
+    z-index: var(--z-content);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -51,12 +51,12 @@
     font-size: var(--text-xl);
     font-weight: var(--weight-light);
     color: rgb(var(--text-secondary));
-    line-height: 1.5;
+    line-height: var(--leading-normal);
     min-height: 1.5em;
     /* SSR'd value is invisible until React swaps in the random pick on
        mount; the [data-mounted] attribute fades the final value in. */
     opacity: 0;
-    transition: opacity var(--duration-medium) ease;
+    transition: opacity var(--duration-medium) var(--ease-out);
 }
 
 .tagline[data-mounted] {
@@ -81,20 +81,21 @@
     justify-content: center;
     color: rgb(var(--accent));
     transition:
-        color var(--duration-base) ease,
-        transform var(--duration-base) ease,
-        filter var(--duration-base) ease;
+        color var(--duration-base) var(--ease-out),
+        transform var(--duration-base) var(--ease-out),
+        filter var(--duration-base) var(--ease-out);
 }
 
 .socialBtn:hover {
     color: rgb(var(--text));
+    /* Optical lift, same 1px nudge as the Contact arrows. */
     transform: translateY(-1px);
     filter: drop-shadow(var(--glow-sm));
 }
 
 .scrollHint {
     position: absolute;
-    z-index: 1;
+    z-index: var(--z-content);
     bottom: var(--space-12);
     left: 50%;
     transform: translateX(-50%);
@@ -112,8 +113,8 @@
        invisible until the touch-aware random hint is selected. */
     opacity: 0;
     transition:
-        color var(--duration-base) ease,
-        opacity var(--duration-medium) ease;
+        color var(--duration-base) var(--ease-out),
+        opacity var(--duration-medium) var(--ease-out);
 }
 
 .scrollHint[data-mounted] {

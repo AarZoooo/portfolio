@@ -6,7 +6,7 @@
    Tighter column width for a magazine/essay feel. Default (wide) stays
    at --content-max-wide; narrow overrides --content-max. */
 :root[data-width="narrow"] {
-    --content-max: 720px;
+    --content-max: var(--content-max-narrow);
 }
 
 /* On mobile / tablet, the viewport already constrains reading width —

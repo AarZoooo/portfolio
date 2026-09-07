@@ -71,7 +71,7 @@ img {
 /* Keyboard focus - visible ring (doesn't disturb layout). */
 :focus { outline: none; }
 :focus-visible {
-    outline: 2px solid rgb(var(--text));
+    outline: var(--focus-ring-width) solid rgb(var(--text));
     outline-offset: 3px;
     border-radius: var(--radius-sm);
 }
@@ -90,7 +90,7 @@ img {
     z-index: var(--z-skip-link);
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--duration-fast) ease;
+    transition: opacity var(--duration-fast) var(--ease-out);
 }
 
 .skip-link:focus {

@@ -29,7 +29,7 @@
         rgb(var(--ink) / 0.18),
         rgb(var(--ink) / 0)
     );
-    transition: background var(--duration-slow) ease;
+    transition: background var(--duration-slow) var(--ease-out);
 }
 
 .wrap.open .rail::before {
@@ -54,19 +54,19 @@
    across during the max-height animation; outgoing view fades fast. */
 .wrap .viewWrap:nth-child(1) .viewInner {
     opacity: 1;
-    transition: opacity var(--duration-slower) ease var(--duration-medium);
+    transition: opacity var(--duration-slower) var(--ease-out) var(--duration-medium);
 }
 .wrap .viewWrap:nth-child(2) .viewInner {
     opacity: 0;
-    transition: opacity var(--duration-slow) ease;
+    transition: opacity var(--duration-slow) var(--ease-out);
 }
 .wrap.open .viewWrap:nth-child(1) .viewInner {
     opacity: 0;
-    transition: opacity var(--duration-slow) ease;
+    transition: opacity var(--duration-slow) var(--ease-out);
 }
 .wrap.open .viewWrap:nth-child(2) .viewInner {
     opacity: 1;
-    transition: opacity var(--duration-slower) ease var(--duration-medium);
+    transition: opacity var(--duration-slower) var(--ease-out) var(--duration-medium);
 }
 
 /* Gap above tech line so it reads as a footer separate from content. */
@@ -82,7 +82,7 @@
     display: block;
     color: rgb(var(--text-muted));
     text-align: left;
-    transition: color var(--duration-base) ease;
+    transition: color var(--duration-base) var(--ease-out);
 }
 
 .toggle:hover {

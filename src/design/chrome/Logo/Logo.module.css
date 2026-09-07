@@ -11,7 +11,7 @@
     line-height: 1;
     color: rgb(var(--text));
     text-decoration: none;
-    transition: filter var(--duration-base) ease;
+    transition: filter var(--duration-base) var(--ease-out);
 }
 
 .brand:hover {
@@ -42,7 +42,7 @@
     white-space: nowrap;
     color: rgb(var(--text-muted));
     text-decoration: none;
-    transition: color var(--duration-base) ease;
+    transition: color var(--duration-base) var(--ease-out);
 }
 
 .slug:hover {

@@ -13,18 +13,23 @@
     z-index: var(--z-cursor);
     mix-blend-mode: difference;
     will-change: transform;
+    /* Parked offscreen until the first mousemove; matches
+       OFFSCREEN_POSITION in CustomCursor.tsx. */
     transform: translate3d(-9999px, -9999px, 0);
 }
 
 .dot {
-    width: 6px;
-    height: 6px;
+    width: var(--space-1-5);
+    height: var(--space-1-5);
+    /* Difference blend inverts whatever is behind the cursor; that math
+       requires pure white, so this stays raw regardless of palette. */
     background: white;
 }
 
 .ring {
-    width: 32px;
-    height: 32px;
+    /* Matches BASE_SIZE in CustomCursor.tsx. */
+    width: var(--space-8);
+    height: var(--space-8);
     border: var(--border-hairline) solid white;
 }
 

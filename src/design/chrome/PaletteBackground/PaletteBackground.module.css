@@ -31,9 +31,10 @@
        colors (see ambient/conicGradient.ts). The blur softens the
        hard-edged gradient into a smooth ambient wash. */
     filter: blur(var(--hero-blur-ambient));
+    /* Overscan so the blur's soft edges never reveal the layer bounds. */
     transform: scale(1.3);
     opacity: 1;
-    animation: ambient-in var(--duration-slower) ease-out both;
+    animation: ambient-in var(--duration-slower) var(--ease-out) both;
 }
 
 @media (--bp-narrow) {
@@ -52,7 +53,7 @@
     /* Full opacity: the image is the subject, fully visible on top of
        the ambient gradient. The ambient fills the gaps around it. */
     opacity: 1;
-    animation: image-in var(--duration-slower) ease-out both;
+    animation: image-in var(--duration-slower) var(--ease-out) both;
 }
 
 @keyframes ambient-in {

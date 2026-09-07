@@ -40,7 +40,7 @@
     color: rgb(var(--text-muted));
     font-weight: var(--weight-light);
     opacity: 0;
-    transition: opacity var(--duration-base) ease;
+    transition: opacity var(--duration-base) var(--ease-out);
 }
 
 .prose :is(h1, h2, h3, h4):hover::after {
@@ -48,7 +48,7 @@
 }
 
 .prose .heading-anchor:focus-visible {
-    outline: 2px solid rgb(var(--text-muted));
+    outline: var(--focus-ring-width) solid rgb(var(--text-muted));
     outline-offset: 4px;
     border-radius: var(--radius-sm);
 }
@@ -79,7 +79,7 @@
     text-decoration: underline;
     text-decoration-color: rgb(var(--ink) / 0.3);
     text-underline-offset: 0.2em;
-    transition: text-decoration-color var(--duration-base) ease;
+    transition: text-decoration-color var(--duration-base) var(--ease-out);
 }
 
 .prose a:hover {
@@ -121,6 +121,7 @@
 /* Inline code */
 .prose :not(pre) > code {
     font-family: var(--font-mono);
+    /* Slightly under 1em so the mono x-height aligns with surrounding prose. */
     font-size: 0.9em;
     padding: 0.1em var(--space-1);
     background: rgb(var(--ink) / 0.06);
@@ -191,9 +192,9 @@
     cursor: pointer;
     opacity: 0;
     transition:
-        opacity var(--duration-base) ease,
-        background var(--duration-base) ease,
-        color var(--duration-base) ease;
+        opacity var(--duration-base) var(--ease-out),
+        background var(--duration-base) var(--ease-out),
+        color var(--duration-base) var(--ease-out);
 }
 
 .prose pre:hover .code-copy,
@@ -211,15 +212,16 @@
    collapses the whole button while still showing the check. */
 .code-copy .copy-icon,
 .code-copy .check-icon {
-    transition: opacity var(--duration-base) ease;
+    transition: opacity var(--duration-base) var(--ease-out);
 }
 
 .code-copy .check-icon {
     position: absolute;
     inset: 0;
     margin: auto;
-    width: 14px;
-    height: 14px;
+    /* Matches ICON_SIZE in @design/primitives/icons. */
+    width: var(--space-3-5);
+    height: var(--space-3-5);
     opacity: 0;
 }
 
@@ -238,7 +240,7 @@
 
 .code-copy[data-fading] {
     opacity: 0;
-    transition: opacity var(--duration-medium) ease;
+    transition: opacity var(--duration-medium) var(--ease-out);
 }
 
 /* Horizontal rule */

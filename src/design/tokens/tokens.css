@@ -17,7 +17,7 @@
 
 :root {
     /* Transition the width token itself so all consumers animate together. */
-    transition: --content-max 520ms cubic-bezier(0.32, 0.72, 0, 1);
+    transition: --content-max var(--duration-slower) var(--ease-spring);
 
     /* Base monochrome channels - still used by borders, glass, glow, and
        any alpha-of-ink/paper expression that is not a text tier. */
@@ -75,8 +75,9 @@
 
     /* Layout */
     --content-max-wide: 1280px;
+    --content-max-narrow: 720px;
     --content-max: var(--content-max-wide);
-    --content-gutter: 1.5rem;
+    --content-gutter: var(--space-6);
 
     /* Spacing — 4px base unit, half-steps for fine alignment. */
     --space-px:  1px;
@@ -118,10 +119,14 @@
     --radius-pill:   999px;
 
     /* z-index layers */
+    --z-content:   1; /* above the palette background layer */
     --z-navbar:    100;
     --z-skip-link: 1000;
     --z-cursor:    10000;
 
     /* Border weights */
     --border-hairline: 1px;
+
+    /* Focus ring (the site-wide :focus-visible style) */
+    --focus-ring-width: 2px;
 }

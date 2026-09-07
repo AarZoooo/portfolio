@@ -55,13 +55,13 @@
     color: inherit;
     text-decoration: none;
     background-image: linear-gradient(currentColor, currentColor);
-    background-size: 0 1px;
+    background-size: 0 var(--border-hairline);
     background-position: 50% 100%;
     background-repeat: no-repeat;
-    transition: background-size var(--duration-medium) ease, color var(--duration-base) ease;
+    transition: background-size var(--duration-medium) var(--ease-out), color var(--duration-base) var(--ease-out);
 }
 
 .link:hover {
-    background-size: 100% 1px;
+    background-size: 100% var(--border-hairline);
     color: rgb(var(--on-surface-dark) / 0.9);
 }
