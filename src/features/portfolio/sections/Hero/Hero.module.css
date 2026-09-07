@@ -11,6 +11,7 @@
     padding: 0 var(--space-6);
     font-family: var(--font-mono);
     overflow: hidden;
+    animation: hero-in var(--duration-slowest) ease-out both;
 }
 
 /* Blurred background wash. Reuses the navbar glass blur token; scaled
@@ -35,8 +36,6 @@
 
 @media (prefers-reduced-motion: reduce) {
     .bg { animation: none; }
-}
-    animation: hero-in var(--duration-slowest) ease-out both;
 }
 
 @keyframes hero-in {

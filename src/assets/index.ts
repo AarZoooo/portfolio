@@ -22,7 +22,7 @@ const avatarModules = import.meta.glob('./avatar/*.{svg,png,jpg,jpeg}', {
     import: 'default',
 }) as Record<string, AssetValue>
 
-const heroModules = import.meta.glob('./hero/*.{svg,png,jpg,jpeg,webp}', {
+const heroModules = import.meta.glob('./hero/*.{svg,png,jpg,jpeg,gif,webp}', {
     eager: true,
     import: 'default',
 }) as Record<string, AssetValue>
