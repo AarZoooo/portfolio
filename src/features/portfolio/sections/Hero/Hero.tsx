@@ -89,11 +89,16 @@ function Hero({ personal, hero, heroImages }: HeroProps) {
     return (
         <section id="hero" className={styles.hero}>
             {heroImage && (
-                <div
-                    className={styles.bg}
-                    style={{ backgroundImage: `url(${heroImage})` }}
-                    aria-hidden
-                />
+                <div className={styles.bg} aria-hidden>
+                    <div
+                        className={styles.bgAmbient}
+                        style={{ backgroundImage: `url(${heroImage})` }}
+                    />
+                    <div
+                        className={styles.bgImage}
+                        style={{ backgroundImage: `url(${heroImage})` }}
+                    />
+                </div>
             )}
             <div className={styles.center}>
                 <h1 className={styles.greeting}>
