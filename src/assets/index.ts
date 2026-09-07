@@ -2,6 +2,9 @@
 // raw Vite returns URL strings. Normalize either shape to the URL.
 type AssetValue = string | { src: string }
 
+/* import.meta.glob has no generics, so the module shape is unknown to TS.
+   The casts below assert the {svg,png,...} glob results match AssetValue —
+   safe because every globbed file is an image processed by Astro/Vite. */
 const companyLogoModules = import.meta.glob('./logos/companies/*.{svg,png}', {
     eager: true,
     import: 'default',
