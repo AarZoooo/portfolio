@@ -12,7 +12,14 @@
    Decorative, so aria-hidden on the wrapper. */
 .bg {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* 100lvh (large viewport height) so the backdrop doesn't shift
+       when the mobile URL bar hides/shows on scroll. inset: 0 would
+       track the layout viewport, which changes and recalculates the
+       ambient's scale, causing a visible shift. */
+    height: 100lvh;
     z-index: -1;
     overflow: hidden;
 }

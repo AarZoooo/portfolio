@@ -27,11 +27,11 @@ export const PALETTES = [
     { name: 'monochrome-light', mode: 'light', hero: null, font: null, imageMode: 'fit', imagePosition: 'center' },
     { name: 'monochrome-dark', mode: 'dark', hero: null, font: null, imageMode: 'fit', imagePosition: 'center' },
     { name: 'meddle', mode: 'dark', hero: 'meddle', font: null, imageMode: 'fit', imagePosition: 'center' },
-    { name: 'utopia', mode: 'dark', hero: 'utopia', font: null, imageMode: 'fit', imagePosition: 'center' },
+    { name: 'utopia', mode: 'dark', hero: 'utopia', font: null, imageMode: 'fit-width', imagePosition: 'bottom-center' },
 ] as const
 
 export type PaletteName = (typeof PALETTES)[number]['name']
-export type ImageMode = 'fill' | 'fit'
+export type ImageMode = 'fit' | 'fill' | 'fit-width' | 'fit-height'
 export type ImagePosition =
     | 'top-left'
     | 'top-center'

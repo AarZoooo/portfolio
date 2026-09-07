@@ -11,6 +11,14 @@ function toBackgroundPosition(pos: string): string {
     return pos.replace('-', ' ')
 }
 
+/** Map the image mode to a CSS background-size value. */
+const IMAGE_SIZE: Record<string, string> = {
+    fit: 'contain',
+    fill: 'cover',
+    'fit-width': '100% auto',
+    'fit-height': 'auto 100%',
+}
+
 /** Fixed full-viewport backdrop. Renders one layer per palette that
  * has a hero image; CSS shows the active palette's layer (the
  * visibility rule lives in each palette CSS file). No runtime
@@ -34,7 +42,7 @@ export default function PaletteBackground({ heroImages }: PaletteBackgroundProps
                             className={styles.image}
                             style={{
                                 backgroundImage: `url(${url})`,
-                                backgroundSize: p.imageMode === 'fill' ? 'cover' : 'contain',
+                                backgroundSize: IMAGE_SIZE[p.imageMode],
                                 backgroundPosition: position,
                             }}
                         />
