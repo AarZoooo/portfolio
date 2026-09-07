@@ -43,6 +43,7 @@
 
 .name {
     font-weight: var(--weight-medium);
+    color: rgb(var(--accent));
 }
 
 .tagline {
