@@ -1,8 +1,7 @@
-import { useState } from 'react'
 import type { Experience as ExperienceType } from '@type/portfolio'
 import { assets } from '@assets'
-import { techLine, renderParas } from '@utils/workItem'
-import Expandable from '@design/primitives/Expandable/Expandable'
+import { groupByEmployer } from '@utils/groupByEmployer'
+import WorkCard from '@design/primitives/WorkCard/WorkCard'
 import styles from './Experience.module.css'
 
 interface ExperienceProps {
@@ -10,64 +9,46 @@ interface ExperienceProps {
     items: ExperienceType[]
 }
 
-function Item({ item }: { item: ExperienceType }) {
-    const [open, setOpen] = useState(false)
-    const hasDetail = Boolean(item.detail?.length)
-
-    const head = (
-        <header className={styles.head}>
-            <div className={styles.primary}>
-                <p className={styles.company}>
-                    {item.logo && assets.companyLogo(item.logo) && (
-                        <img
-                            src={assets.companyLogo(item.logo)}
-                            alt=""
-                            className={styles.logo}
-                        />
-                    )}
-                    <span>{item.company}</span>
-                </p>
-                <p className={styles.role}>{item.role}</p>
-            </div>
-            <p className={styles.duration}>{item.duration}</p>
-        </header>
-    )
-
-    const after = <p className={styles.tech}>{techLine(item.tech, open)}</p>
-
-    if (!hasDetail) {
-        return (
-            <article className={styles.item}>
-                {head}
-                <div className={styles.plainBody}>
-                    {renderParas(item.summary, styles.bullets, styles.bullet)}
-                    {after}
-                </div>
-            </article>
-        )
-    }
-
-    return (
-        <article className={styles.item}>
-            <Expandable
-                isOpen={open}
-                onToggle={() => setOpen((v) => !v)}
-                head={head}
-                short={renderParas(item.summary, styles.bullets, styles.bullet)}
-                full={renderParas(item.detail!, styles.bullets, styles.bullet)}
-                after={after}
-            />
-        </article>
-    )
-}
-
 function Experience({ heading, items }: ExperienceProps) {
+    const groups = groupByEmployer(items)
     return (
         <section id="experience" className={styles.experience}>
             <h2 className={styles.heading}>{heading}</h2>
             <div className={styles.list}>
-                {items.map((item) => (
-                    <Item key={item.company} item={item} />
+                {groups.map((group) => (
+                    <div className={styles.group} key={group.company}>
+                        <h3 className={styles.groupTitle}>
+                            {group.roles[0].logo && assets.companyLogo(group.roles[0].logo) && (
+                                <img
+                                    src={assets.companyLogo(group.roles[0].logo)}
+                                    alt=""
+                                    className={styles.groupLogo}
+                                />
+                            )}
+                            <span>{group.company}</span>
+                        </h3>
+                        <div className={styles.roles}>
+                            {group.roles.map((role) => {
+                                const head = (
+                                    <header className={styles.head}>
+                                        <div className={styles.primary}>
+                                            <p className={styles.role}>{role.role}</p>
+                                        </div>
+                                        <p className={styles.duration}>{role.duration}</p>
+                                    </header>
+                                )
+                                return (
+                                    <WorkCard
+                                        key={role.role + role.duration}
+                                        head={head}
+                                        summary={role.summary}
+                                        detail={role.detail}
+                                        tech={role.tech}
+                                    />
+                                )
+                            })}
+                        </div>
+                    </div>
                 ))}
             </div>
         </section>

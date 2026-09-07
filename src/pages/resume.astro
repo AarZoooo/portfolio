@@ -5,20 +5,12 @@ import Footer from '@design/chrome/Footer/Footer'
 import CustomCursor from '@design/chrome/CustomCursor/CustomCursor'
 import Shortcuts from '@design/chrome/Shortcuts'
 import { portfolioData as d } from '@features/portfolio/data/portfolioData'
-import type { Experience } from '@type/portfolio'
+import { groupByEmployer } from '@utils/groupByEmployer'
 import { SUB_APPS } from '@utils/navigation'
 import { withBuildDate } from '@utils/buildInfo'
 import { stripProtocol, mapsUrl } from '@utils/contact'
 
-const experienceGroups: { company: string; roles: Experience[] }[] = []
-for (const experience of d.experience) {
-    const currentGroup = experienceGroups.at(-1)
-    if (currentGroup?.company === experience.company) {
-        currentGroup.roles.push(experience)
-    } else {
-        experienceGroups.push({ company: experience.company, roles: [experience] })
-    }
-}
+const experienceGroups = groupByEmployer(d.experience)
 ---
 
 <BaseLayout

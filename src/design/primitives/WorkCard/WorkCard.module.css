@@ -1,0 +1,33 @@
+.item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.plainBody {
+    display: flex;
+    flex-direction: column;
+}
+
+.bullets {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3-5);
+}
+
+.bullet {
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: var(--weight-light);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+}
+
+.tech {
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    color: var(--text-muted);
+}
