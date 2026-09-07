@@ -22,7 +22,7 @@ import { withBuildDate } from '@utils/buildInfo'
 
     <main id="main" class="container">
         <div class="error">
-            <p class="code">404</p>
+            <h1 class="code">404</h1>
             <p class="message">this path doesn't exist</p>
             <a class="back" href="/">← back to portfolio</a>
         </div>
@@ -61,11 +61,19 @@ import { withBuildDate } from '@utils/buildInfo'
     }
 
     .back {
+        position: relative;
         margin-top: var(--space-2);
         font-size: var(--text-sm);
         color: rgb(var(--text-secondary));
         text-decoration: none;
-        transition: color var(--duration-base) ease;
+        transition: color var(--duration-base) var(--ease-out);
+    }
+
+    /* Expand the hit area to the minimum touch target without changing layout. */
+    .back::before {
+        content: '';
+        position: absolute;
+        inset: calc((100% - var(--touch-target-min)) / 2) 0;
     }
 
     .back:hover {
