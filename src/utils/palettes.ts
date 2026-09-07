@@ -4,6 +4,10 @@
  * src/design/tokens/palettes/<name>.css (imported from
  * src/design/tokens/index.css).
  *
+ * `mode` classifies the palette as light or dark; set site-wide via
+ * the `data-mode` attribute on <html> (see InitialAttrs.astro).
+ * Drives Shiki code-theme and any light/dark-aware styling.
+ *
  * `hero` is an optional asset key (basename of a file in
  * src/assets/hero/); null means the typographic hero, no image.
  *
@@ -15,9 +19,9 @@
  * The browser only fetches the file when the palette is active, so
  * unused palette fonts cost nothing. */
 export const PALETTES = [
-    { name: 'monochrome-light', hero: null, font: null },
-    { name: 'monochrome-dark', hero: null, font: null },
-    { name: 'meddle', hero: 'meddle', font: null },
+    { name: 'monochrome-light', mode: 'light', hero: null, font: null },
+    { name: 'monochrome-dark', mode: 'dark', hero: null, font: null },
+    { name: 'meddle', mode: 'dark', hero: 'meddle', font: null },
 ] as const
 
 export type PaletteName = (typeof PALETTES)[number]['name']

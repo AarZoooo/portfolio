@@ -6,11 +6,11 @@
 
 <script is:inline>
     ;(function () {
-        // Keep in sync with @utils/palettes PALETTES (names + hero keys).
+        // Keep in sync with @utils/palettes PALETTES (names + modes).
         var PALETTES = [
-            { name: 'monochrome-light', hero: null, font: null },
-            { name: 'monochrome-dark', hero: null, font: null },
-            { name: 'meddle', hero: 'meddle', font: null },
+            { name: 'monochrome-light', mode: 'light' },
+            { name: 'monochrome-dark', mode: 'dark' },
+            { name: 'meddle', mode: 'dark' },
         ]
         var d = document.documentElement
         try {
@@ -21,17 +21,15 @@
                 p = Math.max(0, Math.min(p, PALETTES.length - 1))
             }
             d.setAttribute('data-palette', PALETTES[p].name)
+            d.setAttribute('data-mode', PALETTES[p].mode)
 
             var w = localStorage.getItem('width')
             if (w === 'wide' || w === 'narrow') d.setAttribute('data-width', w)
         } catch (_) {
             try {
-                d.setAttribute(
-                    'data-palette',
-                    matchMedia('(prefers-color-scheme: dark)').matches
-                        ? 'monochrome-dark'
-                        : 'monochrome-light',
-                )
+                var dark = matchMedia('(prefers-color-scheme: dark)').matches
+                d.setAttribute('data-palette', dark ? 'monochrome-dark' : 'monochrome-light')
+                d.setAttribute('data-mode', dark ? 'dark' : 'light')
             } catch (__) {
                 /* matchMedia unavailable — CSS default applies */
             }

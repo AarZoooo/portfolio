@@ -43,7 +43,6 @@
 
 .name {
     font-weight: var(--weight-medium);
-    color: rgb(var(--accent));
 }
 
 .tagline {
@@ -79,7 +78,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: rgb(var(--text-secondary));
+    color: rgb(var(--accent));
     transition:
         color var(--duration-base) ease,
         transform var(--duration-base) ease,

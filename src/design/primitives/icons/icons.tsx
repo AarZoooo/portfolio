@@ -70,3 +70,4 @@ export function CheckIcon(props: SVGProps<SVGSVGElement>) {
         </svg>
     )
 }
+

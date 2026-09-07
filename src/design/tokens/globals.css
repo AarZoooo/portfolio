@@ -124,12 +124,11 @@ img {
     border: 0;
 }
 
-/* Metric - bolder + accent inside otherwise muted prose. On monochrome
-   palettes accent == text so this is invisible; on colored palettes
-   the accent gives bold text its own hue. */
+/* Metric - bolder text. Color stays on the text tier (white-derived);
+   font-weight does the emphasis, not a separate hue. */
 .metric {
     font-weight: var(--weight-medium);
-    color: rgb(var(--accent));
+    color: rgb(var(--text));
 }
 
 /* Globally disable CSS transitions and animations for users who prefer

@@ -161,12 +161,12 @@
     text-decoration: var(--shiki-light-text-decoration);
 }
 
-:root[data-palette='monochrome-dark'] .prose pre {
+:root[data-mode='dark'] .prose pre {
     color: var(--shiki-dark);
     background-color: rgb(var(--ink) / 0.06);
 }
 
-:root[data-palette='monochrome-dark'] .prose pre code span {
+:root[data-mode='dark'] .prose pre code span {
     color: var(--shiki-dark);
     font-style: var(--shiki-dark-font-style);
     font-weight: var(--shiki-dark-font-weight, var(--weight-medium));
@@ -187,7 +187,7 @@
     height: var(--space-7);
     border-radius: var(--radius-sm);
     background: rgb(var(--ink) / 0.08);
-    color: rgb(var(--text-muted));
+    color: rgb(var(--accent));
     cursor: pointer;
     opacity: 0;
     transition:
@@ -260,7 +260,7 @@
 /* Emphasis */
 .prose strong {
     font-weight: var(--weight-medium);
-    color: rgb(var(--accent));
+    color: rgb(var(--text));
 }
 
 .prose em {
