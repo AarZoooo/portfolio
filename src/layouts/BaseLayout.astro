@@ -130,7 +130,9 @@ const personSchema = {
     </head>
     <body>
         <a href="#main" class="skip-link">Skip to content</a>
-        <PaletteBackground heroImages={HERO_IMAGES} client:load />
+        {/* Not interactive: SSR paints the layers, hydration only samples
+            the ambient gradient. Idle is enough. */}
+        <PaletteBackground heroImages={HERO_IMAGES} client:idle />
         <slot />
 
         <script>
