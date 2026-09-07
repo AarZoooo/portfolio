@@ -1,5 +1,6 @@
 import type { Personal } from '@type/portfolio'
 import { CopyIcon, CheckIcon } from '@design/primitives/icons/icons'
+import { stripProtocol, mapsUrl } from '@utils/contact'
 import styles from './Contact.module.css'
 
 interface ContactProps {
@@ -8,9 +9,6 @@ interface ContactProps {
 }
 
 function Contact({ heading, personal }: ContactProps) {
-    const stripProtocol = (url: string) => url.replace(/^https?:\/\//, '')
-    const mapsUrl = (place: string) =>
-        `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place)}`
 
     // Labels are the clickable surface; values stay plain text. External
     // links open in a new tab; mailto stays in-page.

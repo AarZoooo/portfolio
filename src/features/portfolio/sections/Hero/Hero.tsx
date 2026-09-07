@@ -48,14 +48,19 @@ function Hero({ personal, hero }: HeroProps) {
             setMounted(true)
         })
 
-        let timeoutId: NodeJS.Timeout
-        let fadeTimeoutId: NodeJS.Timeout
+        // Guard against setState after unmount: the cleanup may run
+        // between a queued timeout firing and React tearing down the effect.
+        let cancelled = false
+        let timeoutId: ReturnType<typeof setTimeout>
+        let fadeTimeoutId: ReturnType<typeof setTimeout>
 
         const rotateTagline = () => {
             timeoutId = setTimeout(() => {
+                if (cancelled) return
                 setIsFading(true)
 
                 fadeTimeoutId = setTimeout(() => {
+                    if (cancelled) return
                     setCurrentIndex((prev) => (prev + 1) % hero.taglines.length)
                     setIsFading(false)
                     rotateTagline()
@@ -66,6 +71,7 @@ function Hero({ personal, hero }: HeroProps) {
         rotateTagline()
 
         return () => {
+            cancelled = true
             cancelAnimationFrame(mountFrameId)
             clearTimeout(timeoutId)
             clearTimeout(fadeTimeoutId)

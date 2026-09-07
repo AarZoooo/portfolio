@@ -6,6 +6,8 @@ interface FooterProps {
     footer: FooterContent
 }
 
+// Taglines support a ~~strikethrough~~ marker: any text wrapped in double
+// tildes renders as <del>. Used for self-deprecating footer taglines.
 function renderTagline(text: string): ReactNode[] {
     return text.split(/(~~[^~]+~~)/g).map((p, i) =>
         p.startsWith('~~') && p.endsWith('~~') ? (

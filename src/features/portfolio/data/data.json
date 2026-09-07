@@ -161,8 +161,6 @@
             "context": "Rippling",
             "date": "March 2026",
             "logo": "rippling",
-            "github": "",
-            "live": "",
             "summary": [
                 "Built a declarative rules engine on Django REST that lets non-engineers change field behavior in 5 minutes via a UI.",
                 "Replaces 2,300+ hand-written Python lambda overrides with composable, database-stored rules that support plain-English explanations and live simulation."
@@ -183,8 +181,6 @@
             "context": "PayPal",
             "date": "July 2025",
             "logo": "paypal",
-            "github": "",
-            "live": "",
             "summary": [
                 "Designed and built an internal AI-driven backend system using Python to automate creation, validation, and enrichment of change management tickets.",
                 "Reduced average ticket creation time from 1 hour to 5 minutes (92% reduction), significantly improving engineering productivity and operational efficiency."

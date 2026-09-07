@@ -40,8 +40,6 @@ const projectSchema = z.object({
     context: z.string(),
     date: z.string(),
     logo: z.string(),
-    github: z.string(),
-    live: z.string(),
     summary: z.array(z.string()),
     detail: z.array(z.string()).optional(),
     tech: z.array(z.string()),

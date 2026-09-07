@@ -107,6 +107,9 @@ export default function useShortcuts() {
 
             if (pendingLeader === 'g') {
                 clearPending()
+                // Lowercase check: shift-G after a 'g' leader does NOT scroll to
+                // bottom here, it just clears the pending leader. Bottom-scroll
+                // is the standalone 'G' case below. Two-key 'gg' = top.
                 if (e.key === 'g') {
                     e.preventDefault()
                     scrollToTop()

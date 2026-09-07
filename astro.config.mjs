@@ -11,6 +11,8 @@ export default defineConfig({
     site: 'https://aarju.dev',
     output: 'static',
     adapter: vercel({
+        // Adapter-level web analytics off; we inject @vercel/analytics manually
+        // in BaseLayout so the snippet loads after first paint (non-blocking).
         webAnalytics: { enabled: false },
     }),
     integrations: [react(), mdx(), sitemap()],

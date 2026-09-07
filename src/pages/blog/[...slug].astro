@@ -186,6 +186,7 @@ const formatDate = (date: Date): string =>
         const wideMql = window.matchMedia('(min-width: 1025px)')
         const syncWideOpen = () => {
             if (wideMql.matches) details.setAttribute('open', '')
+            else details.removeAttribute('open')
         }
         syncWideOpen()
         wideMql.addEventListener('change', syncWideOpen)

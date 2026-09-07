@@ -115,7 +115,7 @@ function Navbar({ currentPath, sectionLinks, subApps = [] }: NavbarProps) {
                                 type="button"
                                 onClick={() => scrollTo(link.id)}
                                 className={`${styles.navLink} ${active === link.id ? styles.navActive : ''}`}
-                                aria-current={active === link.id ? 'true' : undefined}
+                                aria-current={active === link.id ? 'location' : undefined}
                             >
                                 <span className={styles.labelLong}>{link.label}</span>
                                 {link.short && <span className={styles.labelShort}>{link.short}</span>}

@@ -8,10 +8,7 @@ import { portfolioData as d } from '@features/portfolio/data/portfolioData'
 import type { Experience } from '@type/portfolio'
 import { SUB_APPS } from '@utils/navigation'
 import { withBuildDate } from '@utils/buildInfo'
-
-const stripProtocol = (url: string) => url.replace(/^https?:\/\//, '')
-const mapsUrl = (place: string) =>
-    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place)}`
+import { stripProtocol, mapsUrl } from '@utils/contact'
 
 const experienceGroups: { company: string; roles: Experience[] }[] = []
 for (const experience of d.experience) {
