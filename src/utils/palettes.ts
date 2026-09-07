@@ -28,7 +28,7 @@
 export const PALETTES = [
     { name: 'monochrome-light', mode: 'light', hero: null, font: null, imageMode: 'fit', imagePosition: 'center', blur: true },
     { name: 'monochrome-dark', mode: 'dark', hero: null, font: null, imageMode: 'fit', imagePosition: 'center', blur: true },
-    { name: 'meddle', mode: 'dark', hero: 'meddle', font: null, imageMode: 'fit', imagePosition: 'center', blur: false },
+    { name: 'meddle', mode: 'dark', hero: 'meddle', font: null, imageMode: 'fit', imagePosition: 'center', blur: true },
     { name: 'utopia', mode: 'dark', hero: 'utopia', font: null, imageMode: 'fit-width', imagePosition: 'bottom-center', blur: false },
 ] as const
 
