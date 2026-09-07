@@ -1,11 +1,15 @@
 import styles from './Logo.module.css'
 
+/* Slightly above 1em so the logo optically matches the cap height of
+   the adjacent label text. */
+const DEFAULT_LOGO_SIZE = '1.1em'
+
 interface LogoProps {
     src?: string
     alt: string
-    /** Size of the logo square. Defaults to 1.1em (matches the
-     * inline logo next to a company name). Pass a fixed px/rem for
-     * larger contexts like the Skills chips. */
+    /** Size of the logo square. Defaults to DEFAULT_LOGO_SIZE (inline
+     * next to a company name). Pass a fixed px/rem for larger contexts
+     * like the Skills chips. */
     size?: string
     /** Extra className for the logo container (e.g. a scoped CSS module class).
      * Lets consumers style the wrapper without :global. */
@@ -17,7 +21,7 @@ interface LogoProps {
  * any logo recolors to primary automatically when the palette
  * changes. Replaces the previous <img> + --mono-logo filter
  * approach, which could only force black/white. */
-export default function Logo({ src, alt, size = '1.1em', className }: LogoProps) {
+export default function Logo({ src, alt, size = DEFAULT_LOGO_SIZE, className }: LogoProps) {
     if (!src) return null
     return (
         <div

@@ -23,8 +23,6 @@ function Experience({ heading, items }: ExperienceProps) {
                                 <Logo
                                     src={assets.companyLogo(group.roles[0].logo)}
                                     alt={`${group.company} logo`}
-                                    size="1.1em"
-                                    className={styles.groupLogo}
                                 />
                             )}
                             <span>{group.company}</span>

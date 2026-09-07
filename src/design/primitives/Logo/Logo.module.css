@@ -3,10 +3,3 @@
     mask-repeat: no-repeat;
     mask-position: center;
 }
-
-/* Default inline size: matches a logo sitting next to a
-   company name in a heading. Override via the size prop. */
-.logo {
-    width: 1.1em;
-    height: 1.1em;
-}

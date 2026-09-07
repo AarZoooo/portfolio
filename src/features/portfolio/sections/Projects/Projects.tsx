@@ -25,7 +25,6 @@ function Projects({ heading, items }: ProjectsProps) {
                                             <Logo
                                                 src={assets.companyLogo(item.logo)}
                                                 alt={`${item.context} logo`}
-                                                size="1.1em"
                                                 className={styles.logo}
                                             />
                                         )}

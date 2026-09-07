@@ -11,6 +11,10 @@
 
 import type { SVGProps } from 'react'
 
+/* Rendered size of every icon below. Matches the var(--space-3-5)
+   sizing in prose.css and Contact.module.css. */
+const ICON_SIZE = 14
+
 /* ------------------------------------------------------------------ */
 /* Path data — single source of truth.                                 */
 /* ------------------------------------------------------------------ */
@@ -25,7 +29,7 @@ const COPY_PATHS = [
 const CHECK_PATHS = ['<path d="M20 6L9 17l-5-5" />'] as const
 
 const SVG_BASE_ATTRS =
-    'viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"'
+    `viewBox="0 0 24 24" width="${ICON_SIZE}" height="${ICON_SIZE}" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"`
 
 /* ------------------------------------------------------------------ */
 /* HTML strings — for runtime injection (e.g. Shiki post-process).     */
@@ -45,8 +49,8 @@ export function checkIconHTML(extraClass = 'check-icon'): string {
 
 const baseSvgProps = {
     viewBox: '0 0 24 24',
-    width: 14,
-    height: 14,
+    width: ICON_SIZE,
+    height: ICON_SIZE,
     fill: 'none',
     stroke: 'currentColor',
     strokeLinecap: 'round',

@@ -24,8 +24,6 @@ function Education({ heading, items }: EducationProps) {
                                         <Logo
                                             src={assets.schoolLogo(item.logo)}
                                             alt={`${item.institution} logo`}
-                                            size="1.1em"
-                                            className={styles.logo}
                                         />
                                     )}
                                     <span>{item.institution}</span>

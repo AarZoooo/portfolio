@@ -1,6 +1,13 @@
 import { useEffect, useRef } from 'react'
 import styles from './CustomCursor.module.css'
 
+/* Ring diameter at rest (matches --space-8 in the CSS module). */
+const BASE_SIZE = 32
+const HOVER_SIZE = 52
+const LERP_FACTOR = 0.18
+/* Parked offscreen until the first mousemove (matches the CSS module). */
+const OFFSCREEN_POSITION = -9999
+
 function CustomCursor() {
     const dotRef = useRef<HTMLDivElement>(null)
     const ringRef = useRef<HTMLDivElement>(null)
@@ -11,15 +18,11 @@ function CustomCursor() {
 
         document.documentElement.classList.add(styles.hideNative)
 
-        const BASE_SIZE = 32
-        const HOVER_SIZE = 52
-        const LERP_FACTOR = 0.18
-
         let raf = 0
-        let tx = -9999
-        let ty = -9999
-        let rx = -9999
-        let ry = -9999
+        let tx = OFFSCREEN_POSITION
+        let ty = OFFSCREEN_POSITION
+        let rx = OFFSCREEN_POSITION
+        let ry = OFFSCREEN_POSITION
         let size = BASE_SIZE
         let hovering = false
 

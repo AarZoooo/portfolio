@@ -36,12 +36,6 @@
     color: rgb(var(--text));
 }
 
-.groupLogo {
-    width: 1.1em;
-    height: 1.1em;
-    object-fit: contain;
-}
-
 .roles {
     display: flex;
     flex-direction: column;
