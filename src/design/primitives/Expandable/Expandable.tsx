@@ -40,12 +40,14 @@ function Expandable({
 
     useLayoutEffect(() => {
         const apply = () => {
-            const si = shortInnerRef.current
-            const sw = shortWrapRef.current
-            const fi = fullInnerRef.current
-            const fw = fullWrapRef.current
-            if (sw && si) sw.style.maxHeight = isOpen ? '0px' : `${si.scrollHeight}px`
-            if (fw && fi) fw.style.maxHeight = isOpen ? `${fi.scrollHeight}px` : '0px'
+            const shortInner = shortInnerRef.current
+            const shortWrap = shortWrapRef.current
+            const fullInner = fullInnerRef.current
+            const fullWrap = fullWrapRef.current
+            if (shortWrap && shortInner)
+                shortWrap.style.maxHeight = isOpen ? '0px' : `${shortInner.scrollHeight}px`
+            if (fullWrap && fullInner)
+                fullWrap.style.maxHeight = isOpen ? `${fullInner.scrollHeight}px` : '0px'
         }
         apply()
 
