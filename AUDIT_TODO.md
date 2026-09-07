@@ -65,7 +65,32 @@ None.
 - [ ] Document the `~~strikethrough~~` tagline syntax (used in `Footer.tsx`).
 - [ ] Comment why `astro.config.mjs` has `webAnalytics: { enabled: false }`
   while `@vercel/analytics` is manually injected in `BaseLayout`.
-- [ ] Visual effects (TBD, design in progress).
+
+## Creative / visual (after functional tasks)
+
+Sequenced as togglable experiments behind `data-*` attributes (off by default)
+so the live site stays clean while evaluating. Palette system is the keystone;
+music player depends on it.
+
+- [ ] Dot matrix texture + cursor brightening. Static dot grid via CSS
+  `radial-gradient` on a fixed layer (zero runtime). Cursor brightening via
+  one radial-glow div following the cursor, merged into the existing
+  `CustomCursor` rAF loop. `aria-hidden`, disabled under
+  `prefers-reduced-motion`.
+- [ ] Velvet ribbon gradient. Soft diagonal `linear-gradient` on a fixed
+  `body::before` at ~3-5% alpha. Try alone and with the dots.
+- [ ] Color supplier + custom palettes. Extend `useTheme` with a `palette`
+  axis (orthogonal to light/dark), `data-palette` attr on `<html>`,
+  `palettes.ts` defining named palettes with light/dark ink/paper/accent.
+  Every palette must clear WCAG AA in both themes (validate at build).
+  Update `AGENTS.md` aesthetic stance from strict monochrome to
+  personal/mood-driven once settled.
+- [ ] Mini music player. Custom UI island (play/pause, volume, hotkeys,
+  curated playlist). Persistence via `sessionStorage` resume on nav
+  (start simple; view transitions later if the gap bugs). Each track
+  carries a palette id; playing it calls `setPalette`. Browser autoplay
+  policy = starts paused, user-initiated only. Hotkeys in `useShortcuts`.
+
 - [ ] Blog writer + DB-backed blog content (deferred until 3+ posts and
   real writing friction). Blog-only on Turso (libSQL); `data.json` stays
   git-backed. Single-user auth via env-var session token + Vercel
